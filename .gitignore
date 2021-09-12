@@ -1,0 +1,17 @@
+.DS_Store
+*~
+BIGMESS
+DIRECT.SECTOR
+GAME1
+GAME2
+NOMORE
+SCREEN
+WIND.BAS
+WINDHAM
+
+# for the moment
+*.dsk
+*.po
+*.mov
+Below the Root (4am crack).txt
+
