@@ -12,7 +12,7 @@ using PluginCommon;
 
 namespace ExtensionScriptSample {
     /// <summary>
-    /// Class for handling a JSR followed by a 1-byte format byte, then a string terminated with $FF.
+    /// Class for handling a JSR followed by a 1-byte position, then a string terminated with $FF.
     /// </summary>
     public class InlineBTRString: MarshalByRefObject, IPlugin, IPlugin_SymbolList,
             IPlugin_InlineJsr {

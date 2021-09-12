@@ -265,8 +265,8 @@
 "4704":"Set hires page 2 fullscreen",
 "4743":"eh?",
 "6409":"from $6b27",
-"6620":"from B609 vector",
-"6622":"delay for some reason",
+"6620":"called from B609 vector",
+"6622":"delay",
 "6625":"read key and clear strobe",
 "6631":"if high bit unset, no keypress",
 "6633":"convert to uppercase",
@@ -364,7 +364,7 @@
 "BackgroundColor":0},
 
 "6620":{
-"Text":"Checks for a latched keypress and returns it both in A and in $02; returns #$00 if no key was pressed. This only works for uppercase ($C0-DF), control chars ($80-9F), and spacebar ($A0). Lowercase is treated as uppercase, numbers and punctuation generally convert to control chars.\r\n\r\nThere is a tiny delay before checking for keypress.",
+"Text":"Checks for a latched keypress and returns it both in A and in $02; returns #$00 if no key was pressed. This only works for uppercase ($C0-DF), control chars ($80-9F), and spacebar ($A0). Lowercase is treated as uppercase, numbers and punctuation generally convert to control chars.\r\n\r\nThere is a tiny delay before checking for keypress. This routine is used during gameplay and this delay affects (subtly) how fast the game plays. Set to $01 and the game plays a smidge faster, to $60 and you walk pretty slow.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},

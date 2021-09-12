@@ -25,6 +25,57 @@
 "ExtensionScriptFileIdentifiers":["RT:Apple/ProDOS8.cs",
 "RT:Apple/VisHiRes.cs"],
 "ProjectSyms":{
+"GAME1_chardata":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_chardata",
+"Value":11264,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_hireshi":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_hireshi",
+"Value":7520,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_hireslo":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_hireslo",
+"Value":7488,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_texthi":{
 "DataDescriptor":{
 "Length":1,
@@ -59,6 +110,40 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"INVTEXT":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"0=normal,1=inverse",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"INVTEXT",
+"Value":102,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"Uncertain"},
+
+"MASK":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"may or may not be global",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"MASK",
+"Value":24,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"Uncertain"},
+
 "SCRN_chkkey":{
 "DataDescriptor":{
 "Length":1,
@@ -91,7 +176,7 @@
 "Value":5,
 "Source":"Project",
 "Type":"ExternalAddr",
-"LabelAnno":"Uncertain"},
+"LabelAnno":"None"},
 
 "TXTROW":{
 "DataDescriptor":{
@@ -108,7 +193,7 @@
 "Value":6,
 "Source":"Project",
 "Type":"ExternalAddr",
-"LabelAnno":"Uncertain"}}},
+"LabelAnno":"None"}}},
 
 "AddressMap":[{
 "Offset":0,
@@ -263,19 +348,35 @@
 "Comments":{
 "1750":"inline data; store addr-1 in $61/$62",
 "1756":"addr-1+1",
-"1760":"first byte of inline data goes in $64",
+"1760":"first byte of inline data is indent",
+"1763":"A=char",
 "1765":"end of string?",
 "1769":"save y",
 "1774":"??",
-"1776":"hmm! could this be a column?",
 "1778":"restore y",
 "1781":"always, effectively",
 "1790":"check for page wrap",
 "1792":"and wrap page",
-"1802":"==19, could be screen line 20?",
-"1804":"since $05 looks like COL, this could be ROW",
-"1820":"looks like A on entry is used",
-"1829":"mult $16 (addr/2) by 8",
+"1801":"save char",
+"1802":"screen line 19 (will be 20)",
+"1808":"subtract 40 cols from htab",
+"1813":"add 1 to TXTROW until htab \u003c 0",
+"1818":"adjust +40 (we overshot 1 iter of -40)",
+"1820":"restore char",
+"1821":"convert $C0..DF to $00..1F, $A0..BF to $20..3F (?)",
+"1823":"store char # in $16/17",
+"1829":"mult $16 (addr/2) by 8 bytes (per char data)",
+"1854":"calc hires addr in $14",
+"1857":"draw ($16) data at ($14)",
+"1861":"this will draw normal pixels",
+"1863":"inverse text?",
+"1867":"this will flip (XOR) pixels (inverse?)",
+"1869":"mask. may be global var",
+"1871":"8 lines",
+"1879":"first line empty (note bit 7 color set)",
+"1881":"possibly invert text",
+"1883":"$14 (addr/2) prob hires screen, unsure where set",
+"1888":"next hires line (+$0400)",
 "1911":"load from text page 1",
 "1916":"page aligned, so no high byte inc",
 "1918":"next col",
@@ -286,6 +387,9 @@
 "1936":"no, keep going",
 "1943":"low byte of text page line",
 "1951":"high byte of text page line",
+"2139":"offset into hireshi ($20+$20 will be page 2)",
+"2149":"hires line table",
+"2157":"hires page 2",
 "2503":"next page",
 "2517":"A and Y are now 0",
 "2855":"external entry point"},
@@ -334,7 +438,7 @@
 "BackgroundColor":0},
 
 "1783":{
-"Text":"Update the return address in $61/$62 with the inline data length, then jump to it to continue.",
+"Text":"Offset the return address in $61/$62 with the inline data length, then jump to it to continue.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -343,14 +447,44 @@
 "Text":"Converting a col/row ($05/$06) to an address on text page 1. Output address is in $03/04. X is preserved.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"1750":{
+"Text":"Print inline string to hires text area (last 4 lines). The inline data is:\r\n   1 byte -- hpos, the horizontal position of the string\r\n   x bytes - high ascii string data\r\n $ff       - string terminator\r\n\r\nThe hpos byte starts from $00 (col 1, row 1) and wraps at $28 (col 1, row 2), $50 and $78, so it encodes vertical position as well. In practice, strings are indented by 1 so $01, $29 etc are typical. Strings will wrap at end of screen.\r\n\r\nThe use of $ff instead of $00 to terminate strings could be a cross-platform concession, although platforms where $00 is a valid character would not be using high-ascii anyway.",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1808":{
+"Text":"Add quotient(htab,40)+1 to TXTROW -- implement wrapping.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1801":{
+"Text":"Print char in A at horiz pos htab in text area. Converts position to fullscreen TXTROW/COL. Indexes the char ($00..$3F) into hires char bitmap $2C00 at 8 bytes per char. Then draws the char on the hires screen.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1861":{
+"Text":"Draw 8 lines of character data at ($16) to the hires screen at ($14). Actually, the first written line is blank, and then the first 7 lines of actual data are written; the 8th line is ignored. This creates line spacing by shifting everything down a pixel. This is a little odd, but perhaps let them switch to top-spacing (which offsets text from the playfield) without changing the char data.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2139":{
+"Text":"Convert TEXTROW/TEXTCOL to hires address and stores addr in $14.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
-"1801":{
-"Text":"Numbers like #$13, #$28 look suspiciously like text lines for HRCG.",
+"1883":{
+"Text":"Is $14/15 global?  Is $16/17?",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":-7278960},
+"BackgroundColor":-23296},
 
 "1900":{
 "Text":"Seems to draw 20 lines of text, sourced from text page 1, to hires screen. This looks like 40x20 tiled graphics data stored as text, made further apparent by NOPing out the 4 instructions at $A857 to set HIRES2, leaving GR active. This\r\nshows lores colored blocks in the obvious shape of game screens.",
@@ -527,11 +661,11 @@
 "LabelAnno":"None"},
 
 "1961":{
-"Label":"drawchar",
+"Label":"drawtile",
 "Value":26537,
 "Source":"User",
 "Type":"GlobalAddr",
-"LabelAnno":"Uncertain"},
+"LabelAnno":"None"},
 
 "1939":{
 "Label":"gettextaddr",
@@ -545,9 +679,97 @@
 "Value":26476,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1808":{
+"Label":"incrow",
+"Value":26384,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1801":{
+"Label":"printchar",
+"Value":26377,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1881":{
+"Label":"loop",
+"Value":26457,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1869":{
+"Label":"draw",
+"Value":26445,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1861":{
+"Label":"drawchar",
+"Value":26437,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2139":{
+"Label":"calc_hires_textpos",
+"Value":26715,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
+"1802":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1809":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1816":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1844":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GAME1_chardata",
+"Part":"Low"}},
+
+"1850":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GAME1_chardata",
+"Part":"High"}},
+
+"1922":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1934":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
 "2555":{
 "Length":21,
 "Format":"StringGeneric",
@@ -586,6 +808,42 @@
 "MultiMask":null,
 "Label":"ysav",
 "Value":99,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"horiz text pos (next line at $28)",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"htab",
+"Value":100,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"1861":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"lines left to draw",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"lines",
+"Value":7,
 "Source":"Variable",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],
