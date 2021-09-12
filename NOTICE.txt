@@ -1,0 +1,7 @@
+[The following text from https://github.com/fadden/6502bench/blob/master/NOTICE.txt 
+ is included because the *.cs plugin file(s) in this project are derived from
+ 6502bench sample code, and therefore these files (and only these files) are
+ subject to the Apache 2.0 license.]
+
+This product contains source code or data files from 6502bench.  You can
+visit the project web page at https://6502bench.com/ .
