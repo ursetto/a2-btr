@@ -346,6 +346,9 @@
 },
 
 "Comments":{
+"87":"might be general game loop",
+"92":"$c9 == #$0d during intro",
+"105":"if in gameplay mode",
 "1750":"inline data; store addr-1 in $61/$62",
 "1756":"addr-1+1",
 "1760":"first byte of inline data is indent",
@@ -721,7 +724,21 @@
 "Value":26715,
 "Source":"User",
 "Type":"GlobalAddr",
-"LabelAnno":"None"}},
+"LabelAnno":"None"},
+
+"39":{
+"Label":"GAME2_intro",
+"Value":24615,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"87":{
+"Label":"intro",
+"Value":24663,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"}},
 
 "OperandFormats":{
 "1802":{

@@ -263,6 +263,10 @@
 "315":"maybe begin string or formatting byte",
 "4692":"Clear hires page 2 (was SCREEN)",
 "4704":"Set hires page 2 fullscreen",
+"4717":"$d0 == 0",
+"4723":"$d0 == 1",
+"4728":"when $d0 = $01..7f, set to $ff",
+"4730":"$d0 now guaranteed to be $80..$ff",
 "4743":"eh?",
 "6409":"from $6b27",
 "6620":"called from B609 vector",
@@ -370,6 +374,12 @@
 "BackgroundColor":0}},
 
 "Notes":{
+"4711":{
+"Text":"how is $d0 set ... zp swap? set to 0 on startup. when set to $80, it skips the demo and goes direct to menu. after demo it is set to $01. I don\u0027t notice any difference between $d0 == ff and $d0 == 80.\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-18751},
+
 "6656":{
 "Text":"This page gets copied to $0900 during setup, but is not code.",
 "BoxMode":false,
@@ -528,6 +538,34 @@
 "Value":43087,
 "Source":"User",
 "Type":"LocalOrGlobalAddr",
+"LabelAnno":"None"},
+
+"4688":{
+"Label":"start",
+"Value":43088,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4678":{
+"Label":"start_vec",
+"Value":43078,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4732":{
+"Label":"d0_neg",
+"Value":43132,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4728":{
+"Label":"d0_pos_nonzero",
+"Value":43128,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
