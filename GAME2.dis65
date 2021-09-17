@@ -42,6 +42,57 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_even_col_even_line_mask":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_even_col_even_line_mask",
+"Value":8144,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_even_col_mask":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_even_col_mask",
+"Value":8112,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_even_col_odd_line_mask":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_even_col_odd_line_mask",
+"Value":8176,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_hireshi":{
 "DataDescriptor":{
 "Length":1,
@@ -72,6 +123,57 @@
 "MultiMask":null,
 "Label":"GAME1_hireslo",
 "Value":7488,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_odd_col_even_line_mask":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_odd_col_even_line_mask",
+"Value":8128,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_odd_col_mask":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_odd_col_mask",
+"Value":8096,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_odd_col_odd_line_mask":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_odd_col_odd_line_mask",
+"Value":8160,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -110,6 +212,91 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_tileset0_data":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_tileset0_data",
+"Value":14336,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_tileset0_masks":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_tileset0_masks",
+"Value":14080,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_tileset1_data":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_tileset1_data",
+"Value":12032,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_tileset1_masks":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_tileset1_masks",
+"Value":11776,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"hires_addr":{
+"DataDescriptor":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"hires_addr",
+"Value":20,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "INVTEXT":{
 "DataDescriptor":{
 "Length":1,
@@ -142,7 +329,24 @@
 "Value":24,
 "Source":"Project",
 "Type":"ExternalAddr",
-"LabelAnno":"Uncertain"},
+"LabelAnno":"None"},
+
+"ODDLINE_MASK":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"and mask odd tile lines ($00 disables)",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"ODDLINE_MASK",
+"Value":95,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
 
 "SCRN_chkkey":{
 "DataDescriptor":{
@@ -157,6 +361,40 @@
 "MultiMask":null,
 "Label":"SCRN_chkkey",
 "Value":46601,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"tileptr":{
+"DataDescriptor":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"pointer to current tile data",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tileptr",
+"Value":22,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"tileset":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"which tileset to use, 0 or 1",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tileset",
+"Value":96,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -349,6 +587,13 @@
 "87":"might be general game loop",
 "92":"$c9 == #$0d during intro",
 "105":"if in gameplay mode",
+"998":"from $6006 vec",
+"1002":"256 - 252 = 4 (rows)",
+"1006":"256 - 16 = 40 (cols)",
+"1025":"next column",
+"1027":"40 times (counting up from 216!)",
+"1031":"next row",
+"1033":"4 times (counting up from 252!)",
 "1750":"inline data; store addr-1 in $61/$62",
 "1756":"addr-1+1",
 "1760":"first byte of inline data is indent",
@@ -390,6 +635,30 @@
 "1936":"no, keep going",
 "1943":"low byte of text page line",
 "1951":"high byte of text page line",
+"1984":"8 lines in a tile",
+"1990":"read tile data",
+"1992":"apply global mask",
+"1994":"write tile data",
+"1998":"check if A (lines) is odd",
+"1999":"ignore odd line mask on even lines",
+"2003":"ignore odd line mask when zero",
+"2009":"next line",
+"2010":"next hires line (+$0400)",
+"2019":"write 8 lines",
+"2024":"Y used in L681A",
+"2027":"disable oddline mask by default",
+"2033":"note very close to $3800",
+"2039":"is tile between $4a and $74?",
+"2041":"no, use simple tileset mask",
+"2050":"branch if column even",
+"2052":"apply odd column odd line mask",
+"2063":"apply even column odd line mask",
+"2074":"note very close to $2F00 (see just below)",
+"2081":"even column mask",
+"2086":"odd column mask",
+"2095":"16-bit mul $16 by 8",
+"2109":"*$16 += $2F00 (when $60 is nonzero)",
+"2111":"*$16 += $3800 (when $60 is zero)",
 "2139":"offset into hireshi ($20+$20 will be page 2)",
 "2149":"hires line table",
 "2157":"hires page 2",
@@ -478,6 +747,30 @@
 
 "2139":{
 "Text":"Convert TEXTROW/TEXTCOL to hires address and stores addr in $14.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2125":{
+"Text":"Add $2F00 to the 16-bit address in $16.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2005":{
+"Text":"If the sta to $14 is removed, the purple odd-line hatching on the title screen is gone, and houses are now a single color. The odd line mask is a clever way to add shading/hatching. Note that odd lines are written twice if masked; the second write clobbers the first.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2022":{
+"Text":"Calculate tile data. A is the tile number. There appear to be 2 tilesets, tileset 1 at $2E00 ($2F00), and tileset 0 at $3700 ($3800), selected by the value of $60.\r\n\r\nThe tile mask and odd line mask are retrieved from 6 possible 16-element mask arrays; the first $100 bytes of data are mask indices. Tiles $00-$49 and $75..$ff use one mask array for even columns and a second array for odd columns; their oddline mask is disabled. Tiles $4a-$74 use a mask array for even columns/even lines, one for odd columns/even lines, one for even columns/odd lines, and one for odd columns/odd lines.\r\n\r\nFinally, tileptr ($16) is set to the hires tile bitmap.",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2089":{
+"Text":"Everything ends up here to write A to MASK and calculate tileptr.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -738,9 +1031,105 @@
 "Value":24663,
 "Source":"User",
 "Type":"GlobalAddr",
-"LabelAnno":"Uncertain"}},
+"LabelAnno":"Uncertain"},
+
+"6":{
+"Label":"L6006",
+"Value":24582,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1014":{
+"Label":"col",
+"Value":25590,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1006":{
+"Label":"row",
+"Value":25582,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2125":{
+"Label":"add_2F00_to_zp16",
+"Value":26701,
+"Source":"User",
+"Type":"LocalOrGlobalAddr",
+"LabelAnno":"None"},
+
+"2009":{
+"Label":"no_and",
+"Value":26585,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1971":{
+"Label":"writetile",
+"Value":26547,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1990":{
+"Label":"line",
+"Value":26566,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2022":{
+"Label":"calc_tile",
+"Value":26598,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2063":{
+"Label":"evencol",
+"Value":26639,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2089":{
+"Label":"finalize",
+"Value":26665,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2078":{
+"Label":"mask_tileset",
+"Value":26654,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2074":{
+"Label":"tileset_1",
+"Value":26650,
+"Source":"User",
+"Type":"LocalOrGlobalAddr",
+"LabelAnno":"None"}},
 
 "OperandFormats":{
+"1002":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1006":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
 "1802":{
 "Length":2,
 "Format":"NumericLE",
@@ -794,6 +1183,42 @@
 "SymbolRef":null}},
 
 "LvTables":{
+"998":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"column counter (+216)",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"coltmp",
+"Value":8,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"row counter (+252)",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"rowtmp",
+"Value":101,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
 "1750":{
 "Variables":[{
 "DataDescriptor":{
