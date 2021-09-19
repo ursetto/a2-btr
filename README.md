@@ -123,10 +123,12 @@ NOMORE,A$100,L$B0              # overlaps stack
 DIRECT.SECTOR,A$300,L$30
 BIGMESS,A$330,L$D0             # overlaps vectors
 WINDHAM,A$400,L$400            # overlaps screen and screen holes
-GAME1,A$A00,L$4600             # overlaps hires 1
+GAME1,A$A00,L$4600             # overlaps hires 1 (length should be $3600)
 SCREEN,A$4000,L$2000           # overlaps hires 2
 GAME2,A$6000,L$3600
 ```
+
+(Note that GAME1 length should be $3600; its last $1000 bytes overlap SCREEN, and are the same as SCREEN's first $1000 bytes.)
 
 After copying all unscrambled files from side A to a new work disk, the resulting disk is bootable and lets you start a new game. At this time, it asks you to momentarily swap side A back in. If you insert the copy here, your character will be invisible. The original works here (even if you booted off the copy), so we're missing something there, and it could be those orphaned sectors we mentioned at the top.
 
@@ -258,6 +260,14 @@ Same goes for Neric's house.
 This also shows the hires text is not sourced from text page 1, as in some programs that use a hires character generator, but from other memory.  (Text page 2 at $0800 contains game data.) It turns out there is a commonly used subroutine which writes formatted inline strings to hires.
 
 Peering closely at the house it appears that some consecutive tiles with the same value (`Z`, `F`, `>`) are not exactly identical. They look horizontally mirrored. Possibly, the renderer is mirroring odd/even tiles to make it look less tiled and more organic. On the other hand, the consecutive tree leaf tiles (`;` and `8`) look like completely different shapes. Maybe there is one set of tiles for even addresses, and one for odd. We won't know for sure until we look at the tile renderer.
+
+## GAME1
+
+GAME1 is almost all data: tileset data and masks, charset data, hires line tables, emotion text (PENSE EMOTIONS), thoughts (PENSE THOUGHTS), and dialog (SPEAK). There is lots of other unknown data.
+
+There is a small amount of code in GAME1 at $1b03, which reports a new power gained, and optionally along with it a vision.
+
+There are $1000 extraneous bytes at the end which are overwritten by, and identical to, the first $1000 bytes of SCREEN at $4000.
 
 ## In progress
 

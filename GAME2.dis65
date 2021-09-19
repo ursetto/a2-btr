@@ -23,7 +23,8 @@
 "RT:Apple/C08x-DiskII.sym65",
 "RT:Apple/ProDOS8.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Apple/ProDOS8.cs",
-"RT:Apple/VisHiRes.cs"],
+"RT:Apple/VisHiRes.cs",
+"PROJ:InlineBTRString.cs"],
 "ProjectSyms":{
 "GAME1_chardata":{
 "DataDescriptor":{
@@ -293,6 +294,23 @@
 "MultiMask":null,
 "Label":"hires_addr",
 "Value":20,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"HTAB":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"horiz text pos (next line at $28)",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"HTAB",
+"Value":100,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -567,6 +585,11 @@
 "Hint":"Code"},
 
 {
+"Low":865,
+"High":865,
+"Hint":"Code"},
+
+{
 "Low":2554,
 "High":2576,
 "Hint":"InlineData"},
@@ -776,6 +799,12 @@
 "BackgroundColor":0}},
 
 "Notes":{
+"875":{
+"Text":"Update InlineBTRString to decode this (multiple labels needed)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-18751},
+
 "1883":{
 "Text":"Is $14/15 global?  Is $16/17?",
 "BoxMode":false,
@@ -792,6 +821,12 @@
 "Text":"Jump vectors at $6b00",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":-256},
+
+"9462":{
+"Text":"The rest of the file appears to be data",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":-256}},
 
 "UserLabels":{
@@ -800,7 +835,7 @@
 "Value":24588,
 "Source":"User",
 "Type":"GlobalAddrExport",
-"LabelAnno":"Uncertain"},
+"LabelAnno":"None"},
 
 "2468":{
 "Label":"loop",
@@ -1115,6 +1150,27 @@
 "Value":26650,
 "Source":"User",
 "Type":"LocalOrGlobalAddr",
+"LabelAnno":"None"},
+
+"15":{
+"Label":"GAME2_printchar",
+"Value":24591,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"9113":{
+"Label":"time_of_day_str",
+"Value":33689,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9108":{
+"Label":"time_of_day_idx",
+"Value":33684,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -1250,23 +1306,6 @@
 "MultiMask":null,
 "Label":"ysav",
 "Value":99,
-"Source":"Variable",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
-{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"horiz text pos (next line at $28)",
-"HasWidth":true,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"htab",
-"Value":100,
 "Source":"Variable",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],
