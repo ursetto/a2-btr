@@ -971,7 +971,7 @@
 "LabelAnno":"None"},
 
 "1750":{
-"Label":"prntstr",
+"Label":"PRNTSTR",
 "Value":26326,
 "Source":"User",
 "Type":"GlobalAddr",

@@ -20,8 +20,8 @@ namespace ExtensionScriptSample {
         private byte[] mFileData;
 
         // Only one call.
-        private const string CALL_LABEL = "GAME2_PRNTSTR";
-        private int mInlineBTRStringAddr;      // jsr
+        private const string LABEL_SUFFIX = "PRNTSTR";
+        private Dictionary<int, PlSymbol> mBTRStringAddrs = new Dictionary<int, PlSymbol>();
         private int terminatingByte = 0xff;
 
         public string Identifier {
@@ -44,24 +44,22 @@ namespace ExtensionScriptSample {
         }
 
         public void UpdateSymbolList(List<PlSymbol> plSyms) {
-            // reset this every time, in case they remove the symbol
-            mInlineBTRStringAddr = -1;
+            mBTRStringAddrs.Clear();
 
             foreach (PlSymbol sym in plSyms) {
-                if (sym.Label == CALL_LABEL) {
-                    mInlineBTRStringAddr = sym.Value;
-                    break;
+                if (sym.Label.EndsWith(LABEL_SUFFIX)) {
+                    mBTRStringAddrs.Add(sym.Value, sym);
                 }
             }
-            mAppRef.DebugLog(CALL_LABEL + " @ $" + mInlineBTRStringAddr.ToString("x6"));
+            mAppRef.DebugLog(LABEL_SUFFIX + " matched " + mBTRStringAddrs.Count + " labels");
         }
         public bool IsLabelSignificant(string beforeLabel, string afterLabel) {
-            return beforeLabel == CALL_LABEL || afterLabel == CALL_LABEL;
+               return beforeLabel.EndsWith(LABEL_SUFFIX) || afterLabel.EndsWith(LABEL_SUFFIX);
         }
 
         public void CheckJsr(int offset, int operand, out bool noContinue) {
             noContinue = false;
-            if (operand != mInlineBTRStringAddr) {
+            if (!mBTRStringAddrs.ContainsKey(operand)) {
                 return;
             }
 
