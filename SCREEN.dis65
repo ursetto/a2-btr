@@ -60,6 +60,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_cleartext":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_cleartext",
+"Value":24582,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_copypages":{
 "DataDescriptor":{
 "Length":1,
@@ -111,6 +128,40 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_intro":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_intro",
+"Value":24615,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME2_printchar":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_printchar",
+"Value":24591,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_PRNTSTR":{
 "DataDescriptor":{
 "Length":1,
@@ -158,6 +209,23 @@
 "MultiMask":null,
 "Label":"JOYFLAG",
 "Value":177,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SOUNDFLG":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"0 = sound off, !0 = sound on",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SOUNDFLG",
+"Value":74,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}}},
@@ -268,7 +336,27 @@
 "4728":"when $d0 = $01..7f, set to $ff",
 "4730":"$d0 now guaranteed to be $80..$ff",
 "4743":"eh?",
+"6400":"A=?",
 "6409":"from $6b27",
+"6413":"flag? if non-zero, continue with next subroutine",
+"6423":"X was A on vector entry. X:=$00..$0A",
+"6435":"index into addrtbl data",
+"6441":"items are terminated with $ff",
+"6445":"y=y+1 and bumps addrtbl hi on wrap",
+"6451":"y=y+1 and bumps addrtbl hi on wrap",
+"6454":"preserve Y for loop",
+"6457":"must take X (1st addrtbl byte) \u0026 Y (2nd addrtbl byte)",
+"6462":"delay $64*$64 = 10000 times",
+"6469":"Is sound on?",
+"6471":"yes, play sound",
+"6473":"no, short delay and continue",
+"6499":"delay between speaker clicks",
+"6502":"or terminate on 0",
+"6542":"5 clicks with delay values",
+"6547":"is sound on?",
+"6549":"yes, play it",
+"6551":"no, delay (somewhat longer)",
+"6563":"play sound 0 (X=0)",
 "6620":"called from B609 vector",
 "6622":"delay",
 "6625":"read key and clear strobe",
@@ -371,11 +459,77 @@
 "Text":"Checks for a latched keypress and returns it both in A and in $02; returns #$00 if no key was pressed. This only works for uppercase ($C0-DF), control chars ($80-9F), and spacebar ($A0). Lowercase is treated as uppercase, numbers and punctuation generally convert to control chars.\r\n\r\nThere is a tiny delay before checking for keypress. This routine is used during gameplay and this delay affects (subtly) how fast the game plays. Set to $01 and the game plays a smidge faster, to $60 and you walk pretty slow.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"0":{
+"Text":"External vectors",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6400":{
+"Text":"External vectors",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6608":{
+"Text":"Delay loop -- will delay A * A times. A is 0 on exit.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6583":{
+"Text":"Appears to play a note or sound based on values in X and Y",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6469":{
+"Text":"X is the sound # to play, indexed into sound_data_Y. If this value is $ff, it plays the hardcoded sample 1. Otherwise, sound_data_Y is used as the Y component and sound_data_X is used as the X component to play what is possibly a tone.\r\n\r\nIt\u0027s possible this is one long sample, played over time by iterating X from 0 to 13.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6494":{
+"Text":"Hardcoded to play sample_data_1. Simply clicks the speaker once for each byte, and delays proportional to the byte value, before the next click.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6557":{
+"Text":"This appears to check if sound #0 is queued (in flag $39) and plays it if so.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6393":{
+"Text":"Probably junk bytes",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6649":{
+"Text":"Possibly junk bytes",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6423":{
+"Text":"Plays melody specified by X, where X := 00..0A. Like play_sound, but with an extra level of indirection -- X now indexes into a sound address table to select a sound data stream, which is composed of pairs of X,Y sound components, terminated by $ff. The game is frozen during this time.\r\n\r\nplay_sound by contrast plays a single X,Y sound indexed by X. My theory is the game may iterate through X values and repeatedly call play_sound, which allows this stream to be played without freezing the game, so it might be a footstep.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
 "4711":{
 "Text":"how is $d0 set ... zp swap? set to 0 on startup. when set to $80, it skips the demo and goes direct to menu. after demo it is set to $01. I don\u0027t notice any difference between $d0 == ff and $d0 == 80.\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-18751},
+
+"6557":{
+"Text":"My queue thought is wrong, this does not play if $39=#ff, but always sets $39 to #00, meaning it would itself \"queue\" the sound.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-18751},
@@ -566,6 +720,188 @@
 "Value":43128,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6468":{
+"Label":"rts",
+"Value":46660,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6437":{
+"Label":"loop",
+"Value":46629,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6496":{
+"Label":"click",
+"Value":46688,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6580":{
+"Label":"inc_addrtbl_hi",
+"Value":46772,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6576":{
+"Label":"next_addrtbl",
+"Value":46768,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6610":{
+"Label":"dec2",
+"Value":46802,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6609":{
+"Label":"dec",
+"Value":46801,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6608":{
+"Label":"delayAA",
+"Value":46800,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6607":{
+"Label":"rts",
+"Value":46799,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6589":{
+"Label":"click",
+"Value":46781,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6583":{
+"Label":"play_tone",
+"Value":46775,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6494":{
+"Label":"play_sample_1",
+"Value":46686,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6513":{
+"Label":"rts",
+"Value":46705,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6504":{
+"Label":"dec",
+"Value":46696,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6542":{
+"Label":"sample_data_1",
+"Value":46734,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6514":{
+"Label":"sound_data_Y",
+"Value":46706,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6469":{
+"Label":"play_sound",
+"Value":46661,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6479":{
+"Label":"play_sound",
+"Value":46671,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6528":{
+"Label":"sound_data_X",
+"Value":46720,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6557":{
+"Label":"play_queued_sound_0",
+"Value":46749,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6547":{
+"Label":"play_sound_0",
+"Value":46739,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6566":{
+"Label":"notqueued",
+"Value":46758,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6379":{
+"Label":"sound_is_on",
+"Value":44779,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6345":{
+"Label":"sound_status",
+"Value":44745,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6296":{
+"Label":"insert_side_2_trig",
+"Value":44696,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6423":{
+"Label":"play_melody",
+"Value":46615,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -573,6 +909,12 @@
 "Length":156,
 "Format":"StringGeneric",
 "SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"6542":{
+"Length":5,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null},
 
 "6656":{
@@ -706,6 +1048,78 @@
 "SymbolRef":null}},
 
 "LvTables":{
+"6423":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"idx",
+"Value":77,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"address table",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"addrtbl",
+"Value":78,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"6583":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"ytmp",
+"Value":75,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"xtmp",
+"Value":76,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
 "6966":{
 "Variables":[{
 "DataDescriptor":{

@@ -1069,10 +1069,10 @@
 "LabelAnno":"Uncertain"},
 
 "6":{
-"Label":"L6006",
+"Label":"GAME2_cleartext",
 "Value":24582,
 "Source":"User",
-"Type":"GlobalAddr",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"},
 
 "1014":{
@@ -1169,6 +1169,20 @@
 "9108":{
 "Label":"time_of_day_idx",
 "Value":33684,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2614":{
+"Label":"game_over",
+"Value":27190,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"998":{
+"Label":"cleartext",
+"Value":25574,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
