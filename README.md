@@ -221,9 +221,11 @@ It's clearly data. Identical data, so we can assume the load address (at least t
 
 And it turns out to be code! Awesome, they're not playing around. In retrospect, the `CALL 23296` should have been a clue: that's $5B00, inside hires page 2.
 
-$5B00 essentially copies SCREEN from $4000 to $9600..B600, clobbering most of DOS. It also copies $5900..FF to $B600, and $5A00..FF to $0900. Then it continues executing in high memory, where it is now free to clear hires page 2 and start.
+$5B00 essentially copies SCREEN from $4000 to $9600..B600, clobbering most of DOS. It also copies $5900..FF (handling sound and key checking) to $B600, and $5A00..FF to $0900. Then it continues executing in high memory, where it is now free to clear hires page 2 and start.
 
 There's a bunch of other weird stuff going on at startup that must await a full disassembly. But the takeaway is that this is probably a separate file because it needs to be loaded by DOS into memory occupied by DOS, and putting it in its own module simplified that. Plus, it's easier to work with and assemble 3 modules than one gigantic one.
+
+The end of the file (from $5cf1) is filled with junk, resembling source code variable names and comments, like `FLYFLG`, `FALLCNT`, `DEMOFLG`, `ONLADDER` and so on. In quite a few instances, the space between structures, to end of page, or end of file is padding, apparently whatever happened to be in memory at save time. This can come in handy when figuring out what zero page variables are doing.
 
 ## DIRECT.SECTOR
 
@@ -268,6 +270,13 @@ GAME1 is almost all data: tileset data and masks, charset data, hires line table
 There is a small amount of code in GAME1 at $1b03, which reports a new power gained, and optionally along with it a vision.
 
 There are $1000 extraneous bytes at the end which are overwritten by, and identical to, the first $1000 bytes of SCREEN at $4000.
+
+## Program organization after startup
+
+    $0900 - $09FF
+    $     - $AEFF  
+    $B600 - $B6FF  Sound routines and data; keypress checking
+
 
 ## In progress
 

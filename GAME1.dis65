@@ -610,17 +610,17 @@
 "LabelAnno":"Generated"},
 
 "5152":{
-"Label":"melodies_lo",
+"Label":"GAME1_melodies_lo",
 "Value":7712,
 "Source":"User",
-"Type":"GlobalAddr",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"},
 
 "5168":{
-"Label":"melodies_hi",
+"Label":"GAME1_melodies_hi",
 "Value":7728,
 "Source":"User",
-"Type":"GlobalAddr",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{

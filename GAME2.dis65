@@ -330,7 +330,7 @@
 "Value":102,
 "Source":"Project",
 "Type":"ExternalAddr",
-"LabelAnno":"Uncertain"},
+"LabelAnno":"None"},
 
 "MASK":{
 "DataDescriptor":{
@@ -602,6 +602,26 @@
 {
 "Low":2855,
 "High":2855,
+"Hint":"Code"},
+
+{
+"Low":5903,
+"High":5903,
+"Hint":"Code"},
+
+{
+"Low":5909,
+"High":5909,
+"Hint":"Code"},
+
+{
+"Low":5921,
+"High":5921,
+"Hint":"Code"},
+
+{
+"Low":5924,
+"High":5924,
 "Hint":"Code"}],
 "StatusFlagOverrides":{
 },
@@ -687,7 +707,23 @@
 "2157":"hires page 2",
 "2503":"next page",
 "2517":"A and Y are now 0",
-"2855":"external entry point"},
+"2855":"external entry point",
+"5932":"set top left of menu (0,0)",
+"6207":"hardcoded length of action_text",
+"6371":"menu row number we are on",
+"6373":"get the htab of col 1 in row",
+"6376":"menu column we are on",
+"6379":"get htab of menu column",
+"6384":"get width of menu column",
+"6387":"save for later",
+"6395":"enable inverse",
+"6397":"HTAB is also the index into the action text string",
+"6405":"next screen col \u0026 string char",
+"6413":"disable inverse",
+"6421":"disable inverse",
+"6438":"col #s of first col of text",
+"6442":"col #s of each menu col",
+"6447":"width of each menu col"},
 
 "LongComments":{
 "-2147483647":{
@@ -794,6 +830,36 @@
 
 "2089":{
 "Text":"Everything ends up here to write A to MASK and calculate tileptr.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5888":{
+"Text":"Vectors!",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6191":{
+"Text":"Display action menu. This is a single string that wraps around the screen as it is printed in one shot.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6371":{
+"Text":"Given menu row # and col #, get entry\u0027s htab (in HTAB) and width (in $77).",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6390":{
+"Text":"Highlight text of currently selected action menu item by drawing it in inverse text over the existing menu item.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6416":{
+"Text":"Unhighlight selected menu action, after we have previously highlighted it and are moving away.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -1185,6 +1251,97 @@
 "Value":25574,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6195":{
+"Label":"char",
+"Value":30771,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6191":{
+"Label":"display_actions",
+"Value":30767,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5888":{
+"Label":"GAME2_action_menu",
+"Value":30464,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5927":{
+"Label":"action_menu",
+"Value":30503,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6212":{
+"Label":"action_text",
+"Value":30788,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6438":{
+"Label":"text_col1",
+"Value":31014,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6442":{
+"Label":"text_colx",
+"Value":31018,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6447":{
+"Label":"text_colw",
+"Value":31023,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6371":{
+"Label":"get_menu_pos",
+"Value":30947,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6397":{
+"Label":"char",
+"Value":30973,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6390":{
+"Label":"highlight_menu_action",
+"Value":30966,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6423":{
+"Label":"char",
+"Value":30999,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6416":{
+"Label":"unhighlight_menu_action",
+"Value":30992,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -1250,6 +1407,24 @@
 "Length":21,
 "Format":"StringGeneric",
 "SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"6438":{
+"Length":4,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"6442":{
+"Length":5,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"6447":{
+"Length":5,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null}},
 
 "LvTables":{
@@ -1413,6 +1588,61 @@
 "MultiMask":null,
 "Label":"dst",
 "Value":17,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"5888":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"current menu column (0-4)",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"menucol",
+"Value":113,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"current menu row (0-3)",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"menurow",
+"Value":114,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"6371":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"width of current menu column",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"menuwidth",
+"Value":119,
 "Source":"Variable",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],
