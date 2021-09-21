@@ -1,0 +1,214 @@
+﻿### 6502bench SourceGen dis65 v1.0 ###
+{
+"_ContentVersion":4,
+"FileDataLength":48,
+"FileDataCrc32":854063629,
+"ProjectProps":{
+"CpuName":"65C02",
+"IncludeUndocumentedInstr":false,
+"TwoByteBrk":false,
+"EntryFlags":32702671,
+"AutoLabelStyle":"Simple",
+"AnalysisParams":{
+"AnalyzeUncategorizedData":true,
+"DefaultTextScanMode":"LowHighAscii",
+"MinCharsForString":4,
+"SeekNearbyTargets":true,
+"UseRelocData":false,
+"SmartPlpHandling":false,
+"SmartPlbHandling":true},
+
+"PlatformSymbolFileIdentifiers":["RT:Apple/F8-ROM.sym65",
+"RT:Apple/Cxxx-IO.sym65",
+"RT:Apple/C08x-DiskII.sym65"],
+"ExtensionScriptFileIdentifiers":["RT:Apple/ProDOS8.cs",
+"RT:Apple/VisHiRes.cs"],
+"ProjectSyms":{
+"RWTS":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"DOS33 RWTS entry point",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS",
+"Value":48384,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}}},
+
+"AddressMap":[{
+"Offset":0,
+"Addr":768}],
+"TypeHints":[{
+"Low":0,
+"High":4,
+"Hint":"InlineData"},
+
+{
+"Low":21,
+"High":21,
+"Hint":"Code"}],
+"StatusFlagOverrides":{
+},
+
+"Comments":{
+"0":"table type",
+"1":"slot number * 16",
+"2":"drive number",
+"3":"volume (0=any)",
+"4":"track",
+"5":"sector",
+"6":"ptr to device characteristics table",
+"8":"ptr to READ/WRITE buffer",
+"10":"unused",
+"11":"byte count (0=256 bytes)",
+"12":"command code",
+"13":"return code",
+"14":"volume of last access",
+"15":"slot * 16 of last access",
+"16":"drive of last access",
+"17":"device type (0=DISK ][)",
+"18":"phases per track (1=DISK ][)",
+"19":"Motor on time count ($EF for DISK ][)",
+"20":"Motor on time count ($D8 for DISK ][)"},
+
+"LongComments":{
+"-2147483647":{
+"Text":"6502bench SourceGen v1.7.3",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"21":{
+"Text":"Call RWTS with IOB at $0300.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"29":{
+"Text":"Junk, probably.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"17":{
+"Text":"Standard device characteristics table for Disk ][",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"0":{
+"Text":"RWTS Input/Output Control Block used for reading sectors",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0}},
+
+"Notes":{
+},
+
+"UserLabels":{
+"0":{
+"Label":"RWTS_IOB",
+"Value":768,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"17":{
+"Label":"RWTS_DCT",
+"Value":785,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"}},
+
+"OperandFormats":{
+"6":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTS_DCT",
+"Part":"Low"}},
+
+"8":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"10":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"11":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"12":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"13":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"14":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"19":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"20":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"21":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTS_IOB",
+"Part":"Low"}},
+
+"23":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTS_IOB",
+"Part":"High"}}},
+
+"LvTables":{
+},
+
+"Visualizations":[],
+"VisualizationAnimations":[],
+"VisualizationSets":{
+},
+
+"RelocList":{
+},
+
+"DbrValues":{
+}}

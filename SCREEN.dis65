@@ -775,7 +775,7 @@
 "BackgroundColor":0},
 
 "7409":{
-"Text":"Likely the rest of this file is junk. Most seems to be source code/variable names, which we\u0027ve seen several times in other junk areas.",
+"Text":"Likely the rest of this file is junk. Most seems to be source code/variable names, which we\u0027ve seen several times in other junk areas.\r\n\r\nHowever, some of this area is used as storage; the B400 and B500 pages are used in SCREEN and in GAME2.",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},

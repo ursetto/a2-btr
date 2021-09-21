@@ -229,19 +229,19 @@ The end of the file (from $5cf1) is filled with junk, resembling source code var
 
 ## DIRECT.SECTOR
 
-This contains an RWTS IOB at $300, a Device Characteristics Table at $311, and a subroutine at $314 which calls RWTS with this IOB.
+This contains an RWTS IOB at $300, a Device Characteristics Table at $311, and a subroutine at $315 which calls RWTS with this IOB.
 
-The IOB points to track $11, sector $03 by default, which is in the middle of the catalog but is empty.
+This is used to directly read sectors from side B, as nearly all the DOS RWTS area of $B600-$BFFF is left untouched by the game.
 
-It's possible this is used to read sectors from side B; perhaps enough of DOS has been left untouched to keep RWTS working.
+If you change $0302 (the drive number) from $01 to $02, side B can be placed into drive 2 at startup instead of swapping it into drive 1. Similarly, you can change $0301 from $60 to $50 (slot*16) to use a Disk \]\[ is in slot 5. Occasionally you may need to swap side A into the second drive, though.
 
-Also, examining the orphaned sectors on side A, a couple are exact copies of *unscrambled* data from the game files. This could be
+Examining the orphaned sectors on side A, a couple are exact copies of *unscrambled* data from the game files. This could be
 
-- detritus from the development process (unlikely on professionally created disks)
+- detritus from the development process (there is some development junk in these files, after all)
 - more copy protection, perhaps comparing sectors on disk to what's in memory;
 - actual game data, like on side B.
 
-Earlier we found a file-based, unscrambled copy of side A boots fine, but fails to run unless the original is swapped in when starting a new game. The only real difference between the original and a copy is the orphaned sectors on the original. Since DOS was clobbered at startup, any disk reads at this point are almost certainly sector-based, not file-based. So the swap of side A probably reads those orphaned sectors.
+Earlier we found a file-based, unscrambled copy of side A boots fine, but fails to run unless the original is swapped in when starting a new game. The only real difference between the original and a copy is the orphaned sectors on the original, and if you copy these sectors over it works fine. Since DOS was clobbered at startup, any disk reads at this point are almost certainly sector-based, not file-based. So the swap of side A probably reads those orphaned sectors.
 
 These side A sectors could be read in for copy protection (when missing the game becomes corrupt), or because they're needed to initialize a new game — or perhaps both!
 
@@ -273,9 +273,18 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
 
 ## Program organization after startup
 
-    $0900 - $09FF
-    $     - $AEFF  
+    $0300 - $032F  Direct sector reads via DOS RWTS
+    $0330 - $03FF
+    $0400 - $07FF  Playfield tile numbers stored on text page 1
+    $0800 - $08FF
+    $0900 - $09FF  
+    $0A00 - $3FFF
+    $7700 - $84FF  Menu and submenu and action handers
+    $8500 - $95FF  Data (or junk)
+    $9600 - $AEFF  
+    $B400 - $B5FF  Storage area
     $B600 - $B6FF  Sound routines and data; keypress checking
+    $B700 - $BFFF  DOS (enough for RWTS)
 
 
 ## In progress

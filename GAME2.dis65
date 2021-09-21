@@ -835,7 +835,7 @@
 "BackgroundColor":0},
 
 "5888":{
-"Text":"Vectors!",
+"Text":"Vectors! This section deals with menus and actions.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -889,8 +889,8 @@
 "MaxWidth":80,
 "BackgroundColor":-256},
 
-"9462":{
-"Text":"The rest of the file appears to be data",
+"9472":{
+"Text":"The rest of the file $8500-$95FF appears to be data, or junk",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256}},
@@ -1424,6 +1424,60 @@
 "6447":{
 "Length":5,
 "Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9462":{
+"Length":5,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9467":{
+"Length":5,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9472":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9473":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9474":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9475":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9476":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9477":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9478":{
+"Length":1,
+"Format":"NumericLE",
 "SubFormat":"None",
 "SymbolRef":null}},
 
