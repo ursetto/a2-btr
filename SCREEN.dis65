@@ -518,6 +518,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"LASTKEY":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"last key pressed via chkkey",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"LASTKEY",
+"Value":2,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "SOUNDFLG":{
 "DataDescriptor":{
 "Length":1,
@@ -687,6 +704,10 @@
 },
 
 "Comments":{
+"10":"save $af/$b0",
+"19":"preserve return val",
+"20":"restore $af/$b0",
+"40":"return val from $6b09",
 "315":"maybe begin string or formatting byte",
 "765":"jumps right over this next data area",
 "1474":"junk",
@@ -697,6 +718,15 @@
 "4728":"when $d0 = $01..7f, set to $ff",
 "4730":"$d0 now guaranteed to be $80..$ff",
 "4743":"eh?",
+"4880":"player choice 0..5",
+"5342":"play sound 1 (high pitched beep)",
+"5352":"GAME2 menu vec",
+"5355":"GAME2 vec",
+"5364":"move down 1 menu row",
+"5367":"past end of menu?",
+"5371":"wrap around to neric",
+"6386":"GAME2 jmp vec",
+"6389":"GAME2 jmp vec",
 "6400":"A=?",
 "6409":"from $6b27",
 "6413":"flag? if non-zero, continue with next subroutine",
@@ -886,6 +916,18 @@
 "Text":"External vector time",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"4856":{
+"Text":"Display current player choice (in $d4).",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4880":{
+"Text":"if ($d4 == 0) {\r\n  print NERIC -- A KINDAR BORN YOUNG MAN\r\n} else if ($d4 == 1) {\r\n  print GENAA -- A KINDAR BORN YOUNG WOMAN\r\n} ... else {\r\n  print RETURN TO MENU\r\n}",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -900,6 +942,12 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-18751},
+
+"5352":{
+"Text":"Here (while tracing $770c/$6b2a in GAME2)\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-23296},
 
 "6557":{
 "Text":"My queue thought is wrong, this does not play if $39=#ff, but always sets $39 to #00, meaning it would itself \"queue\" the sound.",
@@ -1315,6 +1363,90 @@
 "Value":46598,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4681":{
+"Label":"SCRN_sound_status",
+"Value":43081,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5056":{
+"Label":"choose_herd",
+"Value":43456,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5144":{
+"Label":"choose_pomma",
+"Value":43544,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4968":{
+"Label":"choose_genaa",
+"Value":43368,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5232":{
+"Label":"choose_charn",
+"Value":43632,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5320":{
+"Label":"choose_noone",
+"Value":43720,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4856":{
+"Label":"choose_player",
+"Value":43256,
+"Source":"User",
+"Type":"LocalOrGlobalAddr",
+"LabelAnno":"None"},
+
+"4845":{
+"Label":"init_choose_player",
+"Value":43245,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5355":{
+"Label":"loop",
+"Value":43755,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5342":{
+"Label":"do_player_choice",
+"Value":43742,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4880":{
+"Label":"choose_neric",
+"Value":43280,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5373":{
+"Label":"next",
+"Value":43773,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -1329,6 +1461,14 @@
 "Format":"Dense",
 "SubFormat":"None",
 "SymbolRef":null},
+
+"6641":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LASTKEY",
+"Part":"Low"}},
 
 "6656":{
 "Length":16,

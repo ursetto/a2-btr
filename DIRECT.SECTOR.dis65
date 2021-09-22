@@ -124,6 +124,13 @@
 "Value":785,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"21":{
+"Label":"DIRECT_RWTS",
+"Value":789,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{

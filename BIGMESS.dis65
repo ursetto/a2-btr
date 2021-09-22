@@ -209,6 +209,18 @@
 "Text":"External vectors",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"203":{
+"Text":"junk?",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6":{
+"Text":"If A=3, do second vision, otherwise first.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{

@@ -21,7 +21,8 @@
 "PlatformSymbolFileIdentifiers":["RT:Apple/F8-ROM.sym65",
 "RT:Apple/Cxxx-IO.sym65",
 "RT:Apple/C08x-DiskII.sym65",
-"RT:Apple/ProDOS8.sym65"],
+"RT:Apple/ProDOS8.sym65",
+"PROJ:BTR-zp.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Apple/ProDOS8.cs",
 "RT:Apple/VisHiRes.cs",
 "PROJ:InlineBTRString.cs"],
@@ -328,6 +329,23 @@
 "MultiMask":null,
 "Label":"INVTEXT",
 "Value":102,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"LASTKEY":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"last key pressed via checkkey",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"LASTKEY",
+"Value":2,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -708,6 +726,29 @@
 "2503":"next page",
 "2517":"A and Y are now 0",
 "2855":"external entry point",
+"5566":"return 0",
+"5568":"is this a nop?",
+"5650":"return 0",
+"5652":"return 1",
+"5684":"was x motion previously 1?",
+"5686":"no, move right",
+"5688":"yes, set back to 1",
+"5690":"and set run flag (below)",
+"5705":"was this previously -1?",
+"5707":"nope, we\u0027ve just started to move left",
+"5709":"yes, set back to -1",
+"5711":"...and set run flag",
+"5715":"halt vertical motion",
+"5728":"hmm. has this gone \u003e $01?",
+"5743":"if already moving up, just stop x motion and return",
+"5747":"start moving up",
+"5761":"were we already moving down?",
+"5763":"yes, just stop x motion and return",
+"5765":"no, start moving down",
+"5767":"stop x motion (and return)",
+"5778":"halt horizontal motion",
+"5795":"note, this is not reached if there was x motion",
+"5803":"end of cursor/character keypress handler",
 "5932":"set top left of menu (0,0)",
 "6207":"hardcoded length of action_text",
 "6371":"menu row number we are on",
@@ -723,7 +764,8 @@
 "6421":"disable inverse",
 "6438":"col #s of first col of text",
 "6442":"col #s of each menu col",
-"6447":"width of each menu col"},
+"6447":"width of each menu col",
+"8185":"and then rts"},
 
 "LongComments":{
 "-2147483647":{
@@ -862,6 +904,12 @@
 "Text":"Unhighlight selected menu action, after we have previously highlighted it and are moving away.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"5665":{
+"Text":"Handle cursor/character motion. Supports both IJKM and RDFC (interestingly) for up-left-right-down, along with spacebar for execute/jump.\r\n\r\n$AF=FF -- moving left\r\n$AF=00 -- standing still\r\n$AF=01 -- moving right\r\n$B0=FF -- moving up\r\n$B0=00 -- no vertical motion\r\n$B0=01 -- moving down\r\n$84=00 -- walking (single press)\r\n$84=01 -- running (double press)\r\n\r\nNote $84 (RUNFLG) might mean more than running. It is maniplulated after pressing up/down and may inc past $01. Could it also be used for flying and crawling? Memory viewer would be easiest.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -888,6 +936,12 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
+
+"5553":{
+"Text":"Heavily used input (?) code via $6b2a\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-7278960},
 
 "9472":{
 "Text":"The rest of the file $8500-$95FF appears to be data, or junk",
@@ -1342,6 +1396,111 @@
 "Value":30992,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5655":{
+"Label":"ret00",
+"Value":30231,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5680":{
+"Label":"right",
+"Value":30256,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5701":{
+"Label":"left",
+"Value":30277,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5693":{
+"Label":"chk_left",
+"Value":30269,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5733":{
+"Label":"chk_up",
+"Value":30309,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5741":{
+"Label":"up",
+"Value":30317,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5751":{
+"Label":"chk_down",
+"Value":30327,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5759":{
+"Label":"down",
+"Value":30335,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5770":{
+"Label":"chk_space",
+"Value":30346,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5782":{
+"Label":"other_key",
+"Value":30358,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5665":{
+"Label":"handle_ijkm_space",
+"Value":30241,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5791":{
+"Label":"no_x_motion",
+"Value":30367,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5801":{
+"Label":"no_y_motion",
+"Value":30377,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5711":{
+"Label":"runflg",
+"Value":30287,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5778":{
+"Label":"haltx",
+"Value":30354,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -1406,6 +1565,60 @@
 "2555":{
 "Length":21,
 "Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5672":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5676":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5693":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5697":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5733":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5737":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5751":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5755":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5770":{
+"Length":2,
+"Format":"NumericLE",
 "SubFormat":"HighAscii",
 "SymbolRef":null},
 

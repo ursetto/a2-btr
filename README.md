@@ -273,18 +273,19 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
 
 ## Program organization after startup
 
-    $0300 - $032F  Direct sector reads via DOS RWTS
-    $0330 - $03FF
-    $0400 - $07FF  Playfield tile numbers stored on text page 1
-    $0800 - $08FF
+    $0200 - $02FF   Sector read buffer
+    $0300 - $032F   Direct sector reads via DOS RWTS
+    $0330 - $03FF ? BIGMESS
+    $0400 - $07FF   Playfield tile numbers stored on text page 1
+    $0800 - $08FF ? Alternate zero page
     $0900 - $09FF  
     $0A00 - $3FFF
-    $7700 - $84FF  Menu and submenu and action handers
-    $8500 - $95FF  Data (or junk)
+    $7700 - $84FF   Menu and submenu and action handers
+    $8500 - $95FF   Data (or junk)
     $9600 - $AEFF  
-    $B400 - $B5FF  Storage area
-    $B600 - $B6FF  Sound routines and data; keypress checking
-    $B700 - $BFFF  DOS (enough for RWTS)
+    $B400 - $B5FF   Storage area
+    $B600 - $B6FF   Sound routines and data; keypress checking
+    $B700 - $BFFF   DOS (enough for RWTS)
 
 
 ## In progress

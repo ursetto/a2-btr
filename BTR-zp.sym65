@@ -1,0 +1,5 @@
+*SYNOPSIS Below the Root zero-page usage
+
+RUNFLG @ $84
+XMOVFLG @ $AF
+YMOVFLG @ $B0
