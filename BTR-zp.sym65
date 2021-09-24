@@ -1,5 +1,9 @@
 *SYNOPSIS Below the Root zero-page usage
 
+LASTKEY @ $02 ;last key pressed via chkkey
+SOUNDFLG @ $4a ;0 = sound off, 1 = on
 RUNFLG @ $84
+FACING @ $95 ;FF=left, 01=right facing
+JOYFLG @ $b1 ;01 = joystick, 00 = kbd
 XMOVFLG @ $AF
 YMOVFLG @ $B0

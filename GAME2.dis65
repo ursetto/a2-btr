@@ -726,8 +726,13 @@
 "2503":"next page",
 "2517":"A and Y are now 0",
 "2855":"external entry point",
+"3632":"$87 unset; clear carry",
+"3638":"$a3 \u003c $10 or",
+"3640":"$a3 \u003e $15; clear carry",
 "5566":"return 0",
 "5568":"is this a nop?",
+"5594":"branch when falling, it seems",
+"5600":"reached when falling",
 "5650":"return 0",
 "5652":"return 1",
 "5684":"was x motion previously 1?",
@@ -739,8 +744,11 @@
 "5709":"yes, set back to -1",
 "5711":"...and set run flag",
 "5715":"halt vertical motion",
+"5722":"might be, how many tiles we have fallen",
+"5724":"because we can\u0027t fly until we fall a bit",
 "5728":"hmm. has this gone \u003e $01?",
-"5743":"if already moving up, just stop x motion and return",
+"5743":"if already moving up, stop x motion and return",
+"5745":"???",
 "5747":"start moving up",
 "5761":"were we already moving down?",
 "5763":"yes, just stop x motion and return",
@@ -907,7 +915,19 @@
 "BackgroundColor":0},
 
 "5665":{
-"Text":"Handle cursor/character motion. Supports both IJKM and RDFC (interestingly) for up-left-right-down, along with spacebar for execute/jump.\r\n\r\n$AF=FF -- moving left\r\n$AF=00 -- standing still\r\n$AF=01 -- moving right\r\n$B0=FF -- moving up\r\n$B0=00 -- no vertical motion\r\n$B0=01 -- moving down\r\n$84=00 -- walking (single press)\r\n$84=01 -- running (double press)\r\n\r\nNote $84 (RUNFLG) might mean more than running. It is maniplulated after pressing up/down and may inc past $01. Could it also be used for flying and crawling? Memory viewer would be easiest.",
+"Text":"Handle cursor/character motion. Supports both IJKM and RDFC (interestingly) for up-left-right-down, along with spacebar for execute/jump.\r\n\r\n$AF=FF -- moving left\r\n$AF=00 -- standing still\r\n$AF=01 -- moving right\r\n$B0=FF -- moving up\r\n$B0=00 -- no vertical motion\r\n$B0=01 -- moving down\r\n$84=00 -- walking (single press) and more\r\n$84=01 -- running (double press) and more\r\n$95=FF -- facing left (?)\r\n$95=01 -- facing right ($6C4A)\r\n\r\n-- $84,$85,$86,$a2 are set to 0 on entry.\r\n-- $85,$86,$a2 are recomputed on every keypress check based on the values of XMOVFLG/YMOVFLG, even if no key was pressed.\r\n$85=?? -- copy of $AF when $AF!=0, otherwise unchanged ($00)\r\n$86=?? -- copy of $B0 when $AF==0 and $B0!=0, otherwise 1 if space, otherwise unchanged ($00)\r\n$a2=00 -- when completely still\r\n$a2=01 -- when moving in any direction (read-only--modifying will not stop char)\r\n\r\nNote $84 (RUNFLG) might mean more than running. It is manipulated after pressing up/down and may inc past $01. Could it also be used for flying and crawling? Memory viewer would be easiest.\r\n\r\n$92 might be the number of tiles we\u0027ve fallen so far. Might be the meaning of FALLCNT.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5728":{
+"Text":"So far I can get here if we are falling and press right, or if we are on a ladder and press right. In both cases, RUNFLG was 0. On a ladder, we jump. So perhaps this is JUMPED. RUNFLG is zeroed on next frame (6b27?)\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3630":{
+"Text":"Returns bool in carry. Returns true (set) if $87 is non-zero AND $a3 is between $10 and $15.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -1501,6 +1521,27 @@
 "Value":30354,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5797":{
+"Label":"moving",
+"Value":30373,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5658":{
+"Label":"handle_kbd_or_joy",
+"Value":30234,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5804":{
+"Label":"handle_joystick",
+"Value":30380,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
