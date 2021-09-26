@@ -132,7 +132,7 @@ GAME2,A$6000,L$3600
 
 After copying all unscrambled files from side A to a new work disk, the resulting disk is bootable and lets you start a new game. At this time, it asks you to momentarily swap side A back in. If you insert the copy here, your character will be invisible. The original works here (even if you booted off the copy), so we're missing something there, and it could be those orphaned sectors we mentioned at the top.
 
-The side A orphaned sectors are T05,S00..T09,S0F (middle of nowhere) and T12,S0D (middle of WIND). I copied T05S00..T09S0F (via Locksmith) over and it then started a game as expected.
+The side A orphaned sectors are T05,S00..T09,S0F (middle of nowhere) and T12,S0D (middle of WIND). I copied T05S00..T09S0F (via Locksmith) over and it then started a game as expected. We'll see later that each of the 5 tracks T05..09 contains data for 1 of the 5 characters.
 
 ## Enciphering algorithm
 
@@ -277,16 +277,23 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
     $0300 - $032F   Direct sector reads via DOS RWTS
     $0330 - $03FF ? BIGMESS
     $0400 - $07FF   Playfield tile numbers stored on text page 1
-    $0800 - $08FF ? Alternate zero page
-    $0900 - $09FF  
+    $0800 - $08FF   Alternate / saved zero page
+    $0900 - $09FF
     $0A00 - $3FFF
     $7700 - $84FF   Menu and submenu and action handers
     $8500 - $95FF   Data (or junk)
     $9600 - $AEFF  
-    $B400 - $B5FF   Storage area
+    $B200 - $B5FF   Game state storage area, along with zero page
     $B600 - $B6FF   Sound routines and data; keypress checking
     $B700 - $BFFF   DOS (enough for RWTS)
 
+## Data formats
+
+**Strings**. Strings have an unusual format, being neither Pascal (length byte prefix) nor null-terminated. Instead they are terminated with `$ff`. Inline strings (those after a JSR to the print string subroutine) are preceded by 1 byte, which is the horizontal column to print at, starting with 0 for the first line of the text area. This wraps to the next line at 40 columns, so the second line starts at $28. This is so common I wrote a parser for this data structure in [InlineBTRString.cs](./InlineBTRString.cs), which also lets 6502bench continue code analysis after the inline data.
+
+## Amusements
+
+- During the intro scene, set memory location $C4 (demo mode) to 0. This will turn off demo mode and let you play the intro screens. If you go up, you'll be in the Grand Hall; if you go left, you'll be in Temple Grund. Going a couple screens right will lock the game. You can also play the sample quest in this way, although it's basically like starting a new game.
 
 ## In progress
 

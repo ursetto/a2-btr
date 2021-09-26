@@ -21,10 +21,45 @@
 "PlatformSymbolFileIdentifiers":["RT:Apple/F8-ROM.sym65",
 "RT:Apple/Cxxx-IO.sym65",
 "RT:Apple/C08x-DiskII.sym65",
-"PROJ:BTR-zp.sym65"],
+"PROJ:BTR-zp.sym65",
+"PROJ:BTR.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Apple/VisHiRes.cs",
 "PROJ:InlineBTRString.cs"],
 "ProjectSyms":{
+"DIRECT_RWTS":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"DIRECT_RWTS",
+"Value":789,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_1DB8":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_1DB8",
+"Value":7608,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_chardata":{
 "DataDescriptor":{
 "Length":1,
@@ -499,6 +534,74 @@
 "Value":24597,
 "Source":"Project",
 "Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"RWTS_IOB":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB",
+"Value":768,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"RWTS_IOB_command":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB_command",
+"Value":780,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"RWTS_IOB_sector":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB_sector",
+"Value":773,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"RWTS_IOB_track":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB_track",
+"Value":772,
+"Source":"Project",
+"Type":"ExternalAddr",
 "LabelAnno":"None"}}},
 
 "AddressMap":[{
@@ -653,10 +756,42 @@
 },
 
 "Comments":{
+"3":"show demo text in A",
+"8":"turn off demo mode temporarily",
 "10":"save $af/$b0",
+"16":"call input handler in normal mode",
 "19":"preserve return val",
 "20":"restore $af/$b0",
 "40":"return val from $6b09",
+"52":"time for next action when 0",
+"54":"if time for next action",
+"56":"last movement byte still active",
+"63":"negative value, command",
+"65":"positive, movement",
+"68":"$ff = end of demo :(",
+"72":"clear demo flag",
+"76":"return to BIT tree",
+"79":"$c0 xx == play melody",
+"86":"next byte is melody #",
+"97":"$c1 == delay",
+"108":"next byte in 1 frame",
+"115":"$c2 xx == long delay",
+"122":"next byte is length of delay",
+"124":"$c0 is used as a temp here",
+"128":"unclear why we need to delay the cpu",
+"135":"next byte in 1 frame",
+"137":"note bit 4 is set here, for BIT tests",
+"142":"$c3 xx == ??",
+"160":"$c4 xx == ??",
+"175":"bit 4 set",
+"178":"$c0=1",
+"183":"$c5 == ??",
+"195":"bit 4 set",
+"214":"y always 0",
+"215":"next byte in 1 frame",
+"217":"next demo byte",
+"221":"hi byte",
+"223":"when jmp\u0027ed to, returns to input handler",
 "315":"maybe begin string or formatting byte",
 "765":"jumps right over this next data area",
 "1474":"junk",
@@ -667,6 +802,7 @@
 "4728":"when $d0 = $01..7f, set to $ff",
 "4730":"$d0 now guaranteed to be $80..$ff",
 "4743":"eh?",
+"4842":"sample quest?",
 "4880":"player choice 0..5",
 "5342":"play sound 1 (high pitched beep)",
 "5352":"GAME2 menu vec",
@@ -674,6 +810,37 @@
 "5364":"move down 1 menu row",
 "5367":"past end of menu?",
 "5371":"wrap around to neric",
+"5456":"jump back to start quest",
+"5889":"WRITE",
+"5901":"selected save slot",
+"5911":"copy page $B2,$B3,$B4,$B5,$00",
+"5914":"(1 page)",
+"5916":"copy to $200",
+"5921":"preserve zp",
+"5924":"write the sector",
+"5927":"restore zp",
+"5930":"next sector and page",
+"5937":"have we copied all 5 pages",
+"5939":"no, loop",
+"5957":"save critical flags which",
+"5959":"may differ in loaded zero page",
+"5966":"READ",
+"5971":"which save slot",
+"6000":"zero page (always last loaded)",
+"6003":"copy a page from sector buffer",
+"6018":"restore zero page data",
+"6020":"from read sector",
+"6029":"restore 3 saved flags",
+"6036":"is the save using the active character?",
+"6038":"yes, done loading data",
+"6040":"no, update character",
+"6042":"and read their data",
+"6048":"swap game disk back in",
+"6232":"selected character",
+"6234":"track 05..09",
+"6245":"read",
+"6279":"read into page $20..$2B?",
+"6281":"no, read more",
 "6386":"GAME2 jmp vec",
 "6389":"GAME2 jmp vec",
 "6400":"A=?",
@@ -877,9 +1044,63 @@
 "Text":"if ($d4 == 0) {\r\n  print NERIC -- A KINDAR BORN YOUNG MAN\r\n} else if ($d4 == 1) {\r\n  print GENAA -- A KINDAR BORN YOUNG WOMAN\r\n} ... else {\r\n  print RETURN TO MENU\r\n}",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"5881":{
+"Text":"Writes game data to storage disk. Copies game data from the 5 pages $B2..$B5 and page $00 to the RWTS buffer at $0200, and writes it to sectors $00..$04 of a single track $01..$05 (depending on the save slot or \"quest\").",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6173":{
+"Text":"This prompts to insert side 1, then reads game data from a single track $05..$09 (based on selected character), sectors $00..$0B into $2000..$2BFF. This explains the orphaned sectors on T05..09 on side 1, and why the character is invisible if these sectors are left out. Neric\u0027s data (character 0) is preloaded as part of GAME1, available during the demo, and you are not prompted if you select him.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5957":{
+"Text":"Load save game data. Read sectors $00..$04 of single track $01..$05 (indexed by player #) into page $b2..$b5 and $00. Preserve the user\u0027s current settings of sound on/off and joystick/keyboard in page $00. If the loaded game is using a different player, load their sprite data as well.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6018":{
+"Text":"Continuing from load_game_data...",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6":{
+"Text":"Called when DEMOFLG is 1. This calls back into the main input handler, to check if you pressed a key to exit the demo. There is a demo data stream parser afterward that reads a byte from ($C2) and executes some action, like a delay, melody, or movement.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"214":{
+"Text":"Positive movement byte in A. A is returned to caller (the input handler BIT tests). When the movement byte is positive, there is no following delay byte; the command is executed and the next byte is read on the next frame.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"200":{
+"Text":"For any other negative value (not C0..C5 or FF), store the next demo byte in the delay counter, store the value in $C1, and return the value in A. This value will be a movement code. In effect, the movement is executed and and the simulation executes for A frames before reading the next byte. The movement is latched in $C1 and will be returned from future frames in wait state.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"224":{
+"Text":"Show demo text A in text area, for A = 1..5. If A=5, just clears text.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
+"59":{
+"Text":"Below may implement a demo command parser",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-7278960},
+
 "768":{
 "Text":"Unknown data",
 "BoxMode":false,
@@ -1396,13 +1617,426 @@
 "Value":43773,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5909":{
+"Label":"loop",
+"Value":44309,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5952":{
+"Label":"pages_to_save",
+"Value":44352,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5947":{
+"Label":"save_track",
+"Value":44347,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5881":{
+"Label":"save_game_data",
+"Value":44281,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5805":{
+"Label":"insert_storage_disk",
+"Value":44205,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5861":{
+"Label":"again",
+"Value":44261,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5669":{
+"Label":"select_save_quest",
+"Value":44069,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5957":{
+"Label":"load_game_data",
+"Value":44357,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5761":{
+"Label":"quest_5",
+"Value":44161,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5746":{
+"Label":"quest_4",
+"Value":44146,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5731":{
+"Label":"quest_3",
+"Value":44131,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5716":{
+"Label":"quest_2",
+"Value":44116,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5492":{
+"Label":"save_load_menu",
+"Value":43892,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5495":{
+"Label":"save_load_menu0",
+"Value":43895,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5565":{
+"Label":"load_game",
+"Value":43965,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5588":{
+"Label":"return_to_menu",
+"Value":43988,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4842":{
+"Label":"sample_quest",
+"Value":43242,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4835":{
+"Label":"storage_disk",
+"Value":43235,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4821":{
+"Label":"start_quest",
+"Value":43221,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4828":{
+"Label":"continue_quest",
+"Value":43228,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5452":{
+"Label":"continue_quest0",
+"Value":43852,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6224":{
+"Label":"again",
+"Value":44624,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6254":{
+"Label":"loop",
+"Value":44654,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6291":{
+"Label":"char_tracks",
+"Value":44691,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6173":{
+"Label":"read_char_data",
+"Value":44573,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6020":{
+"Label":"loop",
+"Value":44420,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6018":{
+"Label":"restore_zp",
+"Value":44418,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5986":{
+"Label":"loop",
+"Value":44386,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6048":{
+"Label":"load_done",
+"Value":44448,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6656":{
+"Label":"SCREEN_0900",
+"Value":2304,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"0":{
+"Label":"SCRN_demo_handler",
+"Value":38400,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"6":{
+"Label":"demo_handler",
+"Value":38406,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"68":{
+"Label":"demo_command",
+"Value":38468,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"59":{
+"Label":"read_demo_byte",
+"Value":38459,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"126":{
+"Label":"loop",
+"Value":38526,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"224":{
+"Label":"show_demo_text",
+"Value":38624,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3":{
+"Label":"SCRN_show_demo_text",
+"Value":38403,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"223":{
+"Label":"done",
+"Value":38623,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"214":{
+"Label":"demo_movement",
+"Value":38614,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"217":{
+"Label":"inc_demo_ptr",
+"Value":38617,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"232":{
+"Label":"demo_text_1",
+"Value":38632,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"305":{
+"Label":"demo_text_2",
+"Value":38705,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"474":{
+"Label":"demo_text_3",
+"Value":38874,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"640":{
+"Label":"demo_text_4",
+"Value":39040,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"481":{
+"Label":"text3",
+"Value":38881,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"312":{
+"Label":"text2",
+"Value":38712,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"200":{
+"Label":"demo_move_and_wait",
+"Value":38600,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"79":{
+"Label":"demo_c0",
+"Value":38479,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"97":{
+"Label":"demo_c1",
+"Value":38497,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"115":{
+"Label":"demo_c2",
+"Value":38515,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"142":{
+"Label":"demo_c3",
+"Value":38542,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"160":{
+"Label":"demo_c4",
+"Value":38560,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"183":{
+"Label":"demo_c5",
+"Value":38583,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
+"221":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"DEMOPTR",
+"Part":"Low"}},
+
 "316":{
 "Length":156,
 "Format":"StringGeneric",
 "SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"5916":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSBUF",
+"Part":"High"}},
+
+"5947":{
+"Length":5,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5952":{
+"Length":5,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"6003":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSBUF",
+"Part":"High"}},
+
+"6291":{
+"Length":5,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null},
 
 "6542":{
@@ -1550,6 +2184,44 @@
 "SymbolRef":null}},
 
 "LvTables":{
+"5881":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"current sector",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"sect",
+"Value":8,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"6173":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"current sector",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"readpage",
+"Value":220,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
 "6423":{
 "Variables":[{
 "DataDescriptor":{

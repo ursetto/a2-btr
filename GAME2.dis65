@@ -27,6 +27,23 @@
 "RT:Apple/VisHiRes.cs",
 "PROJ:InlineBTRString.cs"],
 "ProjectSyms":{
+"GAME1_BITTAB":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB",
+"Value":7608,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_chardata":{
 "DataDescriptor":{
 "Length":1,
@@ -129,6 +146,40 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_melodies_hi":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_melodies_hi",
+"Value":7728,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_melodies_lo":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_melodies_lo",
+"Value":7712,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_odd_col_even_line_mask":{
 "DataDescriptor":{
 "Length":1,
@@ -176,6 +227,23 @@
 "MultiMask":null,
 "Label":"GAME1_odd_col_odd_line_mask",
 "Value":8160,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_power_gained":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_power_gained",
+"Value":6915,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -384,6 +452,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"SCREEN_0900":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCREEN_0900",
+"Value":2304,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "SCRN_chkkey":{
 "DataDescriptor":{
 "Length":1,
@@ -397,6 +482,91 @@
 "MultiMask":null,
 "Label":"SCRN_chkkey",
 "Value":46601,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_demo_handler":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_demo_handler",
+"Value":38400,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_play_melody":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_play_melody",
+"Value":46592,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_play_sound":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_play_sound",
+"Value":46595,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_show_demo_text":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_show_demo_text",
+"Value":38403,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_sound_status":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_sound_status",
+"Value":43081,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -645,6 +815,7 @@
 },
 
 "Comments":{
+"33":"read next byte at $0900",
 "87":"might be general game loop",
 "92":"$c9 == #$0d during intro",
 "105":"if in gameplay mode",
@@ -729,12 +900,21 @@
 "3632":"$87 unset; clear carry",
 "3638":"$a3 \u003c $10 or",
 "3640":"$a3 \u003e $15; clear carry",
-"5566":"return 0",
-"5568":"is this a nop?",
+"5564":"branch if not ascending",
+"5566":"LDA might be skipped",
+"5568":"update N and Z from A, even when LDA skipped",
+"5571":"from $6b09 or ",
 "5594":"branch when falling, it seems",
 "5600":"reached when falling",
-"5650":"return 0",
-"5652":"return 1",
+"5606":"also sets A=runflg and return to caller",
+"5611":"test bit 3 of A",
+"5616":"move character pos?",
+"5620":"test bit 2 of A",
+"5629":"test bit 1 of A",
+"5638":"test bit 0 of A",
+"5647":"test bit 4 of A",
+"5650":"set, return 0",
+"5652":"clear, return 1",
 "5684":"was x motion previously 1?",
 "5686":"no, move right",
 "5688":"yes, set back to 1",
@@ -930,6 +1110,12 @@
 "Text":"Returns bool in carry. Returns true (set) if $87 is non-zero AND $a3 is between $10 and $15.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"5568":{
+"Text":"ORA #0 (AND #$FF, EOR #0) will make the N and Z flags reflect the value in A. This is used to ensure the Z flag still reflects A (return value from $75C3) after the LDX, so callers can BEQ/BNE.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -958,7 +1144,13 @@
 "BackgroundColor":-256},
 
 "5553":{
-"Text":"Heavily used input (?) code via $6b2a\r\n",
+"Text":"Heavily used input (?) code via $6b2a. Like calling $6b09, but with wrapper code.\r\nMay return 0 or 1 in A. If this was an input handling frame, A is RUNFLG.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-7278960},
+
+"5571":{
+"Text":"Heavily used frame code via $6b09 or called in several other cases. Vector $6b29 ($75b1) also calls this as its main action, but wrapped in some X/YMOVFLAG code.\r\nThis code behaves in 1 of 2 ways after its preamble. If DEMOFLG is 0, it handles keyboard/joystick input. If 1, it calls $9600, which calls back into this handler in non-demo mode and does a bunch of processing, then we update (our position?) based on its return value.\r\n\r\nIt looks like $9600 is the demo mode handler, and streams actions or keyboard data into the input handler. Amusingly, if you set $C4 to 0 while the sample quest or intro screen is playing, you can take over.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-7278960},
@@ -1542,6 +1734,41 @@
 "Value":30380,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"355":{
+"Label":"read_0900_next",
+"Value":24931,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5620":{
+"Label":"bit2",
+"Value":30196,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5629":{
+"Label":"bit1",
+"Value":30205,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5638":{
+"Label":"bit0",
+"Value":30214,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5647":{
+"Label":"bit4",
+"Value":30223,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -1608,6 +1835,38 @@
 "Format":"StringGeneric",
 "SubFormat":"HighAscii",
 "SymbolRef":null},
+
+"5611":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GAME1_BITTAB",
+"Part":"Low"}},
+
+"5620":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GAME1_BITTAB",
+"Part":"Low"}},
+
+"5629":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GAME1_BITTAB",
+"Part":"Low"}},
+
+"5647":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GAME1_BITTAB",
+"Part":"Low"}},
 
 "5672":{
 "Length":2,
@@ -1736,6 +1995,25 @@
 "SymbolRef":null}},
 
 "LvTables":{
+"355":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"save x",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"xsav",
+"Value":30,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
 "998":{
 "Variables":[{
 "DataDescriptor":{

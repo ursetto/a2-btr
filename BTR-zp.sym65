@@ -1,9 +1,15 @@
 *SYNOPSIS Below the Root zero-page usage
 
 LASTKEY @ $02 ;last key pressed via chkkey
+PLAYER @ $20 ;active player (0-4)
 SOUNDFLG @ $4a ;0 = sound off, 1 = on
 RUNFLG @ $84
+FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
 FACING @ $95 ;FF=left, 01=right facing
 JOYFLG @ $b1 ;01 = joystick, 00 = kbd
+DEMOWAIT @ $c0 ; number of frames to wait
+DEMOLAST @ $c1 ; latched movement byte
+DEMOPTR @ $c2 ; ptr to current demo byte
+DEMOFLG @ $c4 ; 00 = game, 01 = demo mode
 XMOVFLG @ $AF
-YMOVFLG @ $B0
+YMOVFLG @ $B0 ;FF=up,01=down (edge at end of action)

@@ -21,7 +21,8 @@
 "PlatformSymbolFileIdentifiers":["RT:Apple/F8-ROM.sym65",
 "RT:Apple/Cxxx-IO.sym65",
 "RT:Apple/C08x-DiskII.sym65",
-"RT:Apple/ProDOS8.sym65"],
+"RT:Apple/ProDOS8.sym65",
+"PROJ:BTR-zp.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Apple/ProDOS8.cs",
 "RT:Apple/VisHiRes.cs",
 "PROJ:InlineBTRString.cs"],
@@ -341,6 +342,12 @@
 "Text":"Data referred to by address tables at 1e20/1e30. Each item is terminated with $ff.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"5048":{
+"Text":"BIT table. Used as the target of BIT instructions to test whether a bit is set in A. BIT $xx sets Z as if the value in $xx were ANDed with A, without affecting A. These bytes are masks of bits 0..7. \r\nTherefore, BIT $BITTAB+x (where x = 0..7) tests bit x, and you can BEQ (zero, clear) or BNE (non-zero, set) afterward.",
+"BoxMode":true,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -621,6 +628,13 @@
 "Value":7728,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5048":{
+"Label":"GAME1_BITTAB",
+"Value":7608,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -885,6 +899,12 @@
 "5047":{
 "Length":1,
 "Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5048":{
+"Length":8,
+"Format":"Dense",
 "SubFormat":"None",
 "SymbolRef":null},
 

@@ -116,7 +116,7 @@
 "Label":"RWTS_IOB",
 "Value":768,
 "Source":"User",
-"Type":"GlobalAddr",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"},
 
 "17":{
@@ -129,6 +129,27 @@
 "21":{
 "Label":"DIRECT_RWTS",
 "Value":789,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5":{
+"Label":"RWTS_IOB_sector",
+"Value":773,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"4":{
+"Label":"RWTS_IOB_track",
+"Value":772,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"12":{
+"Label":"RWTS_IOB_command",
+"Value":780,
 "Source":"User",
 "Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
