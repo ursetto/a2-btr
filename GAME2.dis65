@@ -22,12 +22,13 @@
 "RT:Apple/Cxxx-IO.sym65",
 "RT:Apple/C08x-DiskII.sym65",
 "RT:Apple/ProDOS8.sym65",
-"PROJ:BTR-zp.sym65"],
+"PROJ:BTR-zp.sym65",
+"PROJ:BTR.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Apple/ProDOS8.cs",
 "RT:Apple/VisHiRes.cs",
 "PROJ:InlineBTRString.cs"],
 "ProjectSyms":{
-"GAME1_BITTAB":{
+"DIRECT_RWTS":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -38,8 +39,144 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"GAME1_BITTAB",
+"Label":"DIRECT_RWTS",
+"Value":789,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB0":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB0",
 "Value":7608,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB1":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB1",
+"Value":7609,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB2":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB2",
+"Value":7610,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB3":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB3",
+"Value":7611,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB4":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB4",
+"Value":7612,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB5":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB5",
+"Value":7613,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB6":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB6",
+"Value":7614,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB7":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB7",
+"Value":7615,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -282,6 +419,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_tileset_bitmap":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_tileset_bitmap",
+"Value":7424,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_tileset0_data":{
 "DataDescriptor":{
 "Length":1,
@@ -452,6 +606,74 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"RWTS_IOB":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB",
+"Value":768,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"RWTS_IOB_command":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB_command",
+"Value":780,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"RWTS_IOB_sector":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB_sector",
+"Value":773,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"RWTS_IOB_track":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB_track",
+"Value":772,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "SCREEN_0900":{
 "DataDescriptor":{
 "Length":1,
@@ -567,6 +789,23 @@
 "MultiMask":null,
 "Label":"SCRN_sound_status",
 "Value":43081,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_warm_start":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_warm_start",
+"Value":43072,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -818,7 +1057,35 @@
 "33":"read next byte at $0900",
 "87":"might be general game loop",
 "92":"$c9 == #$0d during intro",
-"105":"if in gameplay mode",
+"99":"set demo mode",
+"105":"if in gameplay mode (??)",
+"134":"entered from multiple subs",
+"139":"check $6b",
+"141":"0, delay $0A * 256",
+"143":"!0, delay $06 * 256",
+"145":"delay X * 256",
+"187":"demo text to show 1..5, or 0 for not demo",
+"194":"do not update on next frame",
+"373":"phantom character 5 during demo",
+"578":"Y likely 1..3",
+"594":"check bit 7",
+"596":"bit 7 unset, MAPSIDE=0",
+"599":"bit 7 set, MAPSIDE=1",
+"602":"bits 0..6",
+"609":"bits 0..6",
+"651":"$2f3,$2f4,$2f5",
+"652":"$2f6,$2f7,$2f8",
+"653":"$2f9,$2fa,$2fb",
+"817":"tileset 0 (temp var?)",
+"821":"side 0, choose tileset",
+"823":"side 1, check pos",
+"825":"test pos top bit",
+"827":"side 1 pos 00..7F, choose tileset",
+"829":"set tileset 1 ($5C=1)",
+"831":"always",
+"854":"Z clear, use tileset 1",
+"858":"looks useless; does set Z if tileset differed",
+"860":"however Z is unused by caller",
 "998":"from $6006 vec",
 "1002":"256 - 252 = 4 (rows)",
 "1006":"256 - 16 = 40 (cols)",
@@ -826,6 +1093,77 @@
 "1027":"40 times (counting up from 216!)",
 "1031":"next row",
 "1033":"4 times (counting up from 252!)",
+"1047":"0 or 1 ($11=0000000S)",
+"1049":"A=PPPPPPPP",
+"1053":"divide 16-bit value in $11/A by 8",
+"1057":"A=00SPPPPP (lowest 3 bits discarded)",
+"1059":"X=00..3F",
+"1060":"get byte from tileset bitmap",
+"1065":"now handle the lower 3 bits (0..7) of pos",
+"1070":"each pos 0..7 corresponds to 1 bit in tileset byte",
+"1076":"test bit 7 (x=0)",
+"1083":"test bit 0 (x=7)",
+"1092":"lower 4 bits: sector",
+"1099":"upper 4 bits: track (-1)",
+"1105":"track $01..$10",
+"1108":"track + 1",
+"1111":"high byte ",
+"1113":"0, track unchanged",
+"1115":"1, tracks $11..$20",
+"1119":"(add $10 to track)",
+"1129":"save ZP",
+"1135":"restore ZP",
+"1163":"copy from RWTSBUF into ZP",
+"1165":"\u003c- $2ff,$2fe,$2fd",
+"1168":"-\u003e $0e,$0d,$0c",
+"1175":"text col 0",
+"1177":"text row 0",
+"1179":"get address on text page 1",
+"1182":"start with $201",
+"1190":"get tile",
+"1193":"repeating tile 80..FF, branch",
+"1197":"write tile byte to text screen",
+"1199":"does not return if all rows written",
+"1205":"tile 80..FF, strip high bit",
+"1207":"tile 00..7F",
+"1213":"read next tile byte",
+"1224":"write tile byte to text screen",
+"1226":"does not return if done",
+"1231":"repeat tilecnt times",
+"1236":"check if done",
+"1239":"1 = finish up",
+"1241":"0 = more tiles",
+"1242":"remove caller address from stack",
+"1243":"(we jsr\u0027ed here)",
+"1246":"read another byte",
+"1249":"save it temporarily",
+"1252":"save lower 5 bits in $0a",
+"1254":"restore the read byte",
+"1257":"check if top 3 bits are all set (111)",
+"1259":"no, check other combos",
+"1261":"yep",
+"1268":"001 -\u003e b4,b5,b6",
+"1274":"010 -\u003e b7,b8,b9",
+"1280":"100 -\u003e ba,ba,ba",
+"1286":"101 -\u003e bb,bb,bb",
+"1292":"110 -\u003e bc,bc,bc",
+"1298":"011 -\u003e read more data",
+"1302":"store computed tile",
+"1311":"computed tile",
+"1317":"get tile in A",
+"1318":"write tile to text screen",
+"1320":"check tile number",
+"1322":"\u003e= $ba, repeat same tile",
+"1324":"increment tile",
+"1325":"next column",
+"1328":"3 times",
+"1335":"repeat NNNNN times",
+"1371":"more rwts data",
+"1402":"we are not done",
+"1406":"read rwts byte",
+"1412":"read rwts byte",
+"1447":"questionable label",
+"1454":"wipes out $03/04",
 "1750":"inline data; store addr-1 in $61/$62",
 "1756":"addr-1+1",
 "1760":"first byte of inline data is indent",
@@ -894,12 +1232,21 @@
 "2139":"offset into hireshi ($20+$20 will be page 2)",
 "2149":"hires line table",
 "2157":"hires page 2",
+"2194":"test bit 7",
+"2197":"branch if 0",
+"2227":"test lowest 2 bits",
 "2503":"next page",
 "2517":"A and Y are now 0",
+"2744":"unset gameover",
 "2855":"external entry point",
+"2948":"not falling, branch",
+"2950":"did we fall less than 6 tiles?",
+"2954":"\u003e=6 tiles, jsr",
+"2962":"reset fall count",
 "3632":"$87 unset; clear carry",
 "3638":"$a3 \u003c $10 or",
 "3640":"$a3 \u003e $15; clear carry",
+"4219":"check lower 3 bits",
 "5564":"branch if not ascending",
 "5566":"LDA might be skipped",
 "5568":"update N and Z from A, even when LDA skipped",
@@ -969,7 +1316,7 @@
 "BackgroundColor":0},
 
 "2466":{
-"Text":"Swap $0000..00FF with $0800..08FF.",
+"Text":"Swap $0000..00FF with $0800..08FF. Generally called to save/restore\r\nzero page when reading a new sector (screen) from disk.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1116,11 +1463,83 @@
 "Text":"ORA #0 (AND #$FF, EOR #0) will make the N and Z flags reflect the value in A. This is used to ensure the Z flag still reflects A (return value from $75C3) after the LDX, so callers can BEQ/BNE.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"355":{
+"Text":"Read next byte in $0900 block (pointed to by $55) and return it in A.\r\nThe $55 ptr is (pre)incremented. All access to $55 is encapsulated here.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"187":{
+"Text":"Show demo text on this frame if DEMOTEXT is 1..5. Otherwise continue.\r\nNote that demo text 5 is clears text; 0 simply checks the next action.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"156":{
+"Text":"Below is a state machine which checks several flags/values in zero page in order, and performs the first non-zero action it finds.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"835":{
+"Text":"Special treatment for side 0 pos $9d,$9e, and side 0/1 pos $7d,$7e -- always use tileset 0.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"851":{
+"Text":"Choose tileset for remaining positions -- side 0 00..FF and side 1 00..7F -- using the tileset bitmap. (Minus 4 special positions above.)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1045":{
+"Text":"Use the tileset bitmap to select tileset 0 or 1 based on the 9-bit map position. The top 6 bits select the bitmap byte, and the bottom 3 bits select the bit in that byte. This code is not called for certain positions (see select_tileset).\r\n\r\nClears Z for tileset 1, sets for tileset 0. (The bits are the opposite of the tileset #.)",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1076":{
+"Text":"Used in previous subroutine to test bits 7..0 of $11 based on X=0..7.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1163":{
+"Text":"Write tiles to text page, copying them from the run-length encoded RWTS buffer starting at $201. Continues until all text rows are written.\r\n\r\nThen, reads more data from RWTS and processes it (so it is kind of a misnomer to say it writes tiles). This is really the start point for reading and handling all data for a new map screen.\r\n\r\n$09/$0A are temp vars but $09 at least is used through several subroutines here.",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1205":{
+"Text":"When the tile byte has the high bit set, the next byte is a repeat count of tile \u0026 0x7F. In other words this is run-length encoded.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1374":{
+"Text":"Bump text page 1 position for writing tiles. If we have not written a full screen, return 0; if we have, return 1, which is the end condition for reading tiles from the RWTS RLE tile buffer.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1268":{
+"Text":"Write 3 tiles (specified by top 3 bits in last RWTS byte), repeated N times (the low 5 bits in this byte). In other words, TTTNNNNN.\r\n\r\nCheck for various combos of TTT (we handled 111 above). 5 of 6 combos map to hardcoded tile numbers. If the tile is b4 or b7, it will write b4,b5,b6 or b7,b8,b9. If ba, bb or bc, it will write ba,ba,ba (\u0026c.)\r\n\r\nCombo 011 is special and reads further data.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1405":{
+"Text":"$03/04 appear to be temp values below. gettextaddr will wipe them out with computed values from TEXTCOL/TEXTROW.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
-"875":{
-"Text":"Update InlineBTRString to decode this (multiple labels needed)",
+"1242":{
+"Text":"$08, $11 and possibly $0a change meanings below.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-18751},
@@ -1139,6 +1558,12 @@
 
 "2816":{
 "Text":"Jump vectors at $6b00",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
+"4168":{
+"Text":"Setting fallcnt to $0A is observed to happen when you bump your head.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -1198,7 +1623,7 @@
 "LabelAnno":"None"},
 
 "2529":{
-"Label":"delay1",
+"Label":"delayXtimes256",
 "Value":27105,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -1240,7 +1665,7 @@
 "LabelAnno":"None"},
 
 "18":{
-"Label":"GAME2_delay1",
+"Label":"GAME2_delayXtimes256",
 "Value":24594,
 "Source":"User",
 "Type":"GlobalAddrExport",
@@ -1769,6 +2194,237 @@
 "Value":30223,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"33":{
+"Label":"GAME2_read_0900",
+"Value":24609,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4240":{
+"Label":"rts",
+"Value":28816,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"36":{
+"Label":"GAME2_play_melody",
+"Value":24612,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"201":{
+"Label":"isgameover",
+"Value":24777,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"134":{
+"Label":"L6086",
+"Value":24710,
+"Source":"User",
+"Type":"LocalOrGlobalAddr",
+"LabelAnno":"None"},
+
+"145":{
+"Label":"delay",
+"Value":24721,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1084":{
+"Label":"read_playfield",
+"Value":25660,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"864":{
+"Label":"rts",
+"Value":25440,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"856":{
+"Label":"set_tileset",
+"Value":25432,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"815":{
+"Label":"select_tileset",
+"Value":25391,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"829":{
+"Label":"tileset1",
+"Value":25405,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"833":{
+"Label":"choose",
+"Value":25409,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1045":{
+"Label":"select_tileset_harder",
+"Value":25621,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1076":{
+"Label":"tileset_bittab",
+"Value":25652,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1053":{
+"Label":"loop",
+"Value":25629,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1165":{
+"Label":"loop",
+"Value":25741,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1186":{
+"Label":"next_tile",
+"Value":25762,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1220":{
+"Label":"repeat_tile",
+"Value":25796,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1205":{
+"Label":"rle",
+"Value":25781,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1236":{
+"Label":"next_text_pos",
+"Value":25812,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1374":{
+"Label":"bump_text_pos",
+"Value":25950,
+"Source":"User",
+"Type":"LocalOrGlobalAddr",
+"LabelAnno":"None"},
+
+"1402":{
+"Label":"ret00",
+"Value":25978,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1163":{
+"Label":"write_tiles_to_text",
+"Value":25739,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1242":{
+"Label":"finish_sector",
+"Value":25818,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1268":{
+"Label":"other_combos",
+"Value":25844,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1309":{
+"Label":"outer_loop",
+"Value":25885,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1317":{
+"Label":"inner_loop",
+"Value":25893,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1325":{
+"Label":"no_inctile",
+"Value":25901,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1342":{
+"Label":"combo_011",
+"Value":25918,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1345":{
+"Label":"loop",
+"Value":25921,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1427":{
+"Label":"loop",
+"Value":26003,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1447":{
+"Label":"bump_row",
+"Value":26023,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1244":{
+"Label":"read_combo_byte",
+"Value":25820,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -1782,6 +2438,50 @@
 "Length":2,
 "Format":"NumericLE",
 "SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1124":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSCMD_read",
+"Part":"Low"}},
+
+"1268":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Binary",
+"SymbolRef":null},
+
+"1274":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Binary",
+"SymbolRef":null},
+
+"1280":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Binary",
+"SymbolRef":null},
+
+"1286":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Binary",
+"SymbolRef":null},
+
+"1292":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Binary",
+"SymbolRef":null},
+
+"1298":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Binary",
 "SymbolRef":null},
 
 "1802":{
@@ -1830,43 +2530,43 @@
 "SubFormat":"Decimal",
 "SymbolRef":null},
 
+"2206":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSBUF",
+"Part":"Low"}},
+
 "2555":{
 "Length":21,
 "Format":"StringGeneric",
 "SubFormat":"HighAscii",
 "SymbolRef":null},
 
-"5611":{
-"Length":3,
+"2845":{
+"Length":1,
 "Format":"NumericLE",
-"SubFormat":"Symbol",
-"SymbolRef":{
-"Label":"GAME1_BITTAB",
-"Part":"Low"}},
+"SubFormat":"None",
+"SymbolRef":null},
 
-"5620":{
-"Length":3,
+"2846":{
+"Length":1,
 "Format":"NumericLE",
-"SubFormat":"Symbol",
-"SymbolRef":{
-"Label":"GAME1_BITTAB",
-"Part":"Low"}},
+"SubFormat":"None",
+"SymbolRef":null},
 
-"5629":{
-"Length":3,
+"2847":{
+"Length":1,
 "Format":"NumericLE",
-"SubFormat":"Symbol",
-"SymbolRef":{
-"Label":"GAME1_BITTAB",
-"Part":"Low"}},
+"SubFormat":"None",
+"SymbolRef":null},
 
-"5647":{
-"Length":3,
+"2848":{
+"Length":1,
 "Format":"NumericLE",
-"SubFormat":"Symbol",
-"SymbolRef":{
-"Label":"GAME1_BITTAB",
-"Part":"Low"}},
+"SubFormat":"None",
+"SymbolRef":null},
 
 "5672":{
 "Length":2,
@@ -2014,6 +2714,25 @@
 "LabelAnno":"None"}],
 "ClearPrevious":false},
 
+"815":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tileset_tmp",
+"Value":92,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
 "998":{
 "Variables":[{
 "DataDescriptor":{
@@ -2045,6 +2764,78 @@
 "MultiMask":null,
 "Label":"rowtmp",
 "Value":101,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"1045":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"maptmp",
+"Value":17,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"1163":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tiletmp",
+"Value":8,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"rwtsbuf_idx",
+"Value":9,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"RLE",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tilecnt",
+"Value":10,
 "Source":"Variable",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],

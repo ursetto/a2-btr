@@ -621,8 +621,8 @@
 "Addr":23296},
 
 {
-"Offset":7287,
-"Addr":45687}],
+"Offset":7286,
+"Addr":45686}],
 "TypeHints":[{
 "Low":0,
 "High":0,
@@ -795,6 +795,7 @@
 "315":"maybe begin string or formatting byte",
 "765":"jumps right over this next data area",
 "1474":"junk",
+"4678":"set hires and warm start",
 "4692":"Clear hires page 2 (was SCREEN)",
 "4704":"Set hires page 2 fullscreen",
 "4717":"$d0 == 0",
@@ -1059,7 +1060,7 @@
 "BackgroundColor":0},
 
 "5957":{
-"Text":"Load save game data. Read sectors $00..$04 of single track $01..$05 (indexed by player #) into page $b2..$b5 and $00. Preserve the user\u0027s current settings of sound on/off and joystick/keyboard in page $00. If the loaded game is using a different player, load their sprite data as well.",
+"Text":"Load save game data. Read sectors $00..$04 of single track $01..$05 (indexed by quest #) into page $b2..$b5 and $00. Preserve the user\u0027s current settings of sound on/off and joystick/keyboard in page $00. If the loaded game is using a different player, load their sprite data as well.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1137,8 +1138,8 @@
 "MaxWidth":80,
 "BackgroundColor":-7278960},
 
-"7287":{
-"Text":"Possible this code is junk as well",
+"7286":{
+"Text":"The code below is very likely junk as $B200-$B5FF is used for game state.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -1298,7 +1299,7 @@
 "LabelAnno":"None"},
 
 "4688":{
-"Label":"start",
+"Label":"cold_start",
 "Value":43088,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -1988,6 +1989,20 @@
 "Value":38583,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4707":{
+"Label":"warm_start",
+"Value":43107,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4672":{
+"Label":"SCRN_warm_start",
+"Value":43072,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -2004,6 +2019,14 @@
 "Format":"StringGeneric",
 "SubFormat":"HighAscii",
 "SymbolRef":null},
+
+"5889":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSCMD_write",
+"Part":"Low"}},
 
 "5916":{
 "Length":2,
@@ -2181,6 +2204,30 @@
 "Length":29,
 "Format":"StringGeneric",
 "SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"7238":{
+"Length":16,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7254":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7262":{
+"Length":16,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7278":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null}},
 
 "LvTables":{

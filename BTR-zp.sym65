@@ -1,8 +1,12 @@
 *SYNOPSIS Below the Root zero-page usage
 
 LASTKEY @ $02 ;last key pressed via chkkey
+MAPPOS @ $1b ; playfield position (?)
+MAPSIDE @ $1c ; playfield side (?)
 PLAYER @ $20 ;active player (0-4)
+GAMEOVER @ $3d ;game over bool (0/1)
 SOUNDFLG @ $4a ;0 = sound off, 1 = on
+NINEIDX @ $55 ;cur index into $900 block
 RUNFLG @ $84
 FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
 FACING @ $95 ;FF=left, 01=right facing
@@ -11,5 +15,7 @@ DEMOWAIT @ $c0 ; number of frames to wait
 DEMOLAST @ $c1 ; latched movement byte
 DEMOPTR @ $c2 ; ptr to current demo byte
 DEMOFLG @ $c4 ; 00 = game, 01 = demo mode
+DEMOTEXT @ $c8 ; demo text to show (1..5, or 0 = none)
+QUEST @ $da ; quest (save slot) 0..4
 XMOVFLG @ $AF
 YMOVFLG @ $B0 ;FF=up,01=down (edge at end of action)

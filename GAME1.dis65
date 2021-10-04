@@ -345,8 +345,14 @@
 "BackgroundColor":0},
 
 "5048":{
-"Text":"BIT table. Used as the target of BIT instructions to test whether a bit is set in A. BIT $xx sets Z as if the value in $xx were ANDed with A, without affecting A. These bytes are masks of bits 0..7. \r\nTherefore, BIT $BITTAB+x (where x = 0..7) tests bit x, and you can BEQ (zero, clear) or BNE (non-zero, set) afterward.",
+"Text":"BIT table. Used as the target of BIT instructions to test whether a bit is set in A. BIT $xx sets Z as if the value in $xx were ANDed with A, without affecting A. These bytes are masks of bits 0..7. \r\nTherefore, BIT $BITTAB+x (where x = 0..7) tests bit x, and you can BEQ (zero, clear) or BNE (non-zero, set) afterward.\r\nWe use BITTABx instead of BITTAB+x (what the original source likely used) because it is easier to automatically disassemble.",
 "BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4864":{
+"Text":"Bitmap of tilesets for each map position ($3F bytes * 8 bits = $1FF). See select_tileset_harder in GAME2.",
+"BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
 
@@ -358,7 +364,7 @@
 "BackgroundColor":-256},
 
 "4860":{
-"Text":"Unknown table data",
+"Text":"Probably junk bytes",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256}},
@@ -631,8 +637,64 @@
 "LabelAnno":"None"},
 
 "5048":{
-"Label":"GAME1_BITTAB",
+"Label":"GAME1_BITTAB0",
 "Value":7608,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5049":{
+"Label":"GAME1_BITTAB1",
+"Value":7609,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5050":{
+"Label":"GAME1_BITTAB2",
+"Value":7610,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5051":{
+"Label":"GAME1_BITTAB3",
+"Value":7611,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5052":{
+"Label":"GAME1_BITTAB4",
+"Value":7612,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5053":{
+"Label":"GAME1_BITTAB5",
+"Value":7613,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5054":{
+"Label":"GAME1_BITTAB6",
+"Value":7614,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5055":{
+"Label":"GAME1_BITTAB7",
+"Value":7615,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"4864":{
+"Label":"GAME1_tileset_bitmap",
+"Value":7424,
 "Source":"User",
 "Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
@@ -676,6 +738,30 @@
 
 "4766":{
 "Length":6,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4864":{
+"Length":16,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4880":{
+"Length":16,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4896":{
+"Length":16,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4912":{
+"Length":16,
 "Format":"Dense",
 "SubFormat":"None",
 "SymbolRef":null},
@@ -903,8 +989,50 @@
 "SymbolRef":null},
 
 "5048":{
-"Length":8,
-"Format":"Dense",
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5049":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5050":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5051":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5052":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5053":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5054":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5055":{
+"Length":1,
+"Format":"NumericLE",
 "SubFormat":"None",
 "SymbolRef":null},
 

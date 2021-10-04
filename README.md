@@ -280,6 +280,7 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
     $0800 - $08FF   Alternate / saved zero page
     $0900 - $09FF
     $0A00 - $3FFF
+    $2000 - $2BFF   Current character sprites (read from T05..09,S00..0B)
     $7700 - $84FF   Menu and submenu and action handers
     $8500 - $95FF   Data (or junk)
     $9600 - $AEFF  
@@ -291,9 +292,30 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
 
 **Strings**. Strings have an unusual format, being neither Pascal (length byte prefix) nor null-terminated. Instead they are terminated with `$ff`. Inline strings (those after a JSR to the print string subroutine) are preceded by 1 byte, which is the horizontal column to print at, starting with 0 for the first line of the text area. This wraps to the next line at 40 columns, so the second line starts at $28. This is so common I wrote a parser for this data structure in [InlineBTRString.cs](./InlineBTRString.cs), which also lets 6502bench continue code analysis after the inline data.
 
+## Save games
+
+Games are saved to a storage disk on track 1 through track 5, sectors 00..04. The track number corresponds to the quest (save slot), and the sector data is saved/loaded verbatim to $B200..$B5FF and the zero page. The sole exception is that the user's current joystick/keyboard and sound on/off choice, both stored in zero page, are preserved on load.
+
+Storage disk layout:
+
+    T01,S00..04 Quest 1, page $B2,$B3,$B4,$B5,$00
+    T02,S00..04 Quest 2, "
+    T03,S00..04 Quest 3, "
+    T04,S00..04 Quest 4, "
+    T05,S00..04 Quest 5, "
+
+## Side B layout
+
+T01..T20,S00..0F of side B contain playfield tile data. Each sector represents one screen. The 4-bit sector number comes from the low 4 bits of $1B. The 5-bit track number comes from the high 4 bits of $1B, plus the low bit in $1C as the top bit, plus 1 (since tracks start at 1).
+
+It is likely (but undetermined) that $1C is a flag denoting the outside or inside of the map.
+
+The initial tile data is run-length encoded. It starts at sector offset $01 and consists of either a tile byte 00..7F (high bit clear), or a tile byte (high bit set) + repeat byte.
+
+
 ## Amusements
 
-- During the intro scene, set memory location $C4 (demo mode) to 0. This will turn off demo mode and let you play the intro screens. If you go up, you'll be in the Grand Hall; if you go left, you'll be in Temple Grund. Going a couple screens right will lock the game. You can also play the sample quest in this way, although it's basically like starting a new game.
+- During the intro scene, set memory location $C4 (demo mode) to 0. This will turn off demo mode and let you play the intro screens. If you go up, you'll be in the Grand Hall; if you go left, you'll be in Temple Grund. Going a couple screens right will lock the game. You can also play the sample quest in this way, although it's basically like starting a new game from a normally-inaccessible position.
 
 ## In progress
 
