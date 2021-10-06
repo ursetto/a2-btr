@@ -1162,8 +1162,11 @@
 "1402":"we are not done",
 "1406":"read rwts byte",
 "1412":"read rwts byte",
-"1447":"questionable label",
+"1436":"DEC A? Is carry significant?",
+"1438":"finish up",
+"1450":"we overshot by 40, add it back in",
 "1454":"wipes out $03/04",
+"1457":"return to caller",
 "1750":"inline data; store addr-1 in $61/$62",
 "1756":"addr-1+1",
 "1760":"first byte of inline data is indent",
@@ -1532,7 +1535,25 @@
 "BackgroundColor":0},
 
 "1405":{
-"Text":"$03/04 appear to be temp values below. gettextaddr will wipe them out with computed values from TEXTCOL/TEXTROW.",
+"Text":"Called just before any combo is written. Reads 2 bytes from RWTSBUF.\r\n\r\n$03/04 appear to be temp values below. gettextaddr will wipe them out with computed values from TEXTCOL/TEXTROW.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1345":{
+"Text":"Combo 011 reads the next tile from RWTSBUF, then writes tile and tile+1 to the screen, NNNNN times.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1242":{
+"Text":"Once the screen has been filled with tiles, read additional \"combo\" bytes consisting of a command and a repeat count, followed by a tiled screen position. 5 combos write a hardcoded tile triple N times, 1 writes a tile and tile+1, and the last terminates the section.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1458":{
+"Text":"Tile data is finished reading at this point.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -1551,7 +1572,7 @@
 "BackgroundColor":-23296},
 
 "1900":{
-"Text":"Seems to draw 20 lines of text, sourced from text page 1, to hires screen. This looks like 40x20 tiled graphics data stored as text, made further apparent by NOPing out the 4 instructions at $A857 to set HIRES2, leaving GR active. This\r\nshows lores colored blocks in the obvious shape of game screens.",
+"Text":"Draws 20 lines of text, sourced from text page 1, to hires screen. This looks like 40x20 tiled graphics data stored as text, made further apparent by NOPing out the 4 instructions at $A857 to set HIRES2, leaving GR active. This\r\nshows lores colored blocks in the obvious shape of game screens.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-7278960},
@@ -2358,7 +2379,7 @@
 "LabelAnno":"None"},
 
 "1242":{
-"Label":"finish_sector",
+"Label":"read_combo_section",
 "Value":25818,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
@@ -2414,7 +2435,7 @@
 "LabelAnno":"None"},
 
 "1447":{
-"Label":"bump_row",
+"Label":"done",
 "Value":26023,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
@@ -2482,6 +2503,12 @@
 "Length":2,
 "Format":"NumericLE",
 "SubFormat":"Binary",
+"SymbolRef":null},
+
+"1447":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
 "SymbolRef":null},
 
 "1802":{
