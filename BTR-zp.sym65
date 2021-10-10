@@ -1,6 +1,7 @@
 *SYNOPSIS Below the Root zero-page usage
 
 LASTKEY @ $02 ;last key pressed via chkkey
+TXTPTR @ $03 2 ;current tile position on text page 1
 MAPPOS @ $1b ; playfield position (?)
 MAPSIDE @ $1c ; playfield side (?)
 PLAYER @ $20 ;active player (0-4)

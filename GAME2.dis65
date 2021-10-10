@@ -1139,14 +1139,15 @@
 "1249":"save it temporarily",
 "1252":"save lower 5 bits in $0a",
 "1254":"restore the read byte",
-"1257":"check if top 3 bits are all set (111)",
+"1255":"check the top 3 bits only",
+"1257":"are all 3 top bits set? (in practice byte is $E0)",
 "1259":"no, check other combos",
 "1261":"yep",
-"1268":"001 -\u003e b4,b5,b6",
-"1274":"010 -\u003e b7,b8,b9",
-"1280":"100 -\u003e ba,ba,ba",
+"1268":"001 -\u003e b4,b5,b6 -\u003e outside green ladder",
+"1274":"010 -\u003e b7,b8,b9 -\u003e inside brown ladder",
+"1280":"100 -\u003e ba,ba,ba -\u003e outside blue door",
 "1286":"101 -\u003e bb,bb,bb",
-"1292":"110 -\u003e bc,bc,bc",
+"1292":"110 -\u003e bc,bc,bc -\u003e inside green / outside black door",
 "1298":"011 -\u003e read more data",
 "1302":"store computed tile",
 "1311":"computed tile",
@@ -1154,17 +1155,22 @@
 "1318":"write tile to text screen",
 "1320":"check tile number",
 "1322":"\u003e= $ba, repeat same tile",
-"1324":"increment tile",
+"1324":"otherwise, increment tile",
 "1325":"next column",
 "1328":"3 times",
-"1335":"repeat NNNNN times",
+"1330":"next row",
+"1335":"repeat %NNNNN rows",
 "1371":"more rwts data",
 "1402":"we are not done",
-"1406":"read rwts byte",
-"1412":"read rwts byte",
-"1436":"DEC A? Is carry significant?",
+"1406":"read rwts byte into TXTPTR (temp) lo",
+"1409":"used as a 16-bit temporary, overwritten at end",
+"1412":"read rwts byte into TXTPTR (temp) hi",
+"1415":"ignoring top bit of second byte",
+"1418":"and subtracting $40 from second byte",
+"1427":"16-bit subtract of #$0028 from tmpaddr",
+"1436":"propagate low-byte borrow to high byte",
 "1438":"finish up",
-"1450":"we overshot by 40, add it back in",
+"1450":"overshot $03 by 40, add back in (didn\u0027t update $04)",
 "1454":"wipes out $03/04",
 "1457":"return to caller",
 "1750":"inline data; store addr-1 in $61/$62",
@@ -1529,25 +1535,25 @@
 "BackgroundColor":0},
 
 "1268":{
-"Text":"Write 3 tiles (specified by top 3 bits in last RWTS byte), repeated N times (the low 5 bits in this byte). In other words, TTTNNNNN.\r\n\r\nCheck for various combos of TTT (we handled 111 above). 5 of 6 combos map to hardcoded tile numbers. If the tile is b4 or b7, it will write b4,b5,b6 or b7,b8,b9. If ba, bb or bc, it will write ba,ba,ba (\u0026c.)\r\n\r\nCombo 011 is special and reads further data.\r\n\r\n",
+"Text":"Write 3 tiles (specified by top 3 bits in last RWTS byte), repeated N rows (the low 5 bits in this byte). In other words, %TTTNNNNN. The starting position is specified by the next two bytes (to be read).\r\n\r\nCheck for various combos of TTT (we handled 111 above, which terminates). 5 of 6 combos map to hardcoded tile triples. If the tile is b4 or b7, it will write b4,b5,b6 or b7,b8,b9. If ba, bb or bc, it will write ba,ba,ba (etc.) These are for ladders, vines and doors, which are all 3 tiles across repeated for some distance down the screen.\r\n\r\nThe last combo (011) writes double-wide tiles (letters) at the specified position. Here N is the number of tile bytes to read from the stream, written as consecutive double-wide tiles.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "1405":{
-"Text":"Called just before any combo is written. Reads 2 bytes from RWTSBUF.\r\n\r\n$03/04 appear to be temp values below. gettextaddr will wipe them out with computed values from TEXTCOL/TEXTROW.",
+"Text":"Called just before any tile combo is written. Reads 2 position bytes from RWTSBUF which become a 16-bit address into a 40x20 matrix. Converts that address into a (row,col) tuple and returns the resulting address on text page 1, where the tile will be written.\r\n\r\nFirst, do some initial munging of the top byte, masking off its top bit, and subtracting $40 (for some reason, instead of AND #$3F).\r\n\r\nThen, divide the 16-bit value in $03/04 by the 8 bit value #40 (cols/row), placing the quotient (row) in TXTROW and the remainder (col) in TXTCOL.\r\n\r\nE.g. $A9 $C1 -\u003e $A9 $01 -\u003e $01A9\r\n     $01A9 // 40 = 10 (row 10, 0..23)\r\n     $01A9 %  40 = 25 (col 25, 0..39)\r\n\r\nLast, call gettextaddr to compute the screen address of TXTROW/TXTCOL and place it in TXTPTR for the caller. Note TXTPTR was used as a temp for the divide, and is overwritten.\r\n\r\nA simple 2-byte ROW/COL representation would have been easier to deal with and still left 3 bits for metadata. This representation looks geared toward the contiguous screen memory of other platforms this game was released for.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "1345":{
-"Text":"Combo 011 reads the next tile from RWTSBUF, then writes tile and tile+1 to the screen, NNNNN times.",
+"Text":"and then reads NNNNN more bytes, each of which is a tile number of a double-wide tile. It writes tile and tile+1 to the screen for each tile byte.\r\n\r\nThis is used, for example, when there are text banners on the screen such as \"TO TEMPLE GRUND\". Each letter is double-width, and each word is (may be) written as a separate command block, on top of the background. For example, TO TEMPLE GRUND is 3 commands: 62, 66 and 65. (Command $60 with 2, 6, and 5 letters.)",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "1242":{
-"Text":"Once the screen has been filled with tiles, read additional \"combo\" bytes consisting of a command and a repeat count, followed by a tiled screen position. 5 combos write a hardcoded tile triple N times, 1 writes a tile and tile+1, and the last terminates the section.",
+"Text":"Once the screen has been filled with tiles, read additional \"combo\" bytes consisting of a command and a repeat count, followed by a tiled screen position. 5 combos write a hardcoded tile triple N times, 1 writes a tile and tile+1, and the last terminates the section (in practice, $E0).",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1556,11 +1562,23 @@
 "Text":"Tile data is finished reading at this point.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"1342":{
+"Text":"Combo 011 reads the next 2 position bytes (as normal),",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
 "1242":{
 "Text":"$08, $11 and possibly $0a change meanings below.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-18751},
+
+"1405":{
+"Text":"Unclear why we subtract $40 (or mask top bit) from 16-bit tile position in combo byte data. If it is for metadata, there are 3 bits left with a simple 2 byte ROW (6 bits) and COL (7 bits) representation.\r\n\r\nSince this game was multiplatform, they may have (sanely) assumed contiguous memory for a 40x20 screen, and kept that representation. The function of the upper bit is unknown (an actual address?) but the real question is the subtraction of $40 instead of ANDing it out.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-18751},
@@ -2446,6 +2464,13 @@
 "Value":25820,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1405":{
+"Label":"readTilePos",
+"Value":25981,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -2503,6 +2528,12 @@
 "Length":2,
 "Format":"NumericLE",
 "SubFormat":"Binary",
+"SymbolRef":null},
+
+"1430":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
 "SymbolRef":null},
 
 "1447":{
@@ -2931,7 +2962,7 @@
 "SubFormat":"Hex",
 "SymbolRef":null},
 
-"Comment":"ptr to line on text page 1",
+"Comment":"FIXME: this is TXTPTR",
 "HasWidth":true,
 "Direction":"ReadWrite",
 "MultiMask":null,
