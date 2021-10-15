@@ -1271,7 +1271,6 @@
 "2950":"did we fall less than 6 tiles?",
 "2954":"\u003e=6 tiles, jsr",
 "2962":"reset fall count",
-"3074":"probably, current tile",
 "3078":"\u003c $BA",
 "3082":"\u003e $BC",
 "3084":"$E0 == BA..BC; becomes door pointer 1..3",
@@ -1337,6 +1336,8 @@
 "5795":"note, this is not reached if there was x motion",
 "5803":"end of cursor/character keypress handler",
 "5932":"set top left of menu (0,0)",
+"5936":"next menucol/row, so we can unhighlight old row",
+"5938":"these are really temp vars, only used here",
 "6207":"hardcoded length of action_text",
 "6371":"menu row number we are on",
 "6373":"get the htab of col 1 in row",
@@ -1352,7 +1353,10 @@
 "6438":"col #s of first col of text",
 "6442":"col #s of each menu col",
 "6447":"width of each menu col",
-"8185":"and then rts"},
+"8185":"and then rts",
+"8233":"temp, which food",
+"8337":"only the 2 Erdling",
+"8341":"can eat lapan"},
 
 "LongComments":{
 "-2147483647":{
@@ -2699,17 +2703,51 @@
 "Value":27407,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8562":{
+"Label":"strange_elixer",
+"Value":33138,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8418":{
+"Label":"is_pan_bread",
+"Value":32994,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8393":{
+"Label":"lapan_is_good",
+"Value":32969,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8451":{
+"Label":"is_fruit_and_nuts",
+"Value":33027,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8485":{
+"Label":"sate_hunger",
+"Value":33061,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8188":{
+"Label":"what_will_you_eat",
+"Value":32764,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
-"520":{
-"Length":3,
-"Format":"NumericLE",
-"SubFormat":"Symbol",
-"SymbolRef":{
-"Label":"RWTSBUF",
-"Part":"Low"}},
-
 "583":{
 "Length":3,
 "Format":"NumericLE",
@@ -2981,6 +3019,22 @@
 "Format":"Dense",
 "SubFormat":"None",
 "SymbolRef":null},
+
+"8337":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"PLAYER_Herd",
+"Part":"Low"}},
+
+"8341":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"PLAYER_Charn",
+"Part":"Low"}},
 
 "9462":{
 "Length":5,
@@ -3271,42 +3325,6 @@
 "MultiMask":null,
 "Label":"dst",
 "Value":17,
-"Source":"Variable",
-"Type":"ExternalAddr",
-"LabelAnno":"None"}],
-"ClearPrevious":false},
-
-"5888":{
-"Variables":[{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"current menu column (0-4)",
-"HasWidth":true,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"menucol",
-"Value":113,
-"Source":"Variable",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
-{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"current menu row (0-3)",
-"HasWidth":true,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"menurow",
-"Value":114,
 "Source":"Variable",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],

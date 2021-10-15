@@ -7,11 +7,23 @@ playerY @ $1a ; tile Y of player
 MAPPOS @ $1b ; playfield position (?)
 MAPSIDE @ $1c ; playfield side (?)
 PLAYER @ $20 ;active player (0-4)
+PLAYER_Neric = $00
+PLAYER_Genaa = $01
+PLAYER_Herd = $02
+PLAYER_Pomma = $03
+PLAYER_Charn = $04
 dayNum @ $22 ; day number (1-based)
+levelFood @ $24 ; level of food
+
 doorNeshom @ $35 ; FF = door goes to Neshom house, 01 = Neshom realm
 GAMEOVER @ $3d ;game over bool (0/1)
 SOUNDFLG @ $4a ;0 = sound off, 1 = on
 NINEIDX @ $55 ;cur index into $900 block
+MENUCOL @ $71 ;menu column (0..4)
+MENUROW @ $72 ;menu row (0..3)
+MENUCOL_NEXT @ $73 ;next menu col, used only during movement
+MENUROW_NEXT @ $74 ;next menu row, used only during movement
+
 RUNFLG @ $84
 FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
 FACING @ $95 ;FF=left, 01=right facing
@@ -39,3 +51,6 @@ tileDiagRight @ $EA  ;  1,-2 tile right and 2 down
 
 XMOVFLG @ $AF
 YMOVFLG @ $B0 ;FF=up,01=down (edge at end of action)
+
+
+

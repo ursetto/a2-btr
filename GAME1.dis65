@@ -345,7 +345,7 @@
 "BackgroundColor":0},
 
 "5048":{
-"Text":"BIT table. Used as the target of BIT instructions to test whether a bit is set in A. BIT $xx sets Z as if the value in $xx were ANDed with A, without affecting A. These bytes are masks of bits 0..7. \r\nTherefore, BIT $BITTAB+x (where x = 0..7) tests bit x, and you can BEQ (zero, clear) or BNE (non-zero, set) afterward.\r\nWe use BITTABx instead of BITTAB+x (what the original source likely used) because it is easier to automatically disassemble.",
+"Text":"BIT table. Used as the target of BIT instructions to test whether a bit is set in A. BIT $xx sets Z as if the value in $xx were ANDed with A, without affecting A. These bytes are masks of bits 0..7. \r\nTherefore, BIT $BITTAB+x (where x = 0..7) tests bit x, and you can BEQ (zero, clear) or BNE (non-zero, set) afterward.\r\n\r\nWe use BITTABx instead of BITTAB+x because it is easier for SourceGen to automatically disassemble. SourceGen label imports don\u0027t accept a width argument and any manual override will be overwritten on next import.",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
