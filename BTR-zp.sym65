@@ -2,15 +2,20 @@
 
 LASTKEY @ $02 ;last key pressed via chkkey
 TXTPTR @ $03 2 ;current tile position on text page 1
+playerX @ $19 ; tile X of player
+playerY @ $1a ; tile Y of player
 MAPPOS @ $1b ; playfield position (?)
 MAPSIDE @ $1c ; playfield side (?)
 PLAYER @ $20 ;active player (0-4)
+dayNum @ $22 ; day number (1-based)
+doorNeshom @ $35 ; FF = door goes to Neshom house, 01 = Neshom realm
 GAMEOVER @ $3d ;game over bool (0/1)
 SOUNDFLG @ $4a ;0 = sound off, 1 = on
 NINEIDX @ $55 ;cur index into $900 block
 RUNFLG @ $84
 FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
 FACING @ $95 ;FF=left, 01=right facing
+doorPtr @ $9e ; 0..3, unknown pointer to door triple at $2F3
 JOYFLG @ $b1 ;01 = joystick, 00 = kbd
 DEMOWAIT @ $c0 ; number of frames to wait
 DEMOLAST @ $c1 ; latched movement byte
@@ -18,5 +23,19 @@ DEMOPTR @ $c2 ; ptr to current demo byte
 DEMOFLG @ $c4 ; 00 = game, 01 = demo mode
 DEMOTEXT @ $c8 ; demo text to show (1..5, or 0 = none)
 QUEST @ $da ; quest (save slot) 0..4
+tileFeet @ $E0 ;  0, 0 tile at player's feet
+tileFeetLeft @ $E1   ; -1, 0 tile left of player's feet
+tileFeetRight @ $E2  ;  1, 0 tile right of player's feet
+tileKnee @ $E3 ;  0, 1 tile at player's knees
+tileKneeLeft @ $E4   ; -1, 1 tile left of player's knees
+tileKneeRight @ $E5  ;  1, 1 tile right of player's knees
+tileUnder1 @ $E6     ;  0,-1 tile 1 under player
+tileUnder2 @ $E7     ;  0,-2 tile 2 under player
+tileUnder3 @ $E8     ;  0,-3 tile 3 under player
+tileDiagLeft @ $E9   ; -1,-2 tile left and 2 down
+tileDiagRight @ $EA  ;  1,-2 tile right and 2 down
+
+
+
 XMOVFLG @ $AF
 YMOVFLG @ $B0 ;FF=up,01=down (edge at end of action)

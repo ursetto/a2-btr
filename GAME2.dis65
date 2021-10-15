@@ -1064,15 +1064,34 @@
 "141":"0, delay $0A * 256",
 "143":"!0, delay $06 * 256",
 "145":"delay X * 256",
+"156":"transiting a door? (1..3)",
 "187":"demo text to show 1..5, or 0 for not demo",
 "194":"do not update on next frame",
 "373":"phantom character 5 during demo",
-"578":"Y likely 1..3",
+"472":"zero, handle regular doors",
+"474":"FF, go to her house",
+"492":"next door takes you back",
+"494":"to her house",
+"523":"possibly locked door",
+"527":"0=possibly locked (either has_key, or door_unlocked)",
+"532":"0=locked (either has_key, or door_unlocked)",
+"564":"note $9e is 1..3 below",
+"569":"possibly locked door",
+"573":"possibly inventory check for this key",
+"578":"Y is 1..3 here (on entry must be nonzero)",
+"586":"first byte is map position",
+"590":"second byte is map side (bit 7) + something (0..6)",
 "594":"check bit 7",
 "596":"bit 7 unset, MAPSIDE=0",
 "599":"bit 7 set, MAPSIDE=1",
-"602":"bits 0..6",
-"609":"bits 0..6",
+"602":"bits 0..6 of second byte",
+"609":"bits 0..6 of third byte",
+"616":"read new map screen from disk",
+"619":"Toggle FACING between 01 and FF",
+"621":"so the player faces the opposite direction",
+"622":"when entering/exiting a door",
+"635":"reset triple posptr to 0",
+"641":"bitflip",
 "651":"$2f3,$2f4,$2f5",
 "652":"$2f6,$2f7,$2f8",
 "653":"$2f9,$2fa,$2fb",
@@ -1146,7 +1165,7 @@
 "1268":"001 -\u003e b4,b5,b6 -\u003e outside green ladder",
 "1274":"010 -\u003e b7,b8,b9 -\u003e inside brown ladder",
 "1280":"100 -\u003e ba,ba,ba -\u003e outside blue door",
-"1286":"101 -\u003e bb,bb,bb",
+"1286":"101 -\u003e bb,bb,bb -\u003e outside purple door",
 "1292":"110 -\u003e bc,bc,bc -\u003e inside green / outside black door",
 "1298":"011 -\u003e read more data",
 "1302":"store computed tile",
@@ -1252,10 +1271,34 @@
 "2950":"did we fall less than 6 tiles?",
 "2954":"\u003e=6 tiles, jsr",
 "2962":"reset fall count",
+"3074":"probably, current tile",
+"3078":"\u003c $BA",
+"3082":"\u003e $BC",
+"3084":"$E0 == BA..BC; becomes door pointer 1..3",
 "3632":"$87 unset; clear carry",
 "3638":"$a3 \u003c $10 or",
 "3640":"$a3 \u003e $15; clear carry",
 "4219":"check lower 3 bits",
+"4503":"A is BA..BC on entry (the door tile)",
+"4504":"subtract B9",
+"4506":"result is 1..3",
+"4514":"in neshom\u0027s house or realm?",
+"4516":"yep, return; special handling",
+"4629":"ow",
+"4652":"temp, I believe",
+"4679":"loop 11 times",
+"4682":"E0:  0, 0",
+"4683":"E1: -1, 0",
+"4684":"E2:  1, 0",
+"4685":"E3:  0, 1",
+"4686":"E4: -1, 1",
+"4687":"E5:  1, 1",
+"4688":"E6:  0,-1",
+"4689":"E7:  0,-2",
+"4690":"E8:  0,-3",
+"4691":"E9: -1,-2",
+"4692":"EA:  1,-2",
+"4719":"$89 {addr/2} is temp",
 "5564":"branch if not ascending",
 "5566":"LDA might be skipped",
 "5568":"update N and Z from A, even when LDA skipped",
@@ -1568,9 +1611,75 @@
 "Text":"Combo 011 reads the next 2 position bytes (as normal),",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"470":{
+"Text":"$9E is non-zero here, implying we are transiting a door. The next 2 subroutines are special teleports, based on whether $35 is FF or 01. That\u0027s because when you sleep in D\u0027Ol Neshom\u0027s house, the door changes to send you to the cloud realm (01), and the return door sends you back to her house (FF). (It\u0027s possible the return door must be handled specially because it\u0027s not a standard door tile, so can\u0027t use normal door teleporting, but uncertain.)\r\n\r\nIf $35 is 0, branch to the 3rd sub, which handles doors and repositioning more generally.",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"499":{
+"Text":"FF sends you to the D\u0027Ol Neshom\u0027s small house in the high trees where if you sleep, you are transported to a cloud realm and she grants you the spirit bell.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"474":{
+"Text":"01 sends you to the cloud realm where D\u0027Ol Neshom gives you the spirit bell.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3074":{
+"Text":"Check the tile we are in front of, and if it is a door tile (BA,BB,BC) then handle it as a door (1..3).",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4650":{
+"Text":"Populates $E0..EA with tiles near the player\u0027s feet. See notes at @xoffset.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4682":{
+"Text":"the 3 tiles at the player\u0027s feet (center, left, right)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4685":{
+"Text":"the 3 tiles at the player\u0027s knees (center, left, right)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4688":{
+"Text":"the 3 tiles directly below the player\u0027s feet",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4691":{
+"Text":"the 2 tiles (left, right) 2 down from the player",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
+"461":{
+"Text":"write into RWTSBUF",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
+"520":{
+"Text":"Handles, I think, entering doors. Checks $02F2 for $C0/C1, which I think signify 2 types of locked doors. Then checks a location in game storage, probably whether the player has one of 2 keys, and a final zp location which is unknown. \r\n\r\nIf the door is unlocked, OR $02F2 is any other value, then teleports the user to the new map position. It\u0027s unclear what the other values mean.\r\n\r\nFrom 02F3..F5, 02F6..8, or 02F9..B are a position triple consisting of the new map position (including high bit), and probably character X and Y. Which one to use is determined by $9E (unclear why).",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-7278960},
+
 "1242":{
 "Text":"$08, $11 and possibly $0a change meanings below.",
 "BoxMode":false,
@@ -2471,9 +2580,160 @@
 "Value":25981,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"651":{
+"Label":"posptr",
+"Value":25227,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"499":{
+"Label":"to_dol_neshom",
+"Value":25075,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"470":{
+"Label":"enterDoor",
+"Value":25046,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"520":{
+"Label":"normal_door",
+"Value":25096,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4560":{
+"Label":"rts",
+"Value":29136,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4854":{
+"Label":"win_game",
+"Value":29430,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2852":{
+"Label":"GAME2_win_game",
+"Value":27428,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"7304":{
+"Label":"nothing_to_take",
+"Value":31880,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7332":{
+"Label":"carry_no_more",
+"Value":31908,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7533":{
+"Label":"what_will_you_drop",
+"Value":32109,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4503":{
+"Label":"handle_door",
+"Value":29079,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"870":{
+"Label":"spent_a_day_recovering",
+"Value":25446,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4654":{
+"Label":"loop",
+"Value":29230,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4682":{
+"Label":"xoffset",
+"Value":29258,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4693":{
+"Label":"yoffset",
+"Value":29269,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4650":{
+"Label":"get_adjacent_tiles",
+"Value":29226,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2831":{
+"Label":"GAME2_adjacent_tiles",
+"Value":27407,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
+"520":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSBUF",
+"Part":"Low"}},
+
+"583":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSBUF",
+"Part":"Low"}},
+
+"590":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSBUF",
+"Part":"Low"}},
+
+"606":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSBUF",
+"Part":"Low"}},
+
 "1002":{
 "Length":2,
 "Format":"NumericLE",
@@ -2626,6 +2886,30 @@
 "SubFormat":"None",
 "SymbolRef":null},
 
+"4700":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4701":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4702":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4703":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
 "5672":{
 "Length":2,
 "Format":"NumericLE",
@@ -2711,44 +2995,8 @@
 "SymbolRef":null},
 
 "9472":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"9473":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"9474":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"9475":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"9476":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"9477":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"9478":{
-"Length":1,
-"Format":"NumericLE",
+"Length":4352,
+"Format":"Dense",
 "SubFormat":"None",
 "SymbolRef":null}},
 
