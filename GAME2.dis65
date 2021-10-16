@@ -1298,46 +1298,85 @@
 "4691":"E9: -1,-2",
 "4692":"EA:  1,-2",
 "4719":"$89 {addr/2} is temp",
-"5564":"branch if not ascending",
-"5566":"LDA might be skipped",
+"5553":"clear the kbd movement latches",
+"5564":"branch if not moving up",
+"5566":"or clear button press if we are moving up",
 "5568":"update N and Z from A, even when LDA skipped",
 "5571":"from $6b09 or ",
 "5594":"branch when falling, it seems",
-"5600":"reached when falling",
-"5606":"also sets A=runflg and return to caller",
+"5600":"cancel X movement",
+"5604":"If not in demo mode,",
+"5606":"handle kbd/joy input and return to caller",
+"5608":"otherwise get demo movement for this frame in A",
 "5611":"test bit 3 of A",
-"5616":"move character pos?",
+"5616":"moving right",
+"5618":"we moved",
 "5620":"test bit 2 of A",
+"5625":"moving left",
 "5629":"test bit 1 of A",
 "5638":"test bit 0 of A",
-"5647":"test bit 4 of A",
+"5647":"test bit 4 of A -- !button",
 "5650":"set, return 0",
 "5652":"clear, return 1",
 "5684":"was x motion previously 1?",
 "5686":"no, move right",
-"5688":"yes, set back to 1",
-"5690":"and set run flag (below)",
+"5688":"yes, double press; set back to 1",
+"5690":"and start running",
 "5705":"was this previously -1?",
 "5707":"nope, we\u0027ve just started to move left",
-"5709":"yes, set back to -1",
-"5711":"...and set run flag",
+"5709":"yes, double press; set back to -1",
+"5711":"...and press button (to run)",
 "5715":"halt vertical motion",
 "5722":"might be, how many tiles we have fallen",
 "5724":"because we can\u0027t fly until we fall a bit",
-"5728":"hmm. has this gone \u003e $01?",
 "5743":"if already moving up, stop x motion and return",
-"5745":"???",
-"5747":"start moving up",
+"5745":"otherwise, press button (as if to enter door)",
+"5747":"and also start moving up",
 "5761":"were we already moving down?",
 "5763":"yes, just stop x motion and return",
 "5765":"no, start moving down",
 "5767":"stop x motion (and return)",
+"5774":"SPACE is JOY BTN + JOY DOWN",
+"5776":"which will bring up the menu",
 "5778":"halt horizontal motion",
-"5795":"note, this is not reached if there was x motion",
+"5786":"we are moving horizontally",
+"5791":"only check Y if no X motion, can\u0027t move diagonally",
+"5797":"effectively, MOVING \u003c- XDIR|YDIR",
+"5801":"return virtual joystick button press in A",
 "5803":"end of cursor/character keypress handler",
+"5858":"moving if XDIR or YDIR is non-zero",
+"5862":"stationary, branch",
+"5864":"we are moving",
+"5875":"treat either button equally",
+"5885":"return A=0 if no button press, 1 if press",
 "5932":"set top left of menu (0,0)",
 "5936":"next menucol/row, so we can unhighlight old row",
 "5938":"these are really temp vars, only used here",
+"5945":"wait for input",
+"5948":"get input (again?)",
+"5963":"get input until $a2 is nonzero",
+"5970":"FF (left), 01 (right)",
+"5972":"no attempt to move",
+"5976":"off left edge, don\u0027t move",
+"5978":"off the right edge?",
+"5980":"yes, don\u0027t move",
+"5982":"no, set next column",
+"5984":"and note that we moved",
+"5987":"FF (up), 01 (down)",
+"5989":"no attempt to move vertically",
+"5993":"off top edge, don\u0027t move",
+"5995":"off the bottom?",
+"5997":"yes, don\u0027t move",
+"5999":"no, set next row",
+"6001":"and note that we moved",
+"6005":"no movement, get more input",
+"6007":"unhighlight old menu item",
+"6012":"update menu position",
+"6018":"and highlight new menu item",
+"6023":"beep",
+"6028":"delay repeat",
+"6031":"get more input",
+"6042":"(0,0) [PAUSE]",
 "6207":"hardcoded length of action_text",
 "6371":"menu row number we are on",
 "6373":"get the htab of col 1 in row",
@@ -1353,6 +1392,12 @@
 "6438":"col #s of first col of text",
 "6442":"col #s of each menu col",
 "6447":"width of each menu col",
+"7049":"thrice",
+"7053":"tick",
+"7061":"tock",
+"7073":"boop",
+"7096":"try $15 times",
+"7099":"discard caller",
 "8185":"and then rts",
 "8233":"temp, which food",
 "8337":"only the 2 Erdling",
@@ -1498,13 +1543,13 @@
 "BackgroundColor":0},
 
 "5665":{
-"Text":"Handle cursor/character motion. Supports both IJKM and RDFC (interestingly) for up-left-right-down, along with spacebar for execute/jump.\r\n\r\n$AF=FF -- moving left\r\n$AF=00 -- standing still\r\n$AF=01 -- moving right\r\n$B0=FF -- moving up\r\n$B0=00 -- no vertical motion\r\n$B0=01 -- moving down\r\n$84=00 -- walking (single press) and more\r\n$84=01 -- running (double press) and more\r\n$95=FF -- facing left (?)\r\n$95=01 -- facing right ($6C4A)\r\n\r\n-- $84,$85,$86,$a2 are set to 0 on entry.\r\n-- $85,$86,$a2 are recomputed on every keypress check based on the values of XMOVFLG/YMOVFLG, even if no key was pressed.\r\n$85=?? -- copy of $AF when $AF!=0, otherwise unchanged ($00)\r\n$86=?? -- copy of $B0 when $AF==0 and $B0!=0, otherwise 1 if space, otherwise unchanged ($00)\r\n$a2=00 -- when completely still\r\n$a2=01 -- when moving in any direction (read-only--modifying will not stop char)\r\n\r\nNote $84 (RUNFLG) might mean more than running. It is manipulated after pressing up/down and may inc past $01. Could it also be used for flying and crawling? Memory viewer would be easiest.\r\n\r\n$92 might be the number of tiles we\u0027ve fallen so far. Might be the meaning of FALLCNT.",
-"BoxMode":false,
+"Text":"Handle cursor/character motion. Supports both IJKM and RDFC for up-left-right-down, along with spacebar for execute/jump. The keyboard handler translates its inputs into the equivalent joystick actions (horiz/vert movement and button presses), and callers just handle joystick actions. It keeps some extra state since keys don\u0027t need to be held down to move.\r\n\r\n$84 (VIRTBTN) is a temporary used only in this handler. It represents a virtual joystick button press; this is returned in A to match the joystick API. For example, pressing UP (I) will return a virtual button press to the caller, because KBD UP enters a door, just like JOY BTN. As another example, a double press of KBD LEFT/RIGHT will trigger a virtual button press because this will switch to run mode, just like JOY BTN + LEFT/RIGHT. And KBD SPACE simulates JOY BTN + DOWN, which brings up the action menu.\r\n\r\n$AF/$B0 are X/Y movement latches (-1, 0, +1), set on initial keypress and maintained until you hit something, press another movement key, etc.\r\n\r\nOn return, XDIR and YDIR and MOVING are set as their joystick equivalents, along with A as the virtual button press.",
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "5728":{
-"Text":"So far I can get here if we are falling and press right, or if we are on a ladder and press right. In both cases, RUNFLG was 0. On a ladder, we jump. So perhaps this is JUMPED. RUNFLG is zeroed on next frame (6b27?)\r\n",
+"Text":"So far I can get here if we are falling and press right, or if we are on a ladder and press right. VIRTBTN appears to be zero on entry.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1669,6 +1714,24 @@
 "Text":"the 2 tiles (left, right) 2 down from the player",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"5804":{
+"Text":"Joystick handling is less complicated than the keyboard. This subroutine updates XDIR (when horizontal joystick movement), YDIR (vertical movement) and MOVING (XDIR | YDIR).\r\n\r\nOn return, accumulator is 0 for no button currently pressed, or 1 for pressed.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7081":{
+"Text":"Read joystick (keyboard) input up to $15 times (effects a constant delay if no input). If any input occurred, terminate the calling subroutine.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7037":{
+"Text":"Looks like this does the sleeping loop, which goes tick-tock 3 times and then boop. Any input during this loop terminates it and returns to caller.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -1721,13 +1784,13 @@
 "BackgroundColor":-256},
 
 "5553":{
-"Text":"Heavily used input (?) code via $6b2a. Like calling $6b09, but with wrapper code.\r\nMay return 0 or 1 in A. If this was an input handling frame, A is RUNFLG.",
+"Text":"Wraps a call to input code at $6b09 ($75c3). It ensures any latched keyboard motion is stopped, gets input, and ignores any returned button press if we are moving upward (the keyboard handler adds a virtual button press for UP).\r\n\r\nThis is the exact behavior you\u0027d want in a menu.\r\n\r\nReturns 0 or 1 (button press status) in A.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-7278960},
 
 "5571":{
-"Text":"Heavily used frame code via $6b09 or called in several other cases. Vector $6b29 ($75b1) also calls this as its main action, but wrapped in some X/YMOVFLAG code.\r\nThis code behaves in 1 of 2 ways after its preamble. If DEMOFLG is 0, it handles keyboard/joystick input. If 1, it calls $9600, which calls back into this handler in non-demo mode and does a bunch of processing, then we update (our position?) based on its return value.\r\n\r\nIt looks like $9600 is the demo mode handler, and streams actions or keyboard data into the input handler. Amusingly, if you set $C4 to 0 while the sample quest or intro screen is playing, you can take over.",
+"Text":"Input code called via $6b09 vector or directly. Vector $6b29 ($75b1) also calls this as its main action, but with a bit of wrapper code. This code respects any latched keyboard movement.\r\n\r\nThis code behaves in 1 of 2 ways after its preamble. If DEMOFLG is 0, it handles keyboard/joystick input. If 1, it calls $9600, which calls back into this handler in non-demo mode and does a bunch of processing, then we update XDIR/YDIR/MOVING/BUTTON based on its return value, just as if we were handling input.\r\n\r\nAmusingly, if you set $C4 to 0 while the sample quest or intro screen is playing, you can take over.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-7278960},
@@ -2251,7 +2314,7 @@
 "LabelAnno":"None"},
 
 "5782":{
-"Label":"other_key",
+"Label":"finish",
 "Value":30358,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
@@ -2279,7 +2342,7 @@
 "LabelAnno":"None"},
 
 "5711":{
-"Label":"runflg",
+"Label":"run",
 "Value":30287,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
@@ -2321,32 +2384,32 @@
 "LabelAnno":"None"},
 
 "5620":{
-"Label":"bit2",
+"Label":"test_left",
 "Value":30196,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"},
 
 "5629":{
-"Label":"bit1",
+"Label":"test_down",
 "Value":30205,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"},
 
 "5638":{
-"Label":"bit0",
+"Label":"test_up",
 "Value":30214,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"},
 
 "5647":{
-"Label":"bit4",
+"Label":"test_button",
 "Value":30223,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
-"LabelAnno":"None"},
+"LabelAnno":"Uncertain"},
 
 "33":{
 "Label":"GAME2_read_0900",
@@ -2743,6 +2806,97 @@
 "8188":{
 "Label":"what_will_you_eat",
 "Value":32764,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6003":{
+"Label":"check_moved",
+"Value":30579,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5986":{
+"Label":"check_ymove",
+"Value":30562,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6034":{
+"Label":"select_menu_item",
+"Value":30610,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5868":{
+"Label":"nomove",
+"Value":30444,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5571":{
+"Label":"get_ongoing_input",
+"Value":30147,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5713":{
+"Label":"move_horiz",
+"Value":30289,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5553":{
+"Label":"get_menu_input",
+"Value":30129,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2858":{
+"Label":"GAME2_menu_input",
+"Value":27434,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"7099":{
+"Label":"got_input",
+"Value":31675,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7085":{
+"Label":"loop",
+"Value":31661,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7081":{
+"Label":"terminate_on_input",
+"Value":31657,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7053":{
+"Label":"loop",
+"Value":31629,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7037":{
+"Label":"sleep_loop",
+"Value":31613,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
@@ -3325,6 +3479,25 @@
 "MultiMask":null,
 "Label":"dst",
 "Value":17,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"5961":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"did we actually move menu pos?",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tmpMoved",
+"Value":8,
 "Source":"Variable",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],

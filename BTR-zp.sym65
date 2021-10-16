@@ -24,10 +24,13 @@ MENUROW @ $72 ;menu row (0..3)
 MENUCOL_NEXT @ $73 ;next menu col, used only during movement
 MENUROW_NEXT @ $74 ;next menu row, used only during movement
 
-RUNFLG @ $84
+VIRTBTN @ $84 ; virtual button press, used only in kbd handler
+XDIR @ $85 ;last x dir pressed, -1 (left) or 1 (right)
+YDIR @ $86 ;last y dir pressed, -1 (up) or 1 (down)
 FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
 FACING @ $95 ;FF=left, 01=right facing
 doorPtr @ $9e ; 0..3, unknown pointer to door triple at $2F3
+MOVING @ $a2 ;1=moving,0=stationary
 JOYFLG @ $b1 ;01 = joystick, 00 = kbd
 DEMOWAIT @ $c0 ; number of frames to wait
 DEMOLAST @ $c1 ; latched movement byte
