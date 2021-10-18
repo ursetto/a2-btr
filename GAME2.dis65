@@ -1055,21 +1055,27 @@
 
 "Comments":{
 "33":"read next byte at $0900",
+"85":"always",
 "87":"might be general game loop",
 "92":"$c9 == #$0d during intro",
 "99":"set demo mode",
 "105":"if in gameplay mode (??)",
+"130":"start game timer",
 "134":"entered from multiple subs",
 "139":"check $6b",
 "141":"0, delay $0A * 256",
 "143":"!0, delay $06 * 256",
 "145":"delay X * 256",
 "156":"transiting a door? (1..3)",
+"163":"enter menu on this frame?",
 "187":"demo text to show 1..5, or 0 for not demo",
 "194":"do not update on next frame",
+"210":"we\u0027re fine",
+"212":"starved of food or rest",
 "373":"phantom character 5 during demo",
 "472":"zero, handle regular doors",
 "474":"FF, go to her house",
+"476":"otherwise, teleport",
 "492":"next door takes you back",
 "494":"to her house",
 "523":"possibly locked door",
@@ -1105,6 +1111,8 @@
 "854":"Z clear, use tileset 1",
 "858":"looks useless; does set Z if tileset differed",
 "860":"however Z is unused by caller",
+"926":"01 = lack of food",
+"951":"clear starved attr",
 "998":"from $6006 vec",
 "1002":"256 - 252 = 4 (rows)",
 "1006":"256 - 16 = 40 (cols)",
@@ -1192,6 +1200,9 @@
 "1450":"overshot $03 by 40, add back in (didn\u0027t update $04)",
 "1454":"wipes out $03/04",
 "1457":"return to caller",
+"1736":"lose a day",
+"1738":"restore spirit",
+"1742":"???",
 "1750":"inline data; store addr-1 in $61/$62",
 "1756":"addr-1+1",
 "1760":"first byte of inline data is indent",
@@ -1266,6 +1277,7 @@
 "2503":"next page",
 "2517":"A and Y are now 0",
 "2744":"unset gameover",
+"2816":"game tick",
 "2855":"external entry point",
 "2948":"not falling, branch",
 "2950":"did we fall less than 6 tiles?",
@@ -1274,15 +1286,29 @@
 "3078":"\u003c $BA",
 "3082":"\u003e $BC",
 "3084":"$E0 == BA..BC; becomes door pointer 1..3",
-"3632":"$87 unset; clear carry",
+"3105":"bonk?",
+"3627":"and return to caller",
+"3632":"game paused; clear carry",
 "3638":"$a3 \u003c $10 or",
 "3640":"$a3 \u003e $15; clear carry",
+"3661":"no shuba",
 "4219":"check lower 3 bits",
 "4503":"A is BA..BC on entry (the door tile)",
 "4504":"subtract B9",
 "4506":"result is 1..3",
+"4508":"pause during transit",
 "4514":"in neshom\u0027s house or realm?",
-"4516":"yep, return; special handling",
+"4516":"yep, return; never starve",
+"4538":"starved of food",
+"4542":"pause",
+"4552":"starved of rest",
+"4556":"pause",
+"4563":"a door tile",
+"4594":"a source of pseudo-randomness?",
+"4597":"once in a while, this happens",
+"4601":"20 inventory slots",
+"4606":"check if slot is occupied by a shuba",
+"4615":"clear inventory slot",
 "4629":"ow",
 "4652":"temp, I believe",
 "4679":"loop 11 times",
@@ -1298,6 +1324,7 @@
 "4691":"E9: -1,-2",
 "4692":"EA:  1,-2",
 "4719":"$89 {addr/2} is temp",
+"5180":"again the weird loop that never loops",
 "5553":"clear the kbd movement latches",
 "5564":"branch if not moving up",
 "5566":"or clear button press if we are moving up",
@@ -1352,9 +1379,11 @@
 "5932":"set top left of menu (0,0)",
 "5936":"next menucol/row, so we can unhighlight old row",
 "5938":"these are really temp vars, only used here",
-"5945":"wait for input",
 "5948":"get input (again?)",
-"5963":"get input until $a2 is nonzero",
+"5951":"no button, branch",
+"5953":"button pressed, boop",
+"5961":"no button, check direction",
+"5963":"no input, loop",
 "5970":"FF (left), 01 (right)",
 "5972":"no attempt to move",
 "5976":"off left edge, don\u0027t move",
@@ -1401,7 +1430,23 @@
 "8185":"and then rts",
 "8233":"temp, which food",
 "8337":"only the 2 Erdling",
-"8341":"can eat lapan"},
+"8341":"can eat lapan",
+"9313":"time does not pass automatically",
+"9315":"in the neshom realm",
+"9337":"end of day?",
+"9341":"yes, go to next day",
+"9349":"game over on day 50",
+"9353":"pause timer (permanently!)",
+"9359":"game over, man",
+"9364":"branch if food left",
+"9366":"food floor is 0",
+"9370":"don\u0027t starve if paused",
+"9372":"(paused when we are resting)",
+"9378":"pause timer",
+"9386":"rest floor is 0",
+"9402":"spirit increases by 5 every period",
+"9411":"cap spirit at limit",
+"9428":"set $f9..$fe to #$b0"},
 
 "LongComments":{
 "-2147483647":{
@@ -1555,7 +1600,7 @@
 "BackgroundColor":0},
 
 "3630":{
-"Text":"Returns bool in carry. Returns true (set) if $87 is non-zero AND $a3 is between $10 and $15.",
+"Text":"Returns bool in carry. Returns true (set) if game timer is running AND $a3 is between $10 and $15.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1732,9 +1777,57 @@
 "Text":"Looks like this does the sleeping loop, which goes tick-tock 3 times and then boop. Any input during this loop terminates it and returns to caller.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"4503":{
+"Text":"Translate BA..BC (the 3 door tiles, in A) to a door slot number (1..3) and store it in doorTransit.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2903":{
+"Text":"Tick if the game timer is running.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"9313":{
+"Text":"There are 256 ticks per minute, $25 (or $23) minutes per period, and 8 periods per day.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"9333":{
+"Text":"Usually reached when game timer is running and minutes reaches 0. May also be called when we are resting, or when passing out drunk.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"8178":{
+"Text":"Loop until (menu select) button released (or at least not being pressed).",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"78":{
+"Text":"MENUFLG is non-zero. Pop up menu, await selection, and return.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5001":{
+"Text":"This weird test (which is always 0 so never loops) only occurs after a melody is played, and only on win or lose. It might be a vestige of another platform, as it would enter an infinite loop unless there is an interrupt handler (music?) that updates this value.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
+"130":{
+"Text":"Multiple entries",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
 "461":{
 "Text":"write into RWTSBUF",
 "BoxMode":false,
@@ -1779,6 +1872,18 @@
 
 "4168":{
 "Text":"Setting fallcnt to $0A is observed to happen when you bump your head.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
+"4514":{
+"Text":"Multiple entry. $b7/b8 may be food/rest timers.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-18751},
+
+"5196":{
+"Text":"Possible this draws the player.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -2433,17 +2538,17 @@
 "LabelAnno":"None"},
 
 "201":{
-"Label":"isgameover",
+"Label":"check_gameover",
 "Value":24777,
 "Source":"User",
-"Type":"NonUniqueLocalAddr",
+"Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "134":{
-"Label":"L6086",
+"Label":"tick0",
 "Value":24710,
 "Source":"User",
-"Type":"LocalOrGlobalAddr",
+"Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "145":{
@@ -2899,6 +3004,321 @@
 "Value":31613,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9347":{
+"Label":"check_time_expired",
+"Value":33923,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9333":{
+"Label":"next_time_period",
+"Value":33909,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9362":{
+"Label":"update_period_stats",
+"Value":33938,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9428":{
+"Label":"loop",
+"Value":34004,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"9321":{
+"Label":"rts",
+"Value":33897,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"9322":{
+"Label":"next_minute",
+"Value":33898,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9313":{
+"Label":"next_tick",
+"Value":33889,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5915":{
+"Label":"GAME2_next_tick",
+"Value":30491,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"9291":{
+"Label":"time_has_passed",
+"Value":33867,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2816":{
+"Label":"GAME2_next_frame",
+"Value":27392,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2864":{
+"Label":"frame",
+"Value":27440,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2903":{
+"Label":"maybe_tick",
+"Value":27479,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2908":{
+"Label":"tick",
+"Value":27484,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9382":{
+"Label":"has_food",
+"Value":33958,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"208":{
+"Label":"check_starvation",
+"Value":24784,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4530":{
+"Label":"dec_food",
+"Value":29106,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4546":{
+"Label":"dec_rest",
+"Value":29122,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4514":{
+"Label":"handle_food_rest",
+"Value":29090,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4593":{
+"Label":"rts",
+"Value":29169,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"942":{
+"Label":"of_rest",
+"Value":25518,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"951":{
+"Label":"end",
+"Value":25527,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"968":{
+"Label":"loop",
+"Value":25544,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"961":{
+"Label":"clearfield",
+"Value":25537,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"616":{
+"Label":"do_door_entry",
+"Value":25192,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5568":{
+"Label":"ret",
+"Value":30144,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8178":{
+"Label":"await_button_up",
+"Value":32754,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8166":{
+"Label":"loop",
+"Value":32742,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5900":{
+"Label":"GAME2_await_button_up",
+"Value":30476,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5948":{
+"Label":"check_input",
+"Value":30524,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5961":{
+"Label":"check_moving",
+"Value":30537,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"78":{
+"Label":"enter_menu",
+"Value":24654,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"163":{
+"Label":"check_menu_entry",
+"Value":24739,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"170":{
+"Label":"no",
+"Value":24746,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1699":{
+"Label":"teleport_home",
+"Value":26275,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5184":{
+"Label":"wait_for_input",
+"Value":29760,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5001":{
+"Label":"loop",
+"Value":29577,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5180":{
+"Label":"loop",
+"Value":29756,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4603":{
+"Label":"loop",
+"Value":29179,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4615":{
+"Label":"shuba_has_torn",
+"Value":29191,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4614":{
+"Label":"rts",
+"Value":29190,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4594":{
+"Label":"maybe_tear_shuba",
+"Value":29170,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3646":{
+"Label":"clc",
+"Value":28222,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3650":{
+"Label":"loop",
+"Value":28226,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3648":{
+"Label":"check_has_shuba",
+"Value":28224,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3664":{
+"Label":"has_shuba",
+"Value":28240,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -2925,6 +3345,26 @@
 "SymbolRef":{
 "Label":"RWTSBUF",
 "Part":"Low"}},
+
+"926":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"STARVED_food",
+"Part":"Low"}},
+
+"979":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"991":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
 
 "1002":{
 "Length":2,
@@ -3076,6 +3516,34 @@
 "Length":1,
 "Format":"NumericLE",
 "SubFormat":"None",
+"SymbolRef":null},
+
+"3648":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4538":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"STARVED_food",
+"Part":"Low"}},
+
+"4552":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"STARVED_rest",
+"Part":"Low"}},
+
+"4601":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
 "SymbolRef":null},
 
 "4700":{

@@ -4,3 +4,7 @@ RWTSBUF @ $0200 256 ; 256-byte sector r/w buffer
 RWTSCMD_read = $01
 RWTSCMD_write = $02
 
+
+
+inventory @ $b558 20
+
