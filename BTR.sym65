@@ -1,5 +1,6 @@
 *SYNOPSIS Below the Root general symbols
 
+STACK @ $0100 256
 RWTSBUF @ $0200 256 ; 256-byte sector r/w buffer
 RWTSCMD_read = $01
 RWTSCMD_write = $02

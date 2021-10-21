@@ -3319,6 +3319,13 @@
 "Value":28240,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2825":{
+"Label":"GAME2_ongoing_input",
+"Value":27401,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
