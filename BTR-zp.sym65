@@ -21,7 +21,7 @@ levelFood @ $24 ; level of food
 levelRest @ $25 ; level of rest
 levelStamina @ $26 ; level of stamina
 limitSpirit @ $27 ; spirit limit
-
+maxWeight @ $2c ; max weight you can carry
 homePos @ $2d ; used when teleporting player home
 homeSide @ $2e ; used when teleporting player home
 homeX @ $2f ; used when teleporting player home
@@ -29,6 +29,7 @@ homeY @ $30 ; used when teleporting player home
 
 doorNeshom @ $35 ; FF = door goes to Neshom house, 01 = Neshom realm
 
+fallaKeyOffered @ $38 ; if D'Ol Falla's key has been offered (?)
 STARVED @ $3c ; 0 = ok, 1 = out of food, 2 = out of rest
 STARVED_food = $01
 STARVED_rest = $02
@@ -36,10 +37,16 @@ STARVED_rest = $02
 GAMEOVER @ $3d ;game over bool (0/1)
 SOUNDFLG @ $4a ;0 = sound off, 1 = on
 NINEIDX @ $55 ;cur index into $900 block
+WEIGHT @ $70 ; current item weight carried (< limitWeight)
 MENUCOL @ $71 ;menu column (0..4)
 MENUROW @ $72 ;menu row (0..3)
 MENUCOL_NEXT @ $73 ;next menu col, used only during movement
 MENUROW_NEXT @ $74 ;next menu row, used only during movement
+temp75 @ $75
+temp76 @ $76
+temp77 @ $77 ; temp value
+temp7a @ $7a
+temp7b @ $7b
 TICKS @ $7c ; number of ticks until next minute (0..$FF)
 MINUTES @ $7d ; number of minutes until next time period (0..$25)
 

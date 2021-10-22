@@ -759,6 +759,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"SCRN_play_sound_0":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_play_sound_0",
+"Value":46598,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "SCRN_show_demo_text":{
 "DataDescriptor":{
 "Length":1,
@@ -1291,6 +1308,7 @@
 "3632":"game paused; clear carry",
 "3638":"$a3 \u003c $10 or",
 "3640":"$a3 \u003e $15; clear carry",
+"3648":"check all shuba slots",
 "3661":"no shuba",
 "4219":"check lower 3 bits",
 "4503":"A is BA..BC on entry (the door tile)",
@@ -1376,6 +1394,8 @@
 "5864":"we are moving",
 "5875":"treat either button equally",
 "5885":"return A=0 if no button press, 1 if press",
+"5891":"input slot $00-fe (A), output item 0-14 (Y)",
+"5894":"wait for input after a message",
 "5932":"set top left of menu (0,0)",
 "5936":"next menucol/row, so we can unhighlight old row",
 "5938":"these are really temp vars, only used here",
@@ -1406,6 +1426,12 @@
 "6028":"delay repeat",
 "6031":"get more input",
 "6042":"(0,0) [PAUSE]",
+"6150":"row 0",
+"6153":"row 1",
+"6167":"row 2",
+"6179":"row 3",
+"6181":"toggle sound",
+"6185":"display sound status",
 "6207":"hardcoded length of action_text",
 "6371":"menu row number we are on",
 "6373":"get the htab of col 1 in row",
@@ -1427,6 +1453,48 @@
 "7073":"boop",
 "7096":"try $15 times",
 "7099":"discard caller",
+"7153":"A=slot -\u003e Y=item",
+"7162":"otherwise fall thru, should fail",
+"7180":"anything in your house is fair game",
+"7182":"or in room 1c, 3b, 4b or 51",
+"7240":"can we carry this?",
+"7248":"too heavy!",
+"7255":"set bit 5 of inv slot -- item possession",
+"7361":"0 spirit bell",
+"7369":"8 token",
+"7375":"14 strange elixer",
+"7392":"??",
+"7557":"iterate through all slots",
+"7559":"holds current slot index",
+"7570":"0-fe items, ff=nothing",
+"7601":"do we have an item in this slot",
+"7606":"yes",
+"7607":"get item in Y",
+"7842":"item in Y",
+"7845":"item",
+"7847":"length of item desc",
+"7849":"len",
+"8142":"always--y\u003c16",
+"8145":"spirit bell ($00)",
+"8146":"spirit lamp ($01)",
+"8147":"honeylamp ($02-$1a)",
+"8148":"wand of befal ($1b)",
+"8149":"roast lapan ($1c-$25)",
+"8150":"pan bread ($26-$3e)",
+"8151":"fruit and nuts",
+"8152":"shuba",
+"8153":"token",
+"8154":"trencher beak",
+"8155":"wissenberries",
+"8156":"vine rope",
+"8157":"temple key ($f8)",
+"8158":"d\u0027ol falla\u0027s key ($f9)",
+"8159":"elixer ($fa-$fe)",
+"8160":"(terminator)",
+"8161":"unused",
+"8162":"unused",
+"8173":"if no direction pressed",
+"8175":"and then rts",
 "8185":"and then rts",
 "8233":"temp, which food",
 "8337":"only the 2 Erdling",
@@ -1817,6 +1885,42 @@
 
 "5001":{
 "Text":"This weird test (which is always 0 so never loops) only occurs after a melody is played, and only on win or lose. It might be a vestige of another platform, as it would enter an infinite loop unless there is an interrupt handler (music?) that updates this value.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"8163":{
+"Text":"Called, for example, after selecting SOUND menu item, which displays a status screen / message immediately, so wait for the select button to be released. Then, loop until a button or direction is pressed, clear the screen, and return.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7872":{
+"Text":"There are 15 possible items, with 16 description indices in this string (the last not used). Each is 16 bytes long so the indices aren\u0027t really needed.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"8145":{
+"Text":"One pair of overlapping bytes for each of 15 items, or looked at another way, one byte for the first slot address an item can be in.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"8128":{
+"Text":"Compute the item number (0-14) from the inventory slot ($00-$fe). Takes the slot number in A, and sets Y to the index of the first byte in the item address table that is less than that.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7752":{
+"Text":"Subtracts weight of item (in Y) from current carry weight.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7361":{
+"Text":"Item weight table. Everything weighs 5 units except for tokens (1).",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -3326,6 +3430,181 @@
 "Value":27401,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"8175":{
+"Label":"ret",
+"Value":32751,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6179":{
+"Label":"menu_sound",
+"Value":30755,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8163":{
+"Label":"message_wait",
+"Value":32739,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5894":{
+"Label":"GAME2_message_wait",
+"Value":30470,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"8130":{
+"Label":"loop",
+"Value":32706,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8141":{
+"Label":"iny",
+"Value":32717,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8145":{
+"Label":"item_slots",
+"Value":32721,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8128":{
+"Label":"slot_to_item",
+"Value":32704,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7872":{
+"Label":"item_desc",
+"Value":32448,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8112":{
+"Label":"item_desc_idx",
+"Value":32688,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5891":{
+"Label":"GAME2_slot_to_item",
+"Value":30467,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"7361":{
+"Label":"item_weights",
+"Value":31937,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7752":{
+"Label":"lose_weight",
+"Value":32328,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6478":{
+"Label":"loop",
+"Value":31054,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7111":{
+"Label":"no_nid_here",
+"Value":31687,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7142":{
+"Label":"take_item_at_feet",
+"Value":31718,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7153":{
+"Label":"take_item",
+"Value":31729,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7240":{
+"Label":"take_offered",
+"Value":31816,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7207":{
+"Label":"not_offered",
+"Value":31783,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7198":{
+"Label":"side1",
+"Value":31774,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7164":{
+"Label":"std_item",
+"Value":31740,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7566":{
+"Label":"next_slot",
+"Value":32142,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7598":{
+"Label":"valid_slot",
+"Value":32174,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"7842":{
+"Label":"print_item_desc",
+"Value":32418,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7851":{
+"Label":"printchar",
+"Value":32427,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -3528,7 +3807,7 @@
 "3648":{
 "Length":2,
 "Format":"NumericLE",
-"SubFormat":"Decimal",
+"SubFormat":"Hex",
 "SymbolRef":null},
 
 "4538":{
@@ -3646,6 +3925,238 @@
 "6447":{
 "Length":5,
 "Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"6491":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_shuba",
+"Part":"Low"}},
+
+"7156":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_fallaKey",
+"Part":"Low"}},
+
+"7255":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Binary",
+"SymbolRef":null},
+
+"7361":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7362":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7363":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7364":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7365":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7366":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7367":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7368":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7369":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7370":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7371":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7372":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7373":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7374":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7375":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7847":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"8112":{
+"Length":16,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8145":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8146":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8147":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8148":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8149":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8150":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8151":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8152":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8153":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8154":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8155":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8156":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8157":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8158":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8159":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8160":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8161":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8162":{
+"Length":1,
+"Format":"NumericLE",
 "SubFormat":"None",
 "SymbolRef":null},
 
@@ -3990,12 +4501,16 @@
 "HasWidth":true,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"menuwidth",
+"Label":"tmp_menuwidth",
 "Value":119,
 "Source":"Variable",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],
-"ClearPrevious":false}},
+"ClearPrevious":false},
+
+"6452":{
+"Variables":[],
+"ClearPrevious":true}},
 
 "Visualizations":[],
 "VisualizationAnimations":[],

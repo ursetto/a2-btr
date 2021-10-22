@@ -317,6 +317,10 @@ The initial tile data is run-length encoded. It starts at sector offset $01 and 
 
 - During the intro scene, set memory location $C4 (demo mode) to 0. This will turn off demo mode and let you play the intro screens. If you go up, you'll be in the Grand Hall; if you go left, you'll be in Temple Grund. Going a couple screens right will lock the game. You can also play the sample quest in this way, although it's basically like starting a new game from a normally-inaccessible position.
 
+## Bugs
+
+The 4am crack seems to have some corruption in the first $0E bytes of NOMORE (org $0100). I believe the first six bytes should be 2 jump vectors, `4c 0e 01 4c 60 01`. The bug is that when you try to use a spirit skill without sufficient energy (but with sufficient limit), it says "I HAVE NOTHING MORE TO GIVE" instead of "YOU NEED MORE SPIRIT ENERGY" and locks up. Normally, this message is reached when an NPC runs out of offered items (jump vector 1), and the skill message is jump vector 2. Due to the corruption, the jump vectors are replaced with harmless code and both vectors fall through to the offering check. Note that the PENSE skill is not affected by this as it has a self-contained spirit check message; as an alternate fix, the other skills could be patched to use that message instead of the stack version.
+
 ## In progress
 
 

@@ -6,6 +6,10 @@ RWTSCMD_read = $01
 RWTSCMD_write = $02
 
 
+inventoryEtc @ $b500 256 ; bit 5 inventory, etc.
+inv_shuba @ $b558 20
 
-inventory @ $b558 20
-
+item_shuba = $07
+item_token = $08
+item_fallaKey = $0D
+item_elixer = $0E

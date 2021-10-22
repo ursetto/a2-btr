@@ -1697,7 +1697,7 @@
 "Label":"SCRN_play_sound_0",
 "Value":46598,
 "Source":"User",
-"Type":"GlobalAddr",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"},
 
 "4681":{
