@@ -273,20 +273,38 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
 
 ## Program organization after startup
 
+    $0000 - $00FF   Game state
+    $0100 - $0182   Misc game routines
+    $0183 - $01FF   Stack space
     $0200 - $02FF   Sector read buffer
     $0300 - $032F   Direct sector reads via DOS RWTS
     $0330 - $03FF ? BIGMESS
     $0400 - $07FF   Playfield tile numbers stored on text page 1
-    $0800 - $08FF   Alternate / saved zero page
-    $0900 - $09FF
+    $0800 - $08FF   Zero page save area
+    $0900 - $09FF   Demo action data and source of psuedorandomness
     $0A00 - $3FFF
-    $2000 - $2BFF   Current character sprites (read from T05..09,S00..0B)
+    $2000 - $2BFF   Active player sprites (read from T05..09,S00..0B on side 1)
+    $4000 - $5FFF   Hires page 2 (display)
+    $6000 - $76FF
     $7700 - $84FF   Menu and submenu and action handers
     $8500 - $95FF   Data (or junk)
-    $9600 - $AEFF  
-    $B200 - $B5FF   Game state storage area, along with zero page
+    $9600 - $AEFF
+    $B200 - $B2FF ? Game state
+    $B300 - $B5FF   Item state
     $B600 - $B6FF   Sound routines and data; keypress checking
     $B700 - $BFFF   DOS (enough for RWTS)
+
+## Items
+
+There are 255 items in the world, each in a dedicated slot. The item type is determined by slot number ($00..$fe). Slot $FF is reserved for `Nothing`. Each item may either be present in the world (in a room, row and column set for the slot in the item state area), or in inventory, based on a slot flag.
+
+```
+$B300 - $B3FF Item slot map room
+$B400 - $B4FF Item slot screen column
+$B500 - $B5FF Item slot screen row, room high bit, and inventory/world flags
+```
+
+Details are currently in the disassembly output.
 
 ## Data formats
 

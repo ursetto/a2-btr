@@ -1186,7 +1186,7 @@
 "1255":"check the top 3 bits only",
 "1257":"are all 3 top bits set? (in practice byte is $E0)",
 "1259":"no, check other combos",
-"1261":"yep",
+"1261":"yep, display items",
 "1268":"001 -\u003e b4,b5,b6 -\u003e outside green ladder",
 "1274":"010 -\u003e b7,b8,b9 -\u003e inside brown ladder",
 "1280":"100 -\u003e ba,ba,ba -\u003e outside blue door",
@@ -1217,6 +1217,16 @@
 "1450":"overshot $03 by 40, add back in (didn\u0027t update $04)",
 "1454":"wipes out $03/04",
 "1457":"return to caller",
+"1460":"256 possible item positions (map rooms)",
+"1473":"bit 7 -- high bit of map position",
+"1481":"bit 6 -- unknown (must be set here)",
+"1486":"bit 5 -- item in inventory",
+"1491":"bits 0..4 (tile row)",
+"1494":"Y is the text row",
+"1510":"because tiles are double-wide?",
+"1512":"convert item num to tile ($fd-item*2)",
+"1517":"item tile column",
+"1524":"right half of tile",
 "1736":"lose a day",
 "1738":"restore spirit",
 "1742":"???",
@@ -1764,8 +1774,8 @@
 "BackgroundColor":0},
 
 "1458":{
-"Text":"Tile data is finished reading at this point.",
-"BoxMode":false,
+"Text":"Display all the free-standing items in this room, called after the background is displayed. These are all the items from $b500-$b5ff with bit 6 set and bit 5 clear. For item x (00..ff),\r\n\r\n$b300,x is the item\u0027s map position (room)\r\n$b500,x bit 7 is the map position high bit\r\n$b500,x bit 6 must be set (unknown purpose)\r\n$b500,x bit 5 must be clear (used to indicate item is in your inventory)\r\n$b500,x bits 0..4 are the screen tile row 0..20\r\n$b400,x is the screen tile column 0..39\r\n\r\nAll items are 2 tiles in width and the tile number is $fd - (item * 2).\r\nItems are duplicated in both tilesets.",
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
@@ -3605,6 +3615,27 @@
 "Value":32427,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1528":{
+"Label":"next_item",
+"Value":26104,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1460":{
+"Label":"loop",
+"Value":26036,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1458":{
+"Label":"display_map_items",
+"Value":26034,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{

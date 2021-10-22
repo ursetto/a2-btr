@@ -5,8 +5,9 @@ RWTSBUF @ $0200 256 ; 256-byte sector r/w buffer
 RWTSCMD_read = $01
 RWTSCMD_write = $02
 
-
-inventoryEtc @ $b500 256 ; bit 5 inventory, etc.
+itemStatePos @ $b300 256 ; 256 map positions, one per item
+itemStateCol @ $b400 256 ; 256 column tile positions, one per item
+itemState @ $b500 256 ; 7=mappos high bit, 6=in world, 5=in inv, 4..0=map row
 inv_shuba @ $b558 20
 
 item_shuba = $07
