@@ -775,7 +775,7 @@
 
 {
 "Offset":7286,
-"Addr":45686}],
+"Addr":61440}],
 "TypeHints":[{
 "Low":0,
 "High":0,
@@ -872,34 +872,34 @@
 "Hint":"Code"},
 
 {
-"Low":7287,
+"Low":7286,
 "High":7287,
-"Hint":"Code"},
+"Hint":"Data"},
 
 {
 "Low":7292,
 "High":7292,
-"Hint":"Code"},
+"Hint":"Data"},
 
 {
 "Low":7305,
 "High":7305,
-"Hint":"Code"},
+"Hint":"Data"},
 
 {
 "Low":7318,
 "High":7318,
-"Hint":"Code"},
+"Hint":"Data"},
 
 {
 "Low":7376,
 "High":7376,
-"Hint":"Code"},
+"Hint":"Data"},
 
 {
 "Low":7409,
 "High":7409,
-"Hint":"Code"},
+"Hint":"Data"},
 
 {
 "Low":7429,
@@ -1079,12 +1079,6 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"7409":{
-"Text":"Likely the rest of this file is junk. Most seems to be source code/variable names, which we\u0027ve seen several times in other junk areas.\r\n\r\nHowever, some of this area is used as storage; the B400 and B500 pages are used in SCREEN and in GAME2.",
-"BoxMode":true,
-"MaxWidth":80,
-"BackgroundColor":0},
-
 "7070":{
 "Text":"Addresses for last 4 lines of text page 1. Note these are included in the 24 lines of textlo/hi, so this is redundant.",
 "BoxMode":false,
@@ -1257,6 +1251,12 @@
 "Text":"The BIT operands below refer to code, not data. Given that, and since this resembles a simpler version of the input handling code in GAME2, this could be vestigial code.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"7286":{
+"Text":"The rest of this file is junk. There is some unused code, followed by source code/variable names, which we\u0027ve seen several times in other junk areas.\r\n\r\nWe set org arbitrarily outside the $B200-$B5FF area, since we handle these game storage areas in a project symbol file; otherwise this junk data would take precedence in operands.",
+"BoxMode":true,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -1301,12 +1301,6 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-7278960},
-
-"7286":{
-"Text":"The code below is very likely junk as $B200-$B5FF is used for game state.",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-256},
 
 "7409":{
 "Text":"Example variable names can be found in this junk area",
@@ -2258,6 +2252,97 @@
 "Value":42587,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1539":{
+"Label":"SCRN_grunspreke",
+"Value":39939,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"1542":{
+"Label":"SCRN_kiniport",
+"Value":39942,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"1536":{
+"Label":"SCRN_heal",
+"Value":39936,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"1883":{
+"Label":"pense",
+"Value":40283,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1551":{
+"Label":"SCRN_pense",
+"Value":39951,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"1548":{
+"Label":"SCRN_speak",
+"Value":39948,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"1633":{
+"Label":"speak",
+"Value":40033,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1560":{
+"Label":"SCRN_offer",
+"Value":39960,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2668":{
+"Label":"offer",
+"Value":41068,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2623":{
+"Label":"no_response_1",
+"Value":41023,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2642":{
+"Label":"no_response_2",
+"Value":41042,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2676":{
+"Label":"noone",
+"Value":41076,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2698":{
+"Label":"offer_what",
+"Value":41098,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -2646,6 +2731,18 @@
 "7278":{
 "Length":8,
 "Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7286":{
+"Length":123,
+"Format":"Junk",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7409":{
+"Length":783,
+"Format":"Junk",
 "SubFormat":"None",
 "SymbolRef":null}},
 

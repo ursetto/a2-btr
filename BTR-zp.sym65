@@ -21,6 +21,7 @@ levelFood @ $24 ; level of food
 levelRest @ $25 ; level of rest
 levelStamina @ $26 ; level of stamina
 limitSpirit @ $27 ; spirit limit
+limitFoodRest @ $2a ; not reported in status win
 maxWeight @ $2c ; max weight you can carry
 homePos @ $2d ; used when teleporting player home
 homeSide @ $2e ; used when teleporting player home
@@ -45,6 +46,7 @@ MENUROW_NEXT @ $74 ;next menu row, used only during movement
 temp75 @ $75
 temp76 @ $76
 temp77 @ $77 ; temp value
+temp78 @ $78 ; used during item selection
 temp7a @ $7a
 temp7b @ $7b
 TICKS @ $7c ; number of ticks until next minute (0..$FF)

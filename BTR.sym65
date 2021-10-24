@@ -2,6 +2,7 @@
 
 STACK @ $0100 256
 RWTSBUF @ $0200 256 ; 256-byte sector r/w buffer
+RWTSBUF_npc @ $02e1 ; whether NPC is present
 RWTSCMD_read = $01
 RWTSCMD_write = $02
 
@@ -10,7 +11,10 @@ itemStateCol @ $b400 256 ; 256 column tile positions, one per item
 itemState @ $b500 256 ; 7=mappos high bit, 6=in world, 5=in inv, 4..0=map row
 inv_shuba @ $b558 20
 
+item_pan_bread = $05
+item_fruit_nuts = $06
 item_shuba = $07
 item_token = $08
+item_berries = $0A
 item_fallaKey = $0D
 item_elixer = $0E

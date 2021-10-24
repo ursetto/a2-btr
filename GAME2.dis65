@@ -725,6 +725,57 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"SCRN_grunspreke":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_grunspreke",
+"Value":39939,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_heal":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_heal",
+"Value":39936,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_kiniport":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_kiniport",
+"Value":39942,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "SCRN_play_melody":{
 "DataDescriptor":{
 "Length":1,
@@ -1227,9 +1278,10 @@
 "1512":"convert item num to tile ($fd-item*2)",
 "1517":"item tile column",
 "1524":"right half of tile",
+"1692":"start the clock",
 "1736":"lose a day",
 "1738":"restore spirit",
-"1742":"???",
+"1742":"??? max food and rest?",
 "1750":"inline data; store addr-1 in $61/$62",
 "1756":"addr-1+1",
 "1760":"first byte of inline data is indent",
@@ -1409,7 +1461,8 @@
 "5932":"set top left of menu (0,0)",
 "5936":"next menucol/row, so we can unhighlight old row",
 "5938":"these are really temp vars, only used here",
-"5948":"get input (again?)",
+"5945":"jmp here when no effect (RENEW in Neshom)",
+"5948":"get input",
 "5951":"no button, branch",
 "5953":"button pressed, boop",
 "5961":"no button, check direction",
@@ -1435,10 +1488,18 @@
 "6023":"beep",
 "6028":"delay repeat",
 "6031":"get more input",
-"6042":"(0,0) [PAUSE]",
+"6034":"col 0, row 0 (PAUSE)",
+"6045":"row 1",
+"6062":"col 1",
+"6090":"col 2",
+"6118":"col 3",
+"6146":"col 4",
 "6150":"row 0",
 "6153":"row 1",
+"6161":"RENEW does nothing in Neshom realm",
 "6167":"row 2",
+"6174":"discard game loop",
+"6176":"return to menu",
 "6179":"row 3",
 "6181":"toggle sound",
 "6185":"display sound status",
@@ -1509,6 +1570,11 @@
 "8233":"temp, which food",
 "8337":"only the 2 Erdling",
 "8341":"can eat lapan",
+"8485":"gain 5 food",
+"8492":"cap at limit - 1",
+"8508":"lose 2 time periods",
+"8551":"lose 10 spirit",
+"8555":"floor",
 "9313":"time does not pass automatically",
 "9315":"in the neshom realm",
 "9337":"end of day?",
@@ -3636,6 +3702,188 @@
 "Value":26034,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8501":{
+"Label":"done",
+"Value":33077,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8557":{
+"Label":"done",
+"Value":33133,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8504":{
+"Label":"is_wissenberries",
+"Value":33080,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8857":{
+"Label":"done",
+"Value":33433,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8805":{
+"Label":"do_menu_inventory",
+"Value":33381,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6129":{
+"Label":"menu_inventory",
+"Value":30705,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6146":{
+"Label":"menu_status",
+"Value":30722,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6153":{
+"Label":"menu_renew",
+"Value":30729,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6164":{
+"Label":"renew",
+"Value":30740,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"9247":{
+"Label":"renew",
+"Value":33823,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5945":{
+"Label":"action_menu_no_effect",
+"Value":30521,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6167":{
+"Label":"menu_menu",
+"Value":30743,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6136":{
+"Label":"menu_grunspreke",
+"Value":30712,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6143":{
+"Label":"menu_kiniport",
+"Value":30719,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6087":{
+"Label":"menu_eat",
+"Value":30663,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6090":{
+"Label":"menu_drop",
+"Value":30666,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6101":{
+"Label":"menu_sell",
+"Value":30677,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6108":{
+"Label":"menu_heal",
+"Value":30684,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6115":{
+"Label":"menu_rest",
+"Value":30691,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6118":{
+"Label":"menu_examine",
+"Value":30694,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6080":{
+"Label":"menu_use",
+"Value":30656,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6073":{
+"Label":"menu_buy",
+"Value":30649,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6062":{
+"Label":"menu_take",
+"Value":30638,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6059":{
+"Label":"menu_offer",
+"Value":30635,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6052":{
+"Label":"menu_pense",
+"Value":30628,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6045":{
+"Label":"menu_speak",
+"Value":30621,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -4207,6 +4455,30 @@
 "Label":"PLAYER_Charn",
 "Part":"Low"}},
 
+"8418":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_pan_bread",
+"Part":"Low"}},
+
+"8451":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_fruit_nuts",
+"Part":"Low"}},
+
+"8504":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_berries",
+"Part":"Low"}},
+
 "9462":{
 "Length":5,
 "Format":"Dense",
@@ -4221,7 +4493,7 @@
 
 "9472":{
 "Length":4352,
-"Format":"Dense",
+"Format":"Junk",
 "SubFormat":"None",
 "SymbolRef":null}},
 
@@ -4540,6 +4812,33 @@
 "ClearPrevious":false},
 
 "6452":{
+"Variables":[],
+"ClearPrevious":true},
+
+"8188":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"which food was eaten",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tempEatenFood",
+"Value":120,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"8629":{
+"Variables":[],
+"ClearPrevious":true},
+
+"8897":{
 "Variables":[],
 "ClearPrevious":true}},
 

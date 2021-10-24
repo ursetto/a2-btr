@@ -279,7 +279,7 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
     $0200 - $02FF   Sector read buffer
     $0300 - $032F   Direct sector reads via DOS RWTS
     $0330 - $03FF ? BIGMESS
-    $0400 - $07FF   Playfield tile numbers stored on text page 1
+    $0400 - $07FF   Playfield tile numbers (text page 1)
     $0800 - $08FF   Zero page save area
     $0900 - $09FF   Demo action data and source of psuedorandomness
     $0A00 - $3FFF
@@ -287,7 +287,7 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
     $4000 - $5FFF   Hires page 2 (display)
     $6000 - $76FF
     $7700 - $84FF   Menu and submenu and action handers
-    $8500 - $95FF   Data (or junk)
+    $8500 - $95FF   Unused
     $9600 - $AEFF
     $B200 - $B2FF ? Game state
     $B300 - $B5FF   Item state

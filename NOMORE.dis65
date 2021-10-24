@@ -21,7 +21,8 @@
 "PlatformSymbolFileIdentifiers":["RT:Apple/F8-ROM.sym65",
 "RT:Apple/Cxxx-IO.sym65",
 "RT:Apple/C08x-DiskII.sym65",
-"RT:Apple/ProDOS8.sym65"],
+"PROJ:BTR.sym65",
+"PROJ:BTR-zp.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Apple/ProDOS8.cs",
 "RT:Apple/VisHiRes.cs",
 "PROJ:InlineBTRString.cs"],
@@ -960,7 +961,12 @@
 },
 
 "Comments":{
-"21":"discard caller return address"},
+"17":"check item = 00..FE",
+"21":"cycled thru all item numbers",
+"22":"discard caller return address",
+"68":"check if mapside is same as item\u0027s (bit 7)",
+"85":"bit 6 must be set",
+"90":"bit 5 must be clear"},
 
 "LongComments":{
 "-2147483647":{
@@ -977,10 +983,40 @@
 "BackgroundColor":-18751}},
 
 "UserLabels":{
-},
+"16":{
+"Label":"next_item",
+"Value":272,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"58":{
+"Label":"valid_item_num",
+"Value":314,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"78":{
+"Label":"side0",
+"Value":334,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"82":{
+"Label":"check_state",
+"Value":338,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"}},
 
 "OperandFormats":{
-},
+"131":{
+"Length":45,
+"Format":"Junk",
+"SubFormat":"None",
+"SymbolRef":null}},
 
 "LvTables":{
 },
