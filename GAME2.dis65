@@ -1575,6 +1575,7 @@
 "8508":"lose 2 time periods",
 "8551":"lose 10 spirit",
 "8555":"floor",
+"8903":"await button or direction",
 "9313":"time does not pass automatically",
 "9315":"in the neshom realm",
 "9337":"end of day?",
@@ -3882,6 +3883,41 @@
 "6045":{
 "Label":"menu_speak",
 "Value":30621,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8897":{
+"Label":"do_menu_status",
+"Value":33473,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8915":{
+"Label":"status",
+"Value":33491,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8912":{
+"Label":"ret",
+"Value":33488,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8903":{
+"Label":"loop",
+"Value":33479,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8918":{
+"Label":"display_status",
+"Value":33494,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},

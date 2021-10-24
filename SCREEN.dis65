@@ -43,7 +43,7 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"GAME1_1DB8":{
+"GAME1_BITTAB0":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -54,8 +54,127 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"GAME1_1DB8",
+"Label":"GAME1_BITTAB0",
 "Value":7608,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB1":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB1",
+"Value":7609,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB2":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB2",
+"Value":7610,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB3":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB3",
+"Value":7611,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB4":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB4",
+"Value":7612,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB5":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB5",
+"Value":7613,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB6":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB6",
+"Value":7614,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_BITTAB7":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_BITTAB7",
+"Value":7615,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -294,6 +413,23 @@
 "MultiMask":null,
 "Label":"GAME1_textlo",
 "Value":7584,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME1_tileset_bitmap":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_tileset_bitmap",
+"Value":7424,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -553,6 +689,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_message_wait":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_message_wait",
+"Value":30470,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_next_frame":{
 "DataDescriptor":{
 "Length":1,
@@ -651,6 +804,23 @@
 "MultiMask":null,
 "Label":"GAME2_PRNTSTR",
 "Value":24588,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME2_slot_to_item":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_slot_to_item",
+"Value":30467,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -954,13 +1124,14 @@
 "1957":"duplicate code at $0103/$0160 (but this one works)",
 "3848":"jumps into illegal instruction",
 "4678":"set hires and warm start",
+"4684":"may be unused",
 "4692":"Clear hires page 2 (was SCREEN)",
 "4704":"Set hires page 2 fullscreen",
 "4717":"$d0 == 0",
 "4723":"$d0 == 1",
 "4728":"when $d0 = $01..7f, set to $ff",
 "4730":"$d0 now guaranteed to be $80..$ff",
-"4743":"eh?",
+"4743":"nop??",
 "4842":"sample quest?",
 "4880":"player choice 0..5",
 "5342":"play sound 1 (high pitched beep)",
@@ -995,6 +1166,7 @@
 "6040":"no, update character",
 "6042":"and read their data",
 "6048":"swap game disk back in",
+"6077":"this extra code is here for highlighting",
 "6232":"selected character",
 "6234":"track 05..09",
 "6245":"read",
@@ -1074,7 +1246,7 @@
 "BackgroundColor":0},
 
 "6912":{
-"Text":"Copy SCREEN from $4000..$6000 into high memory at $9600..$B600, $5B00..FF to $B600, and $5A00..FF to $0900, to free up hires screen 2. Prompt the user to insert disk side 2, then clear the logo.\r\n\r\nContinue execution in high memory at $A846.",
+"Text":"Copy SCREEN from $4000..$6000 into high memory at $9600..$B600, $5900..FF to $B600, and $5A00..FF to $0900, to free up hires screen 2. Prompt the user to insert disk side 2, then clear the logo.\r\n\r\nContinue execution in high memory at $A846.\r\n\r\nNote that $AF00 is a copy of $B600, and $B000 is a copy of $0900.",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1159,18 +1331,6 @@
 
 "6557":{
 "Text":"This appears to check if sound #0 is queued (in flag $39) and plays it if so.",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":0},
-
-"6393":{
-"Text":"Probably junk bytes",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":0},
-
-"6649":{
-"Text":"Possibly junk bytes",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1279,7 +1439,7 @@
 "BackgroundColor":-18751},
 
 "5352":{
-"Text":"Here (while tracing $770c/$6b2a in GAME2)\r\n",
+"Text":"\r\n",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-23296},
@@ -2343,6 +2503,139 @@
 "Value":41098,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3551":{
+"Label":"key_is_useless_here",
+"Value":41951,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3281":{
+"Label":"trencher_beak_useless",
+"Value":41681,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3322":{
+"Label":"trencher_beak_breaks",
+"Value":41722,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3196":{
+"Label":"wand_is_useless",
+"Value":41596,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3106":{
+"Label":"lamp_is_lit",
+"Value":41506,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3167":{
+"Label":"wand_cuts_swiftly",
+"Value":41567,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3147":{
+"Label":"use_wand",
+"Value":41547,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3064":{
+"Label":"use_lamp",
+"Value":41464,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3235":{
+"Label":"use_trencher_beak",
+"Value":41635,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3383":{
+"Label":"use_rope",
+"Value":41783,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3228":{
+"Label":"check_beak",
+"Value":41628,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3376":{
+"Label":"check_rope",
+"Value":41776,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3520":{
+"Label":"use_temple_key",
+"Value":41920,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3582":{
+"Label":"use_falla_key",
+"Value":41982,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"},
+
+"6054":{
+"Label":"do_sample_quest",
+"Value":44454,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6153":{
+"Label":"print_sample_quest",
+"Value":44553,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6133":{
+"Label":"print_disk_storage",
+"Value":44533,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6109":{
+"Label":"print_continue",
+"Value":44509,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6085":{
+"Label":"print_start_game",
+"Value":44485,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -2462,6 +2755,46 @@
 "SubFormat":"None",
 "SymbolRef":null},
 
+"3066":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_honeyLamp",
+"Part":"Low"}},
+
+"3147":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_wand",
+"Part":"Low"}},
+
+"3228":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_beak",
+"Part":"Low"}},
+
+"3376":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_rope",
+"Part":"Low"}},
+
+"3520":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_templeKey",
+"Part":"Low"}},
+
 "3834":{
 "Length":2,
 "Format":"NumericLE",
@@ -2566,6 +2899,12 @@
 "SubFormat":"None",
 "SymbolRef":null},
 
+"6393":{
+"Length":7,
+"Format":"Junk",
+"SubFormat":"None",
+"SymbolRef":null},
+
 "6542":{
 "Length":5,
 "Format":"Dense",
@@ -2579,6 +2918,12 @@
 "SymbolRef":{
 "Label":"LASTKEY",
 "Part":"Low"}},
+
+"6649":{
+"Length":7,
+"Format":"Junk",
+"SubFormat":"None",
+"SymbolRef":null},
 
 "6656":{
 "Length":16,

@@ -46,7 +46,7 @@ MENUROW_NEXT @ $74 ;next menu row, used only during movement
 temp75 @ $75
 temp76 @ $76
 temp77 @ $77 ; temp value
-temp78 @ $78 ; used during item selection
+temp78 @ $78 ; temp, usually (always?) holding selected item
 temp7a @ $7a
 temp7b @ $7b
 TICKS @ $7c ; number of ticks until next minute (0..$FF)

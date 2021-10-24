@@ -276,7 +276,7 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
     $0000 - $00FF   Game state
     $0100 - $0182   Misc game routines
     $0183 - $01FF   Stack space
-    $0200 - $02FF   Sector read buffer
+    $0200 - $02FF   Sector read buffer (current screen data)
     $0300 - $032F   Direct sector reads via DOS RWTS
     $0330 - $03FF ? BIGMESS
     $0400 - $07FF   Playfield tile numbers (text page 1)
@@ -289,7 +289,10 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
     $7700 - $84FF   Menu and submenu and action handers
     $8500 - $95FF   Unused
     $9600 - $AEFF
-    $B200 - $B2FF ? Game state
+    $AF00 - $AFFF   Unused, copy of $B600
+    $B000 - $B0FF   Unused, copy of $0900
+    $B100 - $B1FF   Unused, copy of $5B00
+    $B200 - $B2FF   Game state
     $B300 - $B5FF   Item state
     $B600 - $B6FF   Sound routines and data; keypress checking
     $B700 - $BFFF   DOS (enough for RWTS)
