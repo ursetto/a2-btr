@@ -363,7 +363,7 @@
 "BackgroundColor":0},
 
 "5056":{
-"Text":"Character data and stats.\r\nStats are 14 bytes long, and copied into ZP starting at $23 during player initialization.\r\n",
+"Text":"Player initial stats. Each record is 14 bytes long, and copied into ZP starting at $23 during player initialization. Player 5 is the demo player and is identical to player 2 with 5 extra spirit level and limit.\r\n",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0}},

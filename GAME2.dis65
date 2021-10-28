@@ -1378,6 +1378,9 @@
 "2194":"test bit 7",
 "2197":"branch if 0",
 "2227":"test lowest 2 bits",
+"2424":"lower 4 bits in $45",
+"2426":"used only in LA065 in combo with $28",
+"2433":"upper 4 bits in $46 (shifted right 4)",
 "2503":"next page",
 "2517":"A and Y are now 0",
 "2744":"unset gameover",
@@ -4027,6 +4030,13 @@
 "Value":24956,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"57":{
+"Label":"GAME2_player_init",
+"Value":24633,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
