@@ -251,7 +251,13 @@
 "4952":"unknown",
 "4960":"the 24 hires text lines (high)",
 "4984":"unknown",
-"5012":"unknown"},
+"5012":"unknown",
+"5056":"player 0 stats",
+"5070":"player 1 stats",
+"5084":"player 2 stats",
+"5098":"player 3 stats",
+"5112":"player 4 stats",
+"5126":"player 5 (demo) stats"},
 
 "LongComments":{
 "-2147483647":{
@@ -353,6 +359,12 @@
 "4864":{
 "Text":"Bitmap of tilesets for each map position ($3F bytes * 8 bits = $1FF). See select_tileset_harder in GAME2.",
 "BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5056":{
+"Text":"Character data and stats.\r\nStats are 14 bytes long, and copied into ZP starting at $23 during player initialization.\r\n",
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0}},
 
@@ -697,6 +709,13 @@
 "Value":7424,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5056":{
+"Label":"GAME1_player_stats",
+"Value":7616,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -1036,75 +1055,45 @@
 "SubFormat":"None",
 "SymbolRef":null},
 
+"5056":{
+"Length":14,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5070":{
+"Length":14,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5084":{
+"Length":14,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5098":{
+"Length":14,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5112":{
+"Length":14,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5126":{
+"Length":14,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
 "5140":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5141":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5142":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5143":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5144":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5145":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5146":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5147":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5148":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5149":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5150":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"5151":{
-"Length":1,
-"Format":"NumericLE",
+"Length":12,
+"Format":"Junk",
 "SubFormat":"None",
 "SymbolRef":null},
 

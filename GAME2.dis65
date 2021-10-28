@@ -368,6 +368,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_player_stats":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_player_stats",
+"Value":7616,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_power_gained":{
 "DataDescriptor":{
 "Length":1,
@@ -1122,7 +1139,11 @@
 },
 
 "Comments":{
+"9":"local only",
+"24":"vector never used",
+"27":"local only",
 "33":"read next byte at $0900",
+"57":"vector never used",
 "85":"always",
 "87":"might be general game loop",
 "92":"$c9 == #$0d during intro",
@@ -1141,6 +1162,10 @@
 "210":"we\u0027re fine",
 "212":"starved of food or rest",
 "373":"phantom character 5 during demo",
+"375":"give the demo player a shuba",
+"383":"copy $0E bytes from player stats to cur stats",
+"385":"pointer to END of player\u0027s stats",
+"390":"copy from end to beginning",
 "472":"zero, handle regular doors",
 "474":"FF, go to her house",
 "476":"otherwise, teleport",
@@ -1998,6 +2023,18 @@
 
 "7361":{
 "Text":"Item weight table. Everything weighs 5 units except for tokens (1).",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"413":{
+"Text":"Offset to END of player stats. E.g. $0D = $00..$0D, $1B = $0E..$1B.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"367":{
+"Text":"Init player. Copies player\u0027s starting stats to active stats, resets the time, and sets carry weight to 0 (note: inventory is not zeroed out here). The demo player (5) has a shuba added.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -3920,9 +3957,121 @@
 "Value":33494,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3":{
+"Label":"GAME2_drawtile",
+"Value":24579,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"9":{
+"Label":"GAME2_write_tiles_to_text",
+"Value":24585,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"30":{
+"Label":"GAME2_read_playfield",
+"Value":24606,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"27":{
+"Label":"GAME2_teleport_home",
+"Value":24603,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"66":{
+"Label":"GAME2_calc_hires_textpos",
+"Value":24642,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"69":{
+"Label":"GAME2_writetile",
+"Value":24645,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"413":{
+"Label":"player_stat_offsets",
+"Value":24989,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"385":{
+"Label":"loop",
+"Value":24961,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"367":{
+"Label":"player_init",
+"Value":24943,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"380":{
+"Label":"notdemo",
+"Value":24956,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
+"375":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Binary",
+"SymbolRef":null},
+
+"413":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"414":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"415":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"416":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"417":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"418":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
 "583":{
 "Length":3,
 "Format":"NumericLE",
