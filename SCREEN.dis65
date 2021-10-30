@@ -876,6 +876,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_print_item_desc":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_print_item_desc",
+"Value":30479,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_printchar":{
 "DataDescriptor":{
 "Length":1,
@@ -1362,6 +1379,29 @@
 "2113":"our pense caused us to gain 1 spirit limit!",
 "2205":"I guess everything weighs 4?",
 "2257":"but why discard weight here",
+"2351":"loop over slots $00..$FE",
+"2355":"slot $FF is \"NOTHING\"",
+"2388":"in inventory?",
+"2391":"no, skip",
+"2401":"is item saleable?",
+"2404":"no, skip it",
+"2415":"beep",
+"2421":"button pressed",
+"2425":"didn\u0027t press up, loop",
+"2435":"NOTHING?",
+"2437":"selected something, branch",
+"2439":"nothing, just return",
+"2440":"?",
+"2476":"?",
+"2485":"clear item; permanently burned",
+"2495":"obtained token weighs 1",
+"2522":"item 0 ignored",
+"2523":"spirit lamp",
+"2525":"wand",
+"2530":"token",
+"2534":"key",
+"2535":"key",
+"2536":"elixer",
 "3848":"jumps into illegal instruction",
 "4678":"set hires and warm start",
 "4684":"may be unused",
@@ -1681,6 +1721,12 @@
 "Text":"Print NPC emotion/message (message number in A) at position X.\r\nThe message number is 1-based.\r\nMessage 0 is invalid and caller should display \"NO RESPONSE\".",
 "BoxMode":true,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"2522":{
+"Text":"Sellable items. One entry per item, $01 if we can sell it.\r\nBelow we annotate the non-sellable items.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -1698,6 +1744,12 @@
 
 "2257":{
 "Text":"Why discard weight here? Our conception may be wrong",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2440":{
+"Text":"Unsure what #$4A is for relating to item state",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -3130,6 +3182,69 @@
 "Value":40602,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2537":{
+"Label":"check_merchant_here",
+"Value":40937,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2522":{
+"Label":"sellable_items",
+"Value":40922,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2351":{
+"Label":"next_item",
+"Value":40751,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2418":{
+"Label":"loop",
+"Value":40818,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2430":{
+"Label":"sold",
+"Value":40830,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2385":{
+"Label":"some_item",
+"Value":40785,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2415":{
+"Label":"beep",
+"Value":40815,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2476":{
+"Label":"sell_it",
+"Value":40876,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2442":{
+"Label":"loop",
+"Value":40842,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -3656,6 +3771,46 @@
 "ClearPrevious":false},
 
 "1633":{
+"Variables":[],
+"ClearPrevious":true},
+
+"2302":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tempItemSlot",
+"Value":119,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tempItemNum",
+"Value":120,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"2537":{
 "Variables":[],
 "ClearPrevious":true},
 

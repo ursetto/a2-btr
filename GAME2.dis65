@@ -4156,6 +4156,13 @@
 "Value":30482,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5903":{
+"Label":"GAME2_print_item_desc",
+"Value":30479,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
