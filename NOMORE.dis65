@@ -977,7 +977,7 @@
 
 "Notes":{
 "0":{
-"Text":"Looks like some bytes are corrupt. Using any spirit action other than PENSE when you have insufficient spirit energy results in \"I HAVE NOTHING MORE TO GIVE\" instead of \"YOU NEED MORE SPIRIT ENERGY\", and then locks up. That code jumps to $0103, an illegal opcode. PENSE works because it does not use $0103, but its own copy of that code. Jump to $0100 should work, because it will execute harmless instructions on its way to $010E.\r\n\r\nEither the source disk was corrupt, there was some unhandled copy protection, or this version actually has a bug.\r\n\r\n$0100: JMP $010E ??\r\n$0103: JMP $0160 ??",
+"Text":"Looks like some bytes are corrupt. Using any spirit action other than PENSE when you have insufficient spirit energy results in \"I HAVE NOTHING MORE TO GIVE\" instead of \"YOU NEED MORE SPIRIT ENERGY\", and then locks up. That code jumps to $0103, an illegal opcode. PENSE works because it does not use $0103, but its own copy of that code. Jump to $0100 should work, because it will execute harmless instructions on its way to $010E.\r\n\r\nEither the source disk was corrupt, there was some unhandled copy protection, or this version actually has a bug.\r\n\r\n$0100: JMP $010E ??  ; STACK_npc_offer\r\n$0103: JMP $0160 ??  ; STACK_need_energy",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-18751}},

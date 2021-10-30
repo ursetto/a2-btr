@@ -317,6 +317,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_messages":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_messages",
+"Value":2560,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_odd_col_even_line_mask":{
 "DataDescriptor":{
 "Length":1,
@@ -397,7 +414,7 @@
 "Direction":"ReadWrite",
 "MultiMask":null,
 "Label":"GAME1_power_gained",
-"Value":6915,
+"Value":6912,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -538,23 +555,6 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"HTAB":{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"horiz text pos (next line at $28)",
-"HasWidth":true,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"HTAB",
-"Value":100,
-"Source":"Project",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
 "INVTEXT":{
 "DataDescriptor":{
 "Length":1,
@@ -619,6 +619,23 @@
 "MultiMask":null,
 "Label":"ODDLINE_MASK",
 "Value":95,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"power_gained":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"power_gained",
+"Value":6915,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -793,6 +810,40 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"SCRN_offer":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_offer",
+"Value":39960,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_pense":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_pense",
+"Value":39951,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "SCRN_play_melody":{
 "DataDescriptor":{
 "Length":1,
@@ -844,6 +895,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"SCRN_sell":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_sell",
+"Value":39957,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "SCRN_show_demo_text":{
 "DataDescriptor":{
 "Length":1,
@@ -874,6 +942,40 @@
 "MultiMask":null,
 "Label":"SCRN_sound_status",
 "Value":43081,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_speak":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_speak",
+"Value":39948,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCRN_triumph_melody":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCRN_triumph_melody",
+"Value":39966,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -1377,7 +1479,10 @@
 "2157":"hires page 2",
 "2194":"test bit 7",
 "2197":"branch if 0",
+"2224":"probably pseudo-randomness",
 "2227":"test lowest 2 bits",
+"2242":"the only place where the value (not bool) of NPC is used",
+"2249":"store top 4 bits (shifted to low bits)",
 "2424":"lower 4 bits in $45",
 "2426":"used only in LA065 in combo with $28",
 "2433":"upper 4 bits in $46 (shifted right 4)",
@@ -2050,7 +2155,7 @@
 "BackgroundColor":-256},
 
 "461":{
-"Text":"write into RWTSBUF",
+"Text":"write into RWTSBUF -- removes NPC",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -2741,7 +2846,7 @@
 "Label":"GAME2_read_0900",
 "Value":24609,
 "Source":"User",
-"Type":"GlobalAddr",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"},
 
 "4240":{
@@ -4035,6 +4140,20 @@
 "57":{
 "Label":"GAME2_player_init",
 "Value":24633,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2206":{
+"Label":"npc_present",
+"Value":26782,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5906":{
+"Label":"GAME2_lose_weight",
+"Value":30482,
 "Source":"User",
 "Type":"GlobalAddrExport",
 "LabelAnno":"None"}},

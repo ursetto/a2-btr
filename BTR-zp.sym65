@@ -38,6 +38,7 @@ STARVED_rest = $02
 GAMEOVER @ $3d ;game over bool (0/1)
 SOUNDFLG @ $4a ;0 = sound off, 1 = on
 NINEIDX @ $55 ;cur index into $900 block
+HTAB @ $64 ; horiz text pos (next line at +$28)
 WEIGHT @ $70 ; current item weight carried (< limitWeight)
 MENUCOL @ $71 ;menu column (0..4)
 MENUROW @ $72 ;menu row (0..3)

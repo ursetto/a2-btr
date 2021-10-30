@@ -315,6 +315,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_messages":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_messages",
+"Value":2560,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_odd_col_even_line_mask":{
 "DataDescriptor":{
 "Length":1,
@@ -366,6 +383,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_player_stats":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_player_stats",
+"Value":7616,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_power_gained":{
 "DataDescriptor":{
 "Length":1,
@@ -378,7 +412,7 @@
 "Direction":"ReadWrite",
 "MultiMask":null,
 "Label":"GAME1_power_gained",
-"Value":6915,
+"Value":6912,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -706,6 +740,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_lose_weight":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_lose_weight",
+"Value":30482,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_menu_input":{
 "DataDescriptor":{
 "Length":1,
@@ -859,6 +910,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_read_0900":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_read_0900",
+"Value":24609,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_read_playfield":{
 "DataDescriptor":{
 "Length":1,
@@ -974,6 +1042,23 @@
 "MultiMask":null,
 "Label":"GAME2_writetile",
 "Value":24645,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"power_gained":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"power_gained",
+"Value":6915,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -1237,10 +1322,46 @@
 "315":"maybe begin string or formatting byte",
 "765":"jumps right over this next data area",
 "1474":"junk",
+"1569":"X is the horiz text pos",
+"1571":"$08 holds A on entry",
+"1589":"reached desired message; print",
+"1601":"y=len",
+"1602":"advance 16-bit msg ptr by last msg len",
+"1618":"read bytes until $FF terminator",
+"1675":"looks like 0 if NPC offers an item",
+"1680":"NPC offers you an item (if available)",
+"1691":"checking if item is avail today, mechanism unclear",
+"1737":"spoken message variant #1 part 2",
+"1741":"spoken message variant #1 part 1",
+"1747":"spoken message variant #2 part 2",
+"1751":"spoken message variant #2 part 1",
+"1757":"null message, no response",
+"1760":"screen pos 1 -- top msg",
+"1766":"bottom message may be missing, ignore if so",
+"1768":"print bottom message, if any",
+"1783":"note that item was taken for today, I guess",
+"1867":"pseudo-random choice of melody, probably",
 "1878":"again, probably vestigial interrupt checking",
 "1886":"npc indicator?",
+"1912":"pense emotion requires 5 spirit limit",
 "1920":"duplicate code at $A7D2",
+"1951":"pense emotion consumes 1 spirit point",
 "1957":"duplicate code at $0103/$0160 (but this one works)",
+"2006":"npc emotion #1 (1-based)",
+"2014":"npc emotion #2 (1-based)",
+"2022":"location on screen",
+"2027":"use one point of spirit",
+"2031":"pense msg needs 10 limit (but no more cast points)",
+"2035":"can\u0027t pense messages, display nothing and continue",
+"2042":"msg must be in range, emotion works from anywhere",
+"2065":"message worked, may still get NO RESPONSE",
+"2078":"will return 1 of 2 messages, or no response",
+"2083":"npc message #1 (1-based)",
+"2091":"npc message #2 (1-based)",
+"2099":"location on screen",
+"2113":"our pense caused us to gain 1 spirit limit!",
+"2205":"I guess everything weighs 4?",
+"2257":"but why discard weight here",
 "3848":"jumps into illegal instruction",
 "4678":"set hires and warm start",
 "4684":"may be unused",
@@ -1542,6 +1663,24 @@
 "Text":"$45 and $46 come from $02E2 ($45 is the lower 4 bits, and $46 is the upper 4 bits \u003e\u003e 4). This data always exists at $02E2, so these are effectively precomputed temps for this map screen.\r\n\r\n$28 comes from the character stats, loaded at init time and never modified.\r\n\r\nEmpirically (based on map data), $46 will always be $00 (meaning $28) or $01 (meaning $29). $45 will be $00..$04 (never $05). \r\nBased on player stats, $28/$29 are always $00,$02,$03, or $05 (never $04 or $01).\r\n\r\nThe caller does a BCC (\u003c) on the result so it is natural that $28/$29 do not exactly match $45.\r\n\r\nCallers deal with NO RESPONSE etc. so it\u0027s possible this is alignment-related, although it is more fine-grained than the binary races.",
 "BoxMode":true,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"2580":{
+"Text":"Check if NPC is in range for normal speech, as well as facing you, and set the carry flag if so.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1614":{
+"Text":"Prints the desired message found above.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1569":{
+"Text":"Print NPC emotion/message (message number in A) at position X.\r\nThe message number is 1-based.\r\nMessage 0 is invalid and caller should display \"NO RESPONSE\".",
+"BoxMode":true,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -1556,6 +1695,12 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
+
+"2257":{
+"Text":"Why discard weight here? Our conception may be wrong",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
 
 "4711":{
 "Text":"how is $d0 set ... zp swap? set to 0 on startup. when set to $80, it skips the demo and goes direct to menu. after demo it is set to $01. I don\u0027t notice any difference between $d0 == ff and $d0 == 80.\r\n",
@@ -2761,6 +2906,230 @@
 "Value":44485,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2661":{
+"Label":"compare_alignment",
+"Value":41061,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"},
+
+"1910":{
+"Label":"npc_present",
+"Value":40310,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1949":{
+"Label":"spirit_limit_ok",
+"Value":40349,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1988":{
+"Label":"spirit_level_ok",
+"Value":40388,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1641":{
+"Label":"speak_with_whom",
+"Value":40041,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1665":{
+"Label":"npc_present",
+"Value":40065,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2580":{
+"Label":"check_npc_in_range",
+"Value":40980,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1557":{
+"Label":"SCRN_sell",
+"Value":39957,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2302":{
+"Label":"sell",
+"Value":40702,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2316":{
+"Label":"what_to_sell",
+"Value":40716,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2022":{
+"Label":"pense_message",
+"Value":40422,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2035":{
+"Label":"pense_message_failed",
+"Value":40435,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2038":{
+"Label":"spirit_limit_ok",
+"Value":40438,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2065":{
+"Label":"pense_message_ok",
+"Value":40465,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1632":{
+"Label":"rts",
+"Value":40032,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1614":{
+"Label":"print",
+"Value":40014,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1609":{
+"Label":"nocarry",
+"Value":40009,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1591":{
+"Label":"nextchar",
+"Value":39991,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1600":{
+"Label":"end_msg",
+"Value":40000,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1585":{
+"Label":"start_msg",
+"Value":39985,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1569":{
+"Label":"print_npc_message",
+"Value":39969,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1754":{
+"Label":"chkmsg",
+"Value":40154,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1747":{
+"Label":"variant2",
+"Value":40147,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1732":{
+"Label":"speak_ok",
+"Value":40132,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1878":{
+"Label":"loop",
+"Value":40278,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1862":{
+"Label":"play_random_triumph_melody",
+"Value":40262,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1566":{
+"Label":"SCRN_triumph_melody",
+"Value":39966,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2091":{
+"Label":"variant2",
+"Value":40491,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2099":{
+"Label":"print_pense_message",
+"Value":40499,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1859":{
+"Label":"return",
+"Value":40259,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2250":{
+"Label":"underweight",
+"Value":40650,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2202":{
+"Label":"check_weight",
+"Value":40602,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -2879,6 +3248,22 @@
 "Format":"NumericLE",
 "SubFormat":"None",
 "SymbolRef":null},
+
+"1577":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GAME1_messages",
+"Part":"Low"}},
+
+"1581":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GAME1_messages",
+"Part":"High"}},
 
 "3066":{
 "Length":2,
@@ -3217,6 +3602,63 @@
 "SymbolRef":null}},
 
 "LvTables":{
+"1569":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"message number",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tempMsgNum",
+"Value":8,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"ptr to start of cur msg",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tempStrPtr",
+"Value":9,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"index into string",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tempStrIdx",
+"Value":122,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"1633":{
+"Variables":[],
+"ClearPrevious":true},
+
 "5881":{
 "Variables":[{
 "DataDescriptor":{

@@ -1,8 +1,23 @@
 *SYNOPSIS Below the Root general symbols
 
 STACK @ $0100 256
+STACK_npc_offer @ $0100   ; vector -- bytes corrupt
+STACK_need_energy @ $0103 ; vector -- bytes corrupt
+
 RWTSBUF @ $0200 256 ; 256-byte sector r/w buffer
-RWTSBUF_npc @ $02e1 ; whether NPC is present
+RWTSBUF_npc @ $02e1 ; nonzero if NPC is present; may contain data in top 4 bits
+RWTSBUF_npc_pense_emot1 @ $02ea ; NPC pense emotion number (variant 1), 1-based
+RWTSBUF_npc_pense_mesg1 @ $02eb ; NPC pense message number (variant 1), 1-based
+RWTSBUF_npc_pense_emot2 @ $02ee ; NPC pense emotion number (variant 2), 1-based
+RWTSBUF_npc_pense_mesg2 @ $02ef ; NPC pense message number (variant 2), 1-based
+RWTSBUF_npc_speak_top1 @ $02e8  ; NPC spoken msg part 1 (variant 1)
+RWTSBUF_npc_speak_bot1 @ $02e9  ; NPC spoken msg part 2 (variant 1)
+RWTSBUF_npc_speak_top2 @ $02ec  ; NPC spoken msg part 1 (variant 2)
+RWTSBUF_npc_speak_bot2 @ $02ed  ; NPC spoken msg part 2 (variant 2)
+
+
+
+
 RWTSCMD_read = $01
 RWTSCMD_write = $02
 
