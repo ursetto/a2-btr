@@ -963,7 +963,8 @@
 "Comments":{
 "17":"check item = 00..FE",
 "21":"cycled thru all item numbers",
-"22":"discard caller return address",
+"22":"discard caller return address (speak module)",
+"55":"return to game",
 "68":"check if mapside is same as item\u0027s (bit 7)",
 "85":"bit 6 must be set",
 "90":"bit 5 must be clear"},
@@ -1009,6 +1010,20 @@
 "Value":338,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"14":{
+"Label":"npc_offer",
+"Value":270,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"96":{
+"Label":"need_more_energy",
+"Value":352,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{

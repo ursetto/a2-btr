@@ -1345,9 +1345,12 @@
 "1601":"y=len",
 "1602":"advance 16-bit msg ptr by last msg len",
 "1618":"read bytes until $FF terminator",
-"1675":"looks like 0 if NPC offers an item",
+"1675":"0 if NPC offers an item",
 "1680":"NPC offers you an item (if available)",
-"1691":"checking if item is avail today, mechanism unclear",
+"1689":"bits 0..6 last day we spoke to this NPC",
+"1691":"was item already taken today?",
+"1693":"no, speak normally to NPC",
+"1695":"yes, npc says slow down",
 "1737":"spoken message variant #1 part 2",
 "1741":"spoken message variant #1 part 1",
 "1747":"spoken message variant #2 part 2",
@@ -1356,10 +1359,22 @@
 "1760":"screen pos 1 -- top msg",
 "1766":"bottom message may be missing, ignore if so",
 "1768":"print bottom message, if any",
-"1783":"note that item was taken for today, I guess",
+"1779":"update bits 0..6 with current day number",
+"1781":"indicating we spoke to NPC today",
+"1783":"used e.g. when checking if item was taken today",
+"1817":"some npcs do this",
+"1824":"NPC type $40 gains us a level the 1st time we speak",
+"1834":"did we gain a level by speaking to npc earlier?",
+"1837":"yes, return",
+"1839":"no, level up",
+"1841":"record this NPC was spoken to",
+"1845":"gain 5 spirit",
+"1851":"fill spirit",
+"1853":"celebrate",
+"1856":"gain a level",
 "1867":"pseudo-random choice of melody, probably",
 "1878":"again, probably vestigial interrupt checking",
-"1886":"npc indicator?",
+"1886":"npc present?",
 "1912":"pense emotion requires 5 spirit limit",
 "1920":"duplicate code at $A7D2",
 "1951":"pense emotion consumes 1 spirit point",
@@ -1371,14 +1386,22 @@
 "2031":"pense msg needs 10 limit (but no more cast points)",
 "2035":"can\u0027t pense messages, display nothing and continue",
 "2042":"msg must be in range, emotion works from anywhere",
+"2054":"this is an animal",
+"2057":"check if we\u0027ve pensed it already",
+"2063":"we have, no response",
 "2065":"message worked, may still get NO RESPONSE",
 "2078":"will return 1 of 2 messages, or no response",
 "2083":"npc message #1 (1-based)",
 "2091":"npc message #2 (1-based)",
 "2099":"location on screen",
 "2113":"our pense caused us to gain 1 spirit limit!",
+"2133":"running counter of spirit increases, modulo 5",
+"2135":"(major events that add 5 don\u0027t affect this counter)",
+"2137":"have we gained 1 point 5 times?",
+"2141":"yes, gain a level (also resets gainSpirit to 0)",
 "2205":"I guess everything weighs 4?",
 "2257":"but why discard weight here",
+"2262":"maybe the take flag?",
 "2351":"loop over slots $00..$FE",
 "2355":"slot $FF is \"NOTHING\"",
 "2388":"in inventory?",
@@ -1402,6 +1425,11 @@
 "2534":"key",
 "2535":"key",
 "2536":"elixer",
+"2823":"getting warmer",
+"2867":"that was easy",
+"3059":"nothing",
+"3110":"pseudo-random bytes",
+"3116":"10..13",
 "3848":"jumps into illegal instruction",
 "4678":"set hires and warm start",
 "4684":"may be unused",
@@ -1727,6 +1755,18 @@
 "Text":"Sellable items. One entry per item, $01 if we can sell it.\r\nBelow we annotate the non-sellable items.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"2113":{
+"Text":"Pensing a new animal causes a gain of 1 spirit limit; record when this happens and if it happens 5 times, refill spirit and gain a level. (Recording running gain is a cheap, but probably unnecessarily optimized, way to check the new limitSpirit is divisible by 5.)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2859":{
+"Text":"Spoiler ahead: Offer Raamo a shuba or a rope to win.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -1737,16 +1777,16 @@
 "BackgroundColor":-7278960},
 
 "768":{
-"Text":"Unknown data",
+"Text":"Unknown data. Does not seem to be referenced.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
 
-"2257":{
-"Text":"Why discard weight here? Our conception may be wrong",
+"1796":{
+"Text":"Special handling for NPC type speaking.",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":0},
+"BackgroundColor":-256},
 
 "2440":{
 "Text":"Unsure what #$4A is for relating to item state",
@@ -2856,7 +2896,7 @@
 "LabelAnno":"None"},
 
 "3106":{
-"Label":"lamp_is_lit",
+"Label":"light_lamp",
 "Value":41506,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -3245,6 +3285,104 @@
 "Value":40842,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2933":{
+"Label":"use",
+"Value":41333,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1545":{
+"Label":"SCRN_use",
+"Value":39945,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2163":{
+"Label":"loop",
+"Value":40563,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2147":{
+"Label":"buy",
+"Value":40547,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1554":{
+"Label":"SCRN_buy",
+"Value":39954,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2144":{
+"Label":"ret",
+"Value":40544,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2014":{
+"Label":"emotion2",
+"Value":40414,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1760":{
+"Label":"do_msg",
+"Value":40160,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1773":{
+"Label":"update_state",
+"Value":40173,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"1817":{
+"Label":"spoketo",
+"Value":40217,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2859":{
+"Label":"offer_raamo",
+"Value":41259,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2867":{
+"Label":"win",
+"Value":41267,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2836":{
+"Label":"will_not_help",
+"Value":41236,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3054":{
+"Label":"use_item",
+"Value":41454,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -3262,105 +3400,9 @@
 "SubFormat":"HighAscii",
 "SymbolRef":null},
 
-"1255":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1256":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1257":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1258":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1259":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1260":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1261":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1262":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1263":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1264":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1265":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1266":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1267":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1268":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1269":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1270":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
-
-"1271":{
-"Length":1,
-"Format":"NumericLE",
+"768":{
+"Length":674,
+"Format":"Junk",
 "SubFormat":"None",
 "SymbolRef":null},
 
@@ -3379,6 +3421,22 @@
 "SymbolRef":{
 "Label":"GAME1_messages",
 "Part":"High"}},
+
+"2859":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_shuba",
+"Part":"Low"}},
+
+"2863":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_rope",
+"Part":"Low"}},
 
 "3066":{
 "Length":2,

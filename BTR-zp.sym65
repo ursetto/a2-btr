@@ -4,8 +4,8 @@ LASTKEY @ $02 ;last key pressed via chkkey
 TXTPTR @ $03 2 ;current tile position on text page 1
 playerX @ $19 ; tile X of player
 playerY @ $1a ; tile Y of player
-MAPPOS @ $1b ; playfield position (?)
-MAPSIDE @ $1c ; playfield side (?)
+MAPPOS @ $1b ; playfield position
+MAPHALF @ $1c ; playfield half (top/bottom); like top bit of MAPPOS
 
 PLAYER @ $20 ;active player (0-4)
 PLAYER_Neric = $00
@@ -24,21 +24,27 @@ limitSpirit @ $27 ; spirit limit
 limitFoodRest @ $2a ; not reported in status win
 maxWeight @ $2c ; max weight you can carry
 homePos @ $2d ; used when teleporting player home
-homeSide @ $2e ; used when teleporting player home
+homeHalf @ $2e ; used when teleporting player home
 homeX @ $2f ; used when teleporting player home
 homeY @ $30 ; used when teleporting player home
 
+temp34 @ $34 ; holds NPC type when $e0..$ef?
 doorNeshom @ $35 ; FF = door goes to Neshom house, 01 = Neshom realm
-
+spokeTo @ $37 ; spoke to or bought from NPC while on this screen
 fallaKeyOffered @ $38 ; if D'Ol Falla's key has been offered (?)
+litLamp @ $3a ; slot number of lit lamp, or 0 if unlit
 STARVED @ $3c ; 0 = ok, 1 = out of food, 2 = out of rest
 STARVED_food = $01
 STARVED_rest = $02
 
 GAMEOVER @ $3d ;game over bool (0/1)
+VISIONNUM @ $3e ; vision number to have next, 0..5
+gainSpirit @ $3f ; spirit gained so far, modulo 5
+lampFuel @ $44 ; number of rooms left in lamp; 00..13
 SOUNDFLG @ $4a ;0 = sound off, 1 = on
 NINEIDX @ $55 ;cur index into $900 block
 HTAB @ $64 ; horiz text pos (next line at +$28)
+INSIDE @ $67 ; Are we inside? Toggled when entering a door, or set manually on teleport.
 WEIGHT @ $70 ; current item weight carried (< limitWeight)
 MENUCOL @ $71 ;menu column (0..4)
 MENUROW @ $72 ;menu row (0..3)
@@ -46,8 +52,8 @@ MENUCOL_NEXT @ $73 ;next menu col, used only during movement
 MENUROW_NEXT @ $74 ;next menu row, used only during movement
 temp75 @ $75
 temp76 @ $76
-temp77 @ $77 ; temp value
-temp78 @ $78 ; temp, usually (always?) holding selected item
+selItemSlot @ $77 ; last selected item slot (00..FE or FF)
+selItemNum @ $78 ; last selected item number (01..0E)
 temp7a @ $7a
 temp7b @ $7b
 TICKS @ $7c ; number of ticks until next minute (0..$FF)

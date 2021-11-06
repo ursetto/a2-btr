@@ -14,17 +14,19 @@ RWTSBUF_npc_speak_top1 @ $02e8  ; NPC spoken msg part 1 (variant 1)
 RWTSBUF_npc_speak_bot1 @ $02e9  ; NPC spoken msg part 2 (variant 1)
 RWTSBUF_npc_speak_top2 @ $02ec  ; NPC spoken msg part 1 (variant 2)
 RWTSBUF_npc_speak_bot2 @ $02ed  ; NPC spoken msg part 2 (variant 2)
-
-
+RWTSBUF_npcnum @ $02f1 ; NPC number (00..??)  ; $49 raamo
+RWTSBUF_npctype @ $02f2 ; 0 offers item, 1 animal, $d0 dol falla, $40 gain level, $20-$2f ??, $c0 door 1, $c1 door 2, $e0-$ef,
 
 
 RWTSCMD_read = $01
 RWTSCMD_write = $02
 
+state_npc @ $b280 ; per npc bitfield; 7=gained a level from this NPC; 0..6=last spoken daynum
 itemStatePos @ $b300 256 ; 256 map positions, one per item
 itemStateCol @ $b400 256 ; 256 column tile positions, one per item
 itemState @ $b500 256 ; 7=mappos high bit, 6=in world, 5=in inv, 4..0=map row
-inv_shuba @ $b558 20
+inv_shuba @ $b558 $14
+inv_token @ $b56c $4b
 
 item_spiritLamp = $01
 item_honeyLamp = $02

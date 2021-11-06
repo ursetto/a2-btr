@@ -1246,6 +1246,7 @@
 "27":"local only",
 "33":"read next byte at $0900",
 "57":"vector never used",
+"75":"might redraw screen after drop/take lamp",
 "85":"always",
 "87":"might be general game loop",
 "92":"$c9 == #$0d during intro",
@@ -1268,16 +1269,22 @@
 "383":"copy $0E bytes from player stats to cur stats",
 "385":"pointer to END of player\u0027s stats",
 "390":"copy from end to beginning",
+"421":"already out of fuel",
+"425":"still has fuel left",
+"427":"lamp goes out",
+"433":"destroy lamp item",
+"440":"remove its weight",
+"461":"remove NPC presence by overwriting read map data",
 "472":"zero, handle regular doors",
 "474":"FF, go to her house",
 "476":"otherwise, teleport",
 "492":"next door takes you back",
 "494":"to her house",
-"523":"possibly locked door",
+"523":"possibly locked door, or presence of certain NPC",
 "527":"0=possibly locked (either has_key, or door_unlocked)",
 "532":"0=locked (either has_key, or door_unlocked)",
 "564":"note $9e is 1..3 below",
-"569":"possibly locked door",
+"569":"possibly locked door, or presence of certain NPC",
 "573":"possibly inventory check for this key",
 "578":"Y is 1..3 here (on entry must be nonzero)",
 "586":"first byte is map position",
@@ -1297,8 +1304,8 @@
 "652":"$2f6,$2f7,$2f8",
 "653":"$2f9,$2fa,$2fb",
 "817":"tileset 0 (temp var?)",
-"821":"side 0, choose tileset",
-"823":"side 1, check pos",
+"821":"top half, choose tileset",
+"823":"bottom half, check pos",
 "825":"test pos top bit",
 "827":"side 1 pos 00..7F, choose tileset",
 "829":"set tileset 1 ($5C=1)",
@@ -1659,6 +1666,7 @@
 "7099":"discard caller",
 "7153":"A=slot -\u003e Y=item",
 "7162":"otherwise fall thru, should fail",
+"7170":"anything can be taken during the demo",
 "7180":"anything in your house is fair game",
 "7182":"or in room 1c, 3b, 4b or 51",
 "7240":"can we carry this?",
@@ -1674,6 +1682,7 @@
 "7601":"do we have an item in this slot",
 "7606":"yes",
 "7607":"get item in Y",
+"7637":"nothing",
 "7842":"item in Y",
 "7845":"item",
 "7847":"length of item desc",
@@ -1914,7 +1923,7 @@
 "BackgroundColor":0},
 
 "851":{
-"Text":"Choose tileset for remaining positions -- side 0 00..FF and side 1 00..7F -- using the tileset bitmap. (Minus 4 special positions above.)",
+"Text":"Choose tileset for remaining positions -- 000..0FF and 100..17F -- using the tileset bitmap. (Minus 4 special positions above.) Note that 0160..017F is ground level.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2145,17 +2154,17 @@
 "Text":"Init player. Copies player\u0027s starting stats to active stats, resets the time, and sets carry weight to 0 (note: inventory is not zeroed out here). The demo player (5) has a shuba added.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"419":{
+"Text":"Called when moving to another room. This will expend 1 lamp fuel (if the lamp is lit), destroy your lit lamp if it runs out of fuel, and then read the new room data from disk.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
 "130":{
 "Text":"Multiple entries",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-256},
-
-"461":{
-"Text":"write into RWTSBUF -- removes NPC",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -2189,6 +2198,12 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-7278960},
+
+"2751":{
+"Text":"Unidentified RWTS call",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
 
 "2816":{
 "Text":"Jump vectors at $6b00",
@@ -2225,6 +2240,12 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-7278960},
+
+"6991":{
+"Text":"Handle sleeping in NPC $20..$23 nid",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
 
 "9472":{
 "Text":"The rest of the file $8500-$95FF appears to be data, or junk",
@@ -3774,7 +3795,7 @@
 "LabelAnno":"None"},
 
 "7240":{
-"Label":"take_offered",
+"Label":"take_legally",
 "Value":31816,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -4163,6 +4184,34 @@
 "Value":30479,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"7732":{
+"Label":"rts",
+"Value":32308,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"419":{
+"Label":"move_room",
+"Value":24995,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"459":{
+"Label":"dark",
+"Value":25035,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"455":{
+"Label":"light",
+"Value":25031,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -4549,6 +4598,14 @@
 "Format":"NumericLE",
 "SubFormat":"Binary",
 "SymbolRef":null},
+
+"7294":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"item_spiritLamp",
+"Part":"Low"}},
 
 "7361":{
 "Length":1,

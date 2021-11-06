@@ -325,18 +325,31 @@ Storage disk layout:
     T04,S00..04 Quest 4, "
     T05,S00..04 Quest 5, "
 
+## Map
+
+The map position is a 9-bit value: 32 screens wide, and 16 screens high. The current position is stored as a 16-bit value at $1B:
+
+          1B       1C
+    YYYXXXXX 0000000Y
+
+where (0,0) is at the upper left. Thus, moving down a screen advances the position by $20. There's no distinction between inside and outside on the map — doors simply teleport you to a predefined X, Y.
+The game does keep track of inside and outside for lighting and stealing purposes, but door destinations don't include an inside or outside value; it's relative, toggled on door entry.
+
+Notable positions:
+
+    0175 Outside house with Wand (003B inside)
+    01EC Inside Vatar's house (you can kiniport your body off the map here)
+
 ## Side B layout
 
-T01..T20,S00..0F of side B contain playfield tile data. Each sector represents one screen. The 4-bit sector number comes from the low 4 bits of $1B. The 5-bit track number comes from the high 4 bits of $1B, plus the low bit in $1C as the top bit, plus 1 (since tracks start at 1).
+T01..T20,S00..0F of side B contain playfield tile data. Each sector represents one screen. The 4-bit sector number comes from the low 4 bits of $1B. The 5-bit track number comes from the high 4 bits of $1B, plus the low bit in $1C as the top bit, plus 1 (since tracks start at 1). So the 32x16 map is logically laid out as 16x32 (sector * track).
 
-It is likely (but undetermined) that $1C is a flag denoting the outside or inside of the map.
-
-The initial tile data is run-length encoded. It starts at sector offset $01 and consists of either a tile byte 00..7F (high bit clear), or a tile byte (high bit set) + repeat byte.
-
+The initial tile data is run-length encoded. It starts at sector offset $01 and consists of either a tile byte 00..7F (high bit clear), or a tile byte (high bit set) + repeat byte. (Further info in the disassembly.)
 
 ## Amusements
 
 - During the intro scene, set memory location $C4 (demo mode) to 0. This will turn off demo mode and let you play the intro screens. If you go up, you'll be in the Grand Hall; if you go left, you'll be in Temple Grund. Going a couple screens right will lock the game. You can also play the sample quest in this way, although it's basically like starting a new game from a normally-inaccessible position.
+- $67 is the "inside" flag (0 or 1) and is simply toggled when entering a door, or set explicitly during certain major teleport events (like running out of food or being captured). Flipping its value flips the game's concept of inside/outside for a while. Since anything outside is legal to pick up, you can loot all the shops you like, but stuff laying around in the world can't be taken.
 
 ## Bugs
 
