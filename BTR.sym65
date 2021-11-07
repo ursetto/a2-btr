@@ -21,7 +21,8 @@ RWTSBUF_npctype @ $02f2 ; 0 offers item, 1 animal, $d0 dol falla, $40 gain level
 RWTSCMD_read = $01
 RWTSCMD_write = $02
 
-state_npc @ $b280 ; per npc bitfield; 7=gained a level from this NPC; 0..6=last spoken daynum
+state_npc1 @ $b200
+state_npc @ $b280 ; per npc bitfield; 7=gained a level from this NPC; 0..6=last spoken daynum or 0..4=time of day (NPC $E0..$EF)
 itemStatePos @ $b300 256 ; 256 map positions, one per item
 itemStateCol @ $b400 256 ; 256 column tile positions, one per item
 itemState @ $b500 256 ; 7=mappos high bit, 6=in world, 5=in inv, 4..0=map row

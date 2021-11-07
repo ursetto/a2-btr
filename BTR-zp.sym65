@@ -2,6 +2,12 @@
 
 LASTKEY @ $02 ;last key pressed via chkkey
 TXTPTR @ $03 2 ;current tile position on text page 1
+
+temp08 @ $08
+temp09 @ $09
+temp0a @ $0a
+temp11 @ $11
+
 playerX @ $19 ; tile X of player
 playerY @ $1a ; tile Y of player
 MAPPOS @ $1b ; playfield position
@@ -17,18 +23,19 @@ PLAYER_Charn = $04
 timeOfDay @ $21 ; 0 (early morning) .. 7 (late night)
 dayNum @ $22 ; day number (1-based)
 levelSpirit @ $23 ; level of spirit
-levelFood @ $24 ; level of food
-levelRest @ $25 ; level of rest
+levelFood @ $24 ; level of food, max limit-1
+levelRest @ $25 ; level of rest, max limit-1
 levelStamina @ $26 ; level of stamina
 limitSpirit @ $27 ; spirit limit
-limitFoodRest @ $2a ; not reported in status win
+limitFood @ $2a ; not shown, levelStamina/2 + 1
+limitRest @ $2b ; not shown, levelStamina/2 + 1
 maxWeight @ $2c ; max weight you can carry
 homePos @ $2d ; used when teleporting player home
 homeHalf @ $2e ; used when teleporting player home
 homeX @ $2f ; used when teleporting player home
 homeY @ $30 ; used when teleporting player home
 
-temp34 @ $34 ; holds NPC type when $e0..$ef?
+temp34_npctype @ $34 ; holds NPC type when $e0..$ef? Not really a temp.
 doorNeshom @ $35 ; FF = door goes to Neshom house, 01 = Neshom realm
 spokeTo @ $37 ; spoke to or bought from NPC while on this screen
 fallaKeyOffered @ $38 ; if D'Ol Falla's key has been offered (?)
@@ -45,6 +52,7 @@ SOUNDFLG @ $4a ;0 = sound off, 1 = on
 NINEIDX @ $55 ;cur index into $900 block
 HTAB @ $64 ; horiz text pos (next line at +$28)
 INSIDE @ $67 ; Are we inside? Toggled when entering a door, or set manually on teleport.
+zp6b @ $6b ; updated at $6983
 WEIGHT @ $70 ; current item weight carried (< limitWeight)
 MENUCOL @ $71 ;menu column (0..4)
 MENUROW @ $72 ;menu row (0..3)
@@ -59,7 +67,13 @@ temp7b @ $7b
 TICKS @ $7c ; number of ticks until next minute (0..$FF)
 MINUTES @ $7d ; number of minutes until next time period (0..$25)
 
-FREEZE @ $83 ; always 0, but if 1, game freezes on win or lose
+temp82 @ $82
+temp89 @ $89 2
+temp8b @ $8b
+playerXold @ $9c
+playerYold @ $9d
+
+waitMelody @ $83 ; always 0, but could be interrupt placeholder
 VIRTBTN @ $84 ; virtual button press, used only in kbd handler
 XDIR @ $85 ;last x dir pressed, -1 (left) or 1 (right)
 YDIR @ $86 ;last y dir pressed, -1 (up) or 1 (down)
@@ -68,8 +82,12 @@ FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
 FACING @ $95 ;FF=left, 01=right facing
 doorTransit @ $9e ; 1..3 (entering onscreen door #) or 0
 enterMenu @ $9f ; show menu on next frame
+zpA1 @ $a1 ; unknown, but may be 0 or 1
 MOVING @ $a2 ;1=moving,0=stationary
 JOYFLG @ $b1 ;01 = joystick, 00 = kbd
+tempB7 @ $b7 ; temp used only in handle_food_rest
+foodRestTimer @ $b8 ; remaining time until food/rest decreases
+zpBC_bellrings @ $bc ; if 1, spirit bell rings, if 0, get attacked
 DEMOWAIT @ $c0 ; number of frames to wait
 DEMOLAST @ $c1 ; latched movement byte
 DEMOPTR @ $c2 ; ptr to current demo byte

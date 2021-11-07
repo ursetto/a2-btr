@@ -1264,6 +1264,7 @@
 "194":"do not update on next frame",
 "210":"we\u0027re fine",
 "212":"starved of food or rest",
+"222":"unclear when this happens",
 "373":"phantom character 5 during demo",
 "375":"give the demo player a shuba",
 "383":"copy $0E bytes from player stats to cur stats",
@@ -1415,7 +1416,9 @@
 "1692":"start the clock",
 "1736":"lose a day",
 "1738":"restore spirit",
-"1742":"??? max food and rest?",
+"1742":"limitFood and limitRest are always identical, so",
+"1744":"I guess they realized checking 2 vars was pointless",
+"1745":"restore food and rest (to limit - 1)",
 "1750":"inline data; store addr-1 in $61/$62",
 "1756":"addr-1+1",
 "1760":"first byte of inline data is indent",
@@ -1484,10 +1487,14 @@
 "2139":"offset into hireshi ($20+$20 will be page 2)",
 "2149":"hires line table",
 "2157":"hires page 2",
+"2191":"differs from state_npc",
 "2194":"test bit 7",
-"2197":"branch if 0",
+"2197":"if 0",
+"2215":"npctype $e0..$ef -- check state bits 0..4",
 "2224":"probably pseudo-randomness",
 "2227":"test lowest 2 bits",
+"2229":"25% chance?",
+"2237":"update NPC\u0027s state with current time of day",
 "2242":"the only place where the value (not bool) of NPC is used",
 "2249":"store top 4 bits (shifted to low bits)",
 "2424":"lower 4 bits in $45",
@@ -1506,6 +1513,8 @@
 "3082":"\u003e $BC",
 "3084":"$E0 == BA..BC; becomes door pointer 1..3",
 "3105":"bonk?",
+"3558":"may be 0 or 1 -- flip bit",
+"3565":"choose byte 0 or 1",
 "3627":"and return to caller",
 "3632":"game paused; clear carry",
 "3638":"$a3 \u003c $10 or",
@@ -1517,20 +1526,23 @@
 "4504":"subtract B9",
 "4506":"result is 1..3",
 "4508":"pause during transit",
+"4512":"use 10 food during a door transit",
 "4514":"in neshom\u0027s house or realm?",
 "4516":"yep, return; never starve",
+"4518":"temp used only for subtracting X from A",
 "4538":"starved of food",
 "4542":"pause",
 "4552":"starved of rest",
 "4556":"pause",
 "4563":"a door tile",
-"4594":"a source of pseudo-randomness?",
-"4597":"once in a while, this happens",
-"4601":"20 inventory slots",
+"4577":"might be checking spirit bell in inventory",
+"4591":"spirit bell rings?",
+"4594":"pseudo-randomness?",
+"4597":"essentially, a 1 in 16 chance to tear",
+"4601":"20 shuba inventory slots",
 "4606":"check if slot is occupied by a shuba",
 "4615":"clear inventory slot",
 "4629":"ow",
-"4652":"temp, I believe",
 "4679":"loop 11 times",
 "4682":"E0:  0, 0",
 "4683":"E1: -1, 0",
@@ -1544,7 +1556,17 @@
 "4691":"E9: -1,-2",
 "4692":"EA:  1,-2",
 "4719":"$89 {addr/2} is temp",
+"5094":"\u003e= 30 days, gifted quester",
+"5121":"\u003e= 15 days, highly gifted quester",
+"5155":"\u003c 15 days, master quester",
 "5180":"again the weird loop that never loops",
+"5199":"Save old player X,Y for later erase",
+"5417":"probably related to the 6 tiles printed",
+"5429":"skip to next row if row \u003c 0",
+"5433":"or if row \u003e 19 (why not just exit)",
+"5455":"draw tile in A",
+"5462":"3 times",
+"5471":"6 times",
 "5553":"clear the kbd movement latches",
 "5564":"branch if not moving up",
 "5566":"or clear button press if we are moving up",
@@ -1658,6 +1680,11 @@
 "6438":"col #s of first col of text",
 "6442":"col #s of each menu col",
 "6447":"width of each menu col",
+"6655":"E0 = kidnapped by salaat",
+"6669":"E1 = D\u0027OL SALAAT attack",
+"6753":"E2 = kidnapped by nekom",
+"6763":"otherwise (E3..EF?) = NEKOM attack",
+"6961":"cap level of rest",
 "7049":"thrice",
 "7053":"tick",
 "7061":"tock",
@@ -2160,6 +2187,30 @@
 "Text":"Called when moving to another room. This will expend 1 lamp fuel (if the lamp is lit), destroy your lit lamp if it runs out of fuel, and then read the new room data from disk.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"1961":{
+"Text":"Input: A = tile number.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4704":{
+"Text":"Input: X=col, Y=line. Output: A=tile at X,Y. A=0 if X=-1, X=40, or Y\u003c0.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5408":{
+"Text":"Redraw a 3x6 tile area at the old player position ($9c-1,$9d-5), copying tiles from the text screen. This erases the old player.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4514":{
+"Text":"(Multiple entry.) X is the amount to decrease food/rest by ($0A, $01, ...). Subtract this from the food/rest timer, unless we are in the Neshom realm, where time does not pass.\r\n\r\nIf the food/rest timer falls below zero, decrease food and rest by 1 each. The timer ranges from 00..FF so no post-adjustment is needed.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -2199,6 +2250,12 @@
 "MaxWidth":80,
 "BackgroundColor":-7278960},
 
+"2232":{
+"Text":"May handle periodic NPC behavior... walking?",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
 "2751":{
 "Text":"Unidentified RWTS call",
 "BoxMode":false,
@@ -2217,14 +2274,8 @@
 "MaxWidth":80,
 "BackgroundColor":-256},
 
-"4514":{
-"Text":"Multiple entry. $b7/b8 may be food/rest timers.",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-18751},
-
-"5196":{
-"Text":"Possible this draws the player.",
+"4561":{
+"Text":"Suspect this is checking if we are in front of a certain type of door in the caves, and if so, sets the flag for the spirit bell to ring.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -4212,7 +4263,224 @@
 "Value":25031,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
-"LabelAnno":"None"}},
+"LabelAnno":"None"},
+
+"5442":{
+"Label":"col",
+"Value":30018,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5427":{
+"Label":"row",
+"Value":30003,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4731":{
+"Label":"tile0",
+"Value":29307,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4704":{
+"Label":"get_tile_at_xy",
+"Value":29280,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5467":{
+"Label":"nextrow",
+"Value":30043,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5458":{
+"Label":"nextcol",
+"Value":30034,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5408":{
+"Label":"erase_old_player",
+"Value":29984,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2822":{
+"Label":"GAME2_erase_player",
+"Value":27398,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5199":{
+"Label":"draw_player",
+"Value":29775,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5196":{
+"Label":"redraw_player",
+"Value":29772,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2819":{
+"Label":"GAME2_draw_player",
+"Value":27395,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2828":{
+"Label":"GAME2_redraw_player",
+"Value":27404,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5121":{
+"Label":"highly_gifted",
+"Value":29697,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5155":{
+"Label":"master_quester",
+"Value":29731,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5175":{
+"Label":"melody",
+"Value":29751,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5407":{
+"Label":"rts",
+"Value":29983,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2200":{
+"Label":"check_npc_present",
+"Value":26776,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2548":{
+"Label":"spirit_bell_rings",
+"Value":27124,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"215":{
+"Label":"check_spirit_bell_rings",
+"Value":24791,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6588":{
+"Label":"kidnapped_by_nekom",
+"Value":31164,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6662":{
+"Label":"finish_attack",
+"Value":31238,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6753":{
+"Label":"nekom_kidnap",
+"Value":31329,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6763":{
+"Label":"nekom_attack",
+"Value":31339,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6669":{
+"Label":"salaat_attack",
+"Value":31245,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"6653":{
+"Label":"attacked",
+"Value":31229,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5918":{
+"Label":"GAME2_attacked",
+"Value":30494,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"222":{
+"Label":"get_attacked",
+"Value":24798,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"130":{
+"Label":"game_loop",
+"Value":24706,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"},
+
+"6500":{
+"Label":"kidnapped_by_salaat",
+"Value":31076,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6585":{
+"Label":"cont",
+"Value":31161,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4561":{
+"Label":"check_cave_door",
+"Value":29137,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"}},
 
 "OperandFormats":{
 "375":{
@@ -4415,14 +4683,6 @@
 "SubFormat":"Decimal",
 "SymbolRef":null},
 
-"2206":{
-"Length":3,
-"Format":"NumericLE",
-"SubFormat":"Symbol",
-"SymbolRef":{
-"Label":"RWTSBUF",
-"Part":"Low"}},
-
 "2555":{
 "Length":21,
 "Format":"StringGeneric",
@@ -4503,6 +4763,24 @@
 "Length":1,
 "Format":"NumericLE",
 "SubFormat":"None",
+"SymbolRef":null},
+
+"5094":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5121":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5431":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
 "SymbolRef":null},
 
 "5672":{
@@ -5021,6 +5299,10 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],
 "ClearPrevious":false},
+
+"1268":{
+"Variables":[],
+"ClearPrevious":true},
 
 "1750":{
 "Variables":[{
