@@ -1209,6 +1209,11 @@
 "Hint":"InlineData"},
 
 {
+"Low":2846,
+"High":2846,
+"Hint":"Code"},
+
+{
 "Low":2852,
 "High":2852,
 "Hint":"Code"},
@@ -1504,15 +1509,59 @@
 "2517":"A and Y are now 0",
 "2744":"unset gameover",
 "2816":"game tick",
+"2837":"called in SCREEN",
+"2843":"called in SCREEN",
+"2846":"get_tile_at_xy",
 "2855":"external entry point",
+"2874":"May indicate player needs to be erased",
+"2890":"?",
 "2948":"not falling, branch",
 "2950":"did we fall less than 6 tiles?",
 "2954":"\u003e=6 tiles, jsr",
 "2962":"reset fall count",
+"2996":"save old xdir ?",
+"3001":"no button pressed",
+"3003":"(virtual) button press",
+"3005":"have we fallen \u003e= 2 tiles?",
+"3009":"and no solid ground below us?",
+"3013":"and ???",
+"3017":"then do shuba check, we may fly",
+"3024":"ignore x motion if we are standing on air",
+"3026":"this tile will be handled as air",
+"3034":"face the way we are moving",
+"3052":"not moving, check door etc.",
+"3054":"moving up, check door etc.",
+"3056":"moving down, check tile below us",
+"3063":"not solid, I guess we can enter doors while falling?",
+"3065":"solid ground, pressing button+down enters menu",
 "3078":"\u003c $BA",
 "3082":"\u003e $BC",
 "3084":"$E0 == BA..BC; becomes door pointer 1..3",
-"3105":"bonk?",
+"3087":"the tile under our feet, checked above",
+"3089":"branch if on solid ground",
+"3091":"only air below us, fall one tile",
+"3101":"have we fallen 2 tiles",
+"3105":"yes, play this sound, which appears to make no sound",
+"3107":"change to #$01 to beep after falling 2 tiles",
+"3115":"ladder middle tile",
+"3119":"vine middle tile",
+"3133":"on ladder; skip horiz motion check",
+"3138":"no horiz motion; check vertical",
+"3144":"moved opposite dir we are facing",
+"3146":"update facing direction, and cancel movement",
+"3169":"no vertical motion",
+"3171":"moving down",
+"3173":"we are moving up",
+"3197":"move up 1 tile",
+"3201":"left ladder tile",
+"3205":"left vine tile",
+"3211":"right ladder tile",
+"3215":"right vine tile",
+"3229":"is tile at knee climbable?",
+"3233":"no, try to crawl",
+"3235":"already crawling, return",
+"3239":"now set crawl flag",
+"3244":"signal climb start?",
 "3558":"may be 0 or 1 -- flip bit",
 "3565":"choose byte 0 or 1",
 "3627":"and return to caller",
@@ -1520,7 +1569,9 @@
 "3638":"$a3 \u003c $10 or",
 "3640":"$a3 \u003e $15; clear carry",
 "3648":"check all shuba slots",
-"3661":"no shuba",
+"3661":"no shuba, return to normal processing",
+"3774":"writes to $9b are contained here",
+"3853":"maintain A4=A3+1",
 "4219":"check lower 3 bits",
 "4503":"A is BA..BC on entry (the door tile)",
 "4504":"subtract B9",
@@ -1556,6 +1607,20 @@
 "4691":"E9: -1,-2",
 "4692":"EA:  1,-2",
 "4719":"$89 {addr/2} is temp",
+"4735":"Store 0 in $F0..$F2",
+"4745":"(0,0,0) -- $00",
+"4753":"(1,1,0) -- $01..06",
+"4759":"(0,0,0) -- $07..18",
+"4767":"(1,1,0) -- $19..1b",
+"4771":"always",
+"4777":"(1,1,0) -- $75",
+"4785":"(0,0,0) -- $1c..74,76..b3",
+"4791":"(1,0,1) -- $b4..b9",
+"4803":"(0,0,0) -- $e0 (when $9a == 0)",
+"4805":"(1,1,0) -- $e0 (when $9a == 1)",
+"4813":"(0,0,0) -- $ba..$de,$e1..$ff",
+"4815":"(1,1,0) -- $df",
+"4840":"if facing left",
 "5094":"\u003e= 30 days, gifted quester",
 "5121":"\u003e= 15 days, highly gifted quester",
 "5155":"\u003c 15 days, master quester",
@@ -2040,7 +2105,7 @@
 "BackgroundColor":0},
 
 "3074":{
-"Text":"Check the tile we are in front of, and if it is a door tile (BA,BB,BC) then handle it as a door (1..3).",
+"Text":"Check the tile we are in front of, and if it is a door tile (BA,BB,BC) then handle it as a door (1..3). We will only reach this when the (virtual) button is pressed.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2058,19 +2123,19 @@
 "BackgroundColor":0},
 
 "4685":{
-"Text":"the 3 tiles at the player\u0027s knees (center, left, right)",
+"Text":"the 3 tiles under the player (center, left, right)",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "4688":{
-"Text":"the 3 tiles directly below the player\u0027s feet",
+"Text":"the 3 tiles at knee (-1), arm (-2) and shoulder (-3) height",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "4691":{
-"Text":"the 2 tiles (left, right) 2 down from the player",
+"Text":"the 2 tiles (left, right) at -2 (arm level), which is the height of items on tables and shelves for taking",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2209,6 +2274,66 @@
 
 "4514":{
 "Text":"(Multiple entry.) X is the amount to decrease food/rest by ($0A, $01, ...). Subtract this from the food/rest timer, unless we are in the Neshom realm, where time does not pass.\r\n\r\nIf the food/rest timer falls below zero, decrease food and rest by 1 each. The timer ranges from 00..FF so no post-adjustment is needed.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4734":{
+"Text":"Maps a tile in A to 3 output values in $F0, $F1, $F2.\r\n\r\nOn return ($F0,$F1,$F2) is (0,0,0) for all A except:\r\n  (1,1,0) when A = 01..06, 19..1b (bush), 75, df\r\n  (1,0,1) when A = b4..b6 (ladder) and b7..b9 (vine)\r\n  (1,1,0) when A = e0 and $9A != 0\r\n\r\nIt\u0027s likely these denote permeability in different directions, with $F2=1 as climbable. The (1,1,0) tiles appear to be solid.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3113":{
+"Text":"Check if the player is centered on a ladder/vine, with a center ladder/vine tile both at their feet and just under them. This implies the player is on a ladder, since both tiles wouldn\u0027t be present if you are at the top or the bottom of a ladder. Since horizontal motion on a ladder is disallowed, skip XDIR handling if on the ladder.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3166":{
+"Text":"Check vertical motion. If moving up, and the tile at our feet is climbable, start climbing up; if it\u0027s not climbable then stand up from a crawl (if needed).\r\n\r\n(You can arrive here after already confirming we are on the ladder. The below checks are more general though, since you don\u0027t need to be centered on the ladder, and it may be above or below you.)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3136":{
+"Text":"Check horizontal motion. If yes, and we are facing the opposite direction, face the new direction and cancel motion.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3224":{
+"Text":"If moving down and the tile below us is climbable, start climbing down; if it\u0027s not climbable, start crawling (if not already doing so).",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3193":{
+"Text":"Climb; move player up 1 tile. Snap to the center of the ladder or vine.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3244":{
+"Text":"Climb down; move down one tile. Snap to the center of the ladder or vine.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3050":{
+"Text":"Virtual button press, check Y motion. (Remember, keyboard input is translated into the joystick API, so SPACE -\u003e JOY DOWN + BUTTON, which enters the menu below.)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3020":{
+"Text":"Reached here after (virtual) button press, and not trying to deploy shuba. Check X motion.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3087":{
+"Text":"The button may or may not be pressed when we arrive here, but the selected tile ($F0..$F2) is always the one under our feet. If the button is pressed, we know we\u0027re not entering a door or the menu, as that was handled earlier.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -4480,7 +4605,238 @@
 "Value":29137,
 "Source":"User",
 "Type":"GlobalAddr",
-"LabelAnno":"Uncertain"}},
+"LabelAnno":"Uncertain"},
+
+"4739":{
+"Label":"loop",
+"Value":29315,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2846":{
+"Label":"GAME2_tile_at_xy",
+"Value":27422,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2883":{
+"Label":"erase_and_draw",
+"Value":27459,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2893":{
+"Label":"draw",
+"Value":27469,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3074":{
+"Label":"check_door_tile",
+"Value":27650,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4821":{
+"Label":"rts",
+"Value":29397,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4773":{
+"Label":"p2",
+"Value":29349,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4783":{
+"Label":"p3",
+"Value":29359,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4797":{
+"Label":"p4",
+"Value":29373,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4811":{
+"Label":"p5",
+"Value":29387,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4759":{
+"Label":"p1",
+"Value":29335,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4734":{
+"Label":"tile_to_f0_f1_f2",
+"Value":29310,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3224":{
+"Label":"moving_down",
+"Value":27800,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3255":{
+"Label":"no_vert_motion",
+"Value":27831,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3244":{
+"Label":"climb_down",
+"Value":27820,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3263":{
+"Label":"rts",
+"Value":27839,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3113":{
+"Label":"check_on_ladder",
+"Value":27689,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3123":{
+"Label":"atfeet",
+"Value":27699,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3166":{
+"Label":"check_vert_motion",
+"Value":27742,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3136":{
+"Label":"check_horiz_motion",
+"Value":27712,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3156":{
+"Label":"facing_same_dir",
+"Value":27732,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3133":{
+"Label":"on_ladder",
+"Value":27709,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3193":{
+"Label":"climb_up",
+"Value":27769,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3209":{
+"Label":"adjust_right",
+"Value":27785,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3219":{
+"Label":"adjust_left",
+"Value":27795,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3221":{
+"Label":"cont",
+"Value":27797,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3211":{
+"Label":"check_right_side",
+"Value":27787,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3201":{
+"Label":"check_left_side",
+"Value":27777,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3087":{
+"Label":"check_non_door_tile",
+"Value":27663,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3110":{
+"Label":"cont",
+"Value":27686,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3020":{
+"Label":"button_check_x",
+"Value":27596,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3050":{
+"Label":"button_check_y",
+"Value":27626,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3047":{
+"Label":"cont",
+"Value":27623,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"}},
 
 "OperandFormats":{
 "375":{
