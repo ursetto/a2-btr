@@ -1034,14 +1034,22 @@
 "Text":"Player initial stats. Each record is 14 bytes long, and copied into ZP starting at $23 during player initialization. Player 5 is the demo player and is identical to player 2 with 5 extra spirit level and limit.\r\n",
 "BoxMode":true,
 "MaxWidth":80,
-"BackgroundColor":0}},
+"BackgroundColor":0},
 
-"Notes":{
+"4304":{
+"Text":"The 5 player names, 5 chars each, used in the status screen.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
 "4294":{
 "Text":"End string table",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":-256}},
+"BackgroundColor":0}},
+
+"Notes":{
+},
 
 "UserLabels":{
 "4992":{
@@ -1392,11 +1400,54 @@
 "Value":6912,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"4304":{
+"Label":"GAME1_player_names",
+"Value":6864,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
 "4294":{
-"Length":58,
+"Length":10,
+"Format":"Junk",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4304":{
+"Length":5,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"4309":{
+"Length":5,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"4314":{
+"Length":5,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"4319":{
+"Length":5,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"4324":{
+"Length":5,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"4329":{
+"Length":23,
 "Format":"Junk",
 "SubFormat":"None",
 "SymbolRef":null},

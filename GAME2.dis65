@@ -385,6 +385,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME1_player_names":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME1_player_names",
+"Value":6864,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME1_player_stats":{
 "DataDescriptor":{
 "Length":1,
@@ -1570,6 +1587,7 @@
 "3640":"$a3 \u003e $15; clear carry",
 "3648":"check all shuba slots",
 "3661":"no shuba, return to normal processing",
+"3666":"whee!",
 "3774":"writes to $9b are contained here",
 "3853":"maintain A4=A3+1",
 "4219":"check lower 3 bits",
@@ -1632,13 +1650,14 @@
 "5455":"draw tile in A",
 "5462":"3 times",
 "5471":"6 times",
+"5491":"unused code",
 "5553":"clear the kbd movement latches",
 "5564":"branch if not moving up",
 "5566":"or clear button press if we are moving up",
 "5568":"update N and Z from A, even when LDA skipped",
 "5571":"from $6b09 or ",
 "5594":"branch when falling, it seems",
-"5600":"cancel X movement",
+"5600":"cancel X movement when falling",
 "5604":"If not in demo mode,",
 "5606":"handle kbd/joy input and return to caller",
 "5608":"otherwise get demo movement for this frame in A",
@@ -1809,7 +1828,20 @@
 "8508":"lose 2 time periods",
 "8551":"lose 10 spirit",
 "8555":"floor",
+"8827":"suppress beep for first item display",
 "8903":"await button or direction",
+"8945":"print name right-to-left",
+"8951":"each name is 5 chars -- use HTAB to track this",
+"8980":"each time of day is 15 chars long",
+"9069":"6 values, accessed in reverse order ($27..$22)",
+"9075":"status values are sequential in zero page",
+"9084":"position to print each value",
+"9089":"write the 2-digit, zero-padded value",
+"9108":"oddly, an index into player names at $1AD0",
+"9109":"(pointing to the last char of each)",
+"9233":"positions for the 6 status numbers",
+"9239":"index into times of day",
+"9240":"(pointing to the last char of each)",
 "9313":"time does not pass automatically",
 "9315":"in the neshom realm",
 "9337":"end of day?",
@@ -1825,7 +1857,16 @@
 "9386":"rest floor is 0",
 "9402":"spirit increases by 5 every period",
 "9411":"cap spirit at limit",
-"9428":"set $f9..$fe to #$b0"},
+"9424":"the digit 0",
+"9426":"#$05 would also work fine",
+"9428":"set $f9..$fe to #$b0 ($fe unused)",
+"9433":"x=0 on entry",
+"9439":"save",
+"9447":"next digit",
+"9448":"digits 0..4",
+"9453":"\u00270\u0027 -\u003e \u00271\u0027, etc.",
+"9462":"10000,1000,100,10,1 (low 8 bits)",
+"9467":"10000,1000,100,10,1 (high 8 bits)"},
 
 "LongComments":{
 "-2147483647":{
@@ -2336,6 +2377,54 @@
 "Text":"The button may or may not be pressed when we arrive here, but the selected tile ($F0..$F2) is always the one under our feet. If the button is pressed, we know we\u0027re not entering a door or the menu, as that was handled earlier.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"3648":{
+"Text":"Check if we have a shuba in inventory. Reached when the button is pressed and we have falled 2 or more tiles.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3664":{
+"Text":"If we did have a shuba, stop falling (and crawling, if we crawled off a ledge) and fly!",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3721":{
+"Text":"We are clear of obstacles.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3728":{
+"Text":"We pressed left or right, so if we are changing direction, face that way and play a sound.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"9420":{
+"Text":"Convert unsigned 16-bit value in (Y,X) to 5-digit string in $F9..$FD, left-padded with zeroes. Uses standard 10s division algorithm, implemented via subtraction on the 6502, of course.\r\n\r\n($7e/$7f are temps and only used in this subroutine.)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"9462":{
+"Text":"Low and high 8 bits of decimal 10s places. E.g. 0x2710 = 10,000.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"9433":{
+"Text":"16-bit subtract the highest decimal place\u0027s value from the total value, until it would underflow, and increase the digit that many times. Then move on to the next digit. In other words, take quotient(x,10000), set x=remainder, take quotient(x,1000), and so on.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"8629":{
+"Text":"Check for item of interest at arm-level (take height) or at feet. Clears carry and sets A to the item slot if so. Sets carry if no item of interest.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -2424,7 +2513,7 @@
 "BackgroundColor":-256},
 
 "9472":{
-"Text":"The rest of the file $8500-$95FF appears to be data, or junk",
+"Text":"The rest of the file $8500-$95FF appears to be junk",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256}},
@@ -2767,7 +2856,7 @@
 "LabelAnno":"None"},
 
 "9108":{
-"Label":"time_of_day_idx",
+"Label":"player_name_idx",
 "Value":33684,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -3957,7 +4046,7 @@
 "LabelAnno":"None"},
 
 "7142":{
-"Label":"take_item_at_feet",
+"Label":"take",
 "Value":31718,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -4836,6 +4925,125 @@
 "Value":27623,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5600":{
+"Label":"falling",
+"Value":30176,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3697":{
+"Label":"land",
+"Value":28273,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"9433":{
+"Label":"loop2",
+"Value":34009,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"9420":{
+"Label":"num_to_str",
+"Value":33996,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9462":{
+"Label":"tenslo",
+"Value":34038,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9467":{
+"Label":"tenshi",
+"Value":34043,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9453":{
+"Label":"inc",
+"Value":34029,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5912":{
+"Label":"GAME2_num_to_str",
+"Value":30488,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"8966":{
+"Label":"loop2",
+"Value":33542,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8937":{
+"Label":"loop1",
+"Value":33513,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"9233":{
+"Label":"status_digit_pos",
+"Value":33809,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9239":{
+"Label":"time_of_day_idx",
+"Value":33815,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9073":{
+"Label":"loop3",
+"Value":33649,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"8772":{
+"Label":"it_looks_like",
+"Value":33348,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6126":{
+"Label":"GAME2_examine",
+"Value":30702,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"8723":{
+"Label":"examine",
+"Value":33299,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8629":{
+"Label":"item_of_interest",
+"Value":33205,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -5137,6 +5345,12 @@
 "Length":2,
 "Format":"NumericLE",
 "SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5491":{
+"Length":6,
+"Format":"Junk",
+"SubFormat":"None",
 "SymbolRef":null},
 
 "5672":{
@@ -5489,6 +5703,116 @@
 "SubFormat":"Symbol",
 "SymbolRef":{
 "Label":"item_berries",
+"Part":"Low"}},
+
+"9113":{
+"Length":15,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9128":{
+"Length":15,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9143":{
+"Length":15,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9158":{
+"Length":15,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9173":{
+"Length":15,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9188":{
+"Length":15,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9203":{
+"Length":15,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9218":{
+"Length":15,
+"Format":"StringGeneric",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9239":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9240":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9241":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9242":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9243":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9244":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9245":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9246":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"9424":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"9428":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"digits",
 "Part":"Low"}},
 
 "9462":{

@@ -876,6 +876,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_num_to_str":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_num_to_str",
+"Value":30488,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_ongoing_input":{
 "DataDescriptor":{
 "Length":1,
@@ -1587,6 +1604,7 @@
 "6547":"is sound on?",
 "6549":"yes, play it",
 "6551":"no, delay (somewhat longer)",
+"6557":"set to $FF when entering sell, buy or similar menu",
 "6563":"play sound 0 (X=0)",
 "6620":"called from B609 vector",
 "6622":"delay",
@@ -1723,7 +1741,7 @@
 "BackgroundColor":0},
 
 "6557":{
-"Text":"This appears to check if sound #0 is queued (in flag $39) and plays it if so.",
+"Text":"This plays sound 0 as long as $39 is not #$FF, and always sets $39 to 0. It is set to $FF on inventory menu entry (eating, selling, buying) in order to suppress the beep that normally occurs during item display.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1890,12 +1908,6 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-23296},
-
-"6557":{
-"Text":"My queue thought is wrong, this does not play if $39=#ff, but always sets $39 to #00, meaning it would itself \"queue\" the sound.",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-18751},
 
 "6656":{
 "Text":"This page gets copied to $0900 during setup, but is not code.",
@@ -2225,7 +2237,7 @@
 "LabelAnno":"None"},
 
 "6557":{
-"Label":"play_queued_sound_0",
+"Label":"try_play_sound_0",
 "Value":46749,
 "Source":"User",
 "Type":"GlobalAddr",

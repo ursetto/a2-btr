@@ -39,6 +39,7 @@ temp34_npctype @ $34 ; holds NPC type when $e0..$ef? Not really a temp.
 doorNeshom @ $35 ; FF = door goes to Neshom house, 01 = Neshom realm
 spokeTo @ $37 ; spoke to or bought from NPC while on this screen
 fallaKeyOffered @ $38 ; if D'Ol Falla's key has been offered (?)
+suppressSound0 @ $39 ; $FF=suppress sound 0 for 1 call, set on inventory menu entry
 litLamp @ $3a ; slot number of lit lamp, or 0 if unlit
 STARVED @ $3c ; 0 = ok, 1 = out of food, 2 = out of rest
 STARVED_food = $01
@@ -66,6 +67,8 @@ temp7a @ $7a
 temp7b @ $7b
 TICKS @ $7c ; number of ticks until next minute (0..$FF)
 MINUTES @ $7d ; number of minutes until next time period (0..$25)
+temp7e @ $7e ; only used in $84CC sub
+temp7f @ $7f ; only used in $84CC sub
 
 temp82 @ $82
 temp89 @ $89 2
@@ -80,6 +83,7 @@ YDIR @ $86 ;last y dir pressed, -1 (up) or 1 (down)
 TICKING @ $87 ; 1 if timer is ticking, 0 if paused
 zp90 @ $90 ; set to $0a during climb start
 FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
+flyFlag @ $94 ; # 1 when flying (button pressed in air after > 2 tiles fell)
 FACING @ $95 ;FF=left, 01=right facing
 crawlFlag @ $9a ; 1=crawling, 0=not
 zp9b @ $9b
@@ -89,6 +93,8 @@ zpA1 @ $a1 ; unknown, but may be 0 or 1
 MOVING @ $a2 ;1=moving,0=stationary
 zpA3 @ $A3 ; only used in game2
 zpA4_unused @ $A4 ; always $A3+1; never read, seems unused
+XMOVFLG @ $AF
+YMOVFLG @ $B0 ;FF=up,01=down (edge at end of action)
 JOYFLG @ $b1 ;01 = joystick, 00 = kbd
 zpB2_erasePlayer @ $B2 ; read only at $6b3a. Flag to erase player on next frame?
 tempB7 @ $b7 ; temp used only in handle_food_rest
@@ -115,9 +121,7 @@ tileArmRight @ $EA  ;  1,-2 tile right at arm level (table/shelf)
 ySolid @ $F0 ; selected tile is solid ground
 xSolid @ $F1 ; selected tile prevents x motion
 climbable @ $F2 ; selected tile is a ladder/vine
-
-XMOVFLG @ $AF
-YMOVFLG @ $B0 ;FF=up,01=down (edge at end of action)
+digits @ $F9 5 ; decimal digit output of num_to_str
 
 
 
