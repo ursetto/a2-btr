@@ -674,6 +674,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"RWTS_IOB_buf":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RWTS_IOB_buf",
+"Value":776,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "RWTS_IOB_command":{
 "DataDescriptor":{
 "Length":1,
@@ -1268,6 +1285,7 @@
 "27":"local only",
 "33":"read next byte at $0900",
 "57":"vector never used",
+"63":"Read T22,S00..02 into $B300..$B5FF",
 "75":"might redraw screen after drop/take lamp",
 "85":"always",
 "87":"might be general game loop",
@@ -1278,7 +1296,7 @@
 "134":"entered from multiple subs",
 "139":"check $6b",
 "141":"0, delay $0A * 256",
-"143":"!0, delay $06 * 256",
+"143":"!0, delay $06 * 256, allowing more time for NPC CPU?",
 "145":"delay X * 256",
 "156":"transiting a door? (1..3)",
 "163":"enter menu on this frame?",
@@ -1525,6 +1543,9 @@
 "2503":"next page",
 "2517":"A and Y are now 0",
 "2744":"unset gameover",
+"2779":"override page to read into",
+"2802":"read sectors 00..02",
+"2804":"restore read buffer to page $02",
 "2816":"game tick",
 "2837":"called in SCREEN",
 "2843":"called in SCREEN",
@@ -1591,6 +1612,7 @@
 "3774":"writes to $9b are contained here",
 "3853":"maintain A4=A3+1",
 "4219":"check lower 3 bits",
+"4315":"move one tile in direction they are facing",
 "4503":"A is BA..BC on entry (the door tile)",
 "4504":"subtract B9",
 "4506":"result is 1..3",
@@ -2425,6 +2447,24 @@
 "Text":"Check for item of interest at arm-level (take height) or at feet. Clears carry and sets A to the item slot if so. Sets carry if no item of interest.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"7824":{
+"Text":"Convert the text position in (TXTCOL,TXTROW) to a text page address and store it in $11/12. Clobbers A,Y but preserves X.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"741":{
+"Text":"Pages that T22,S00..02 are read into",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2751":{
+"Text":"Read T22,S00..02 into $B300..$B5FF. This sets the initial item state from the game disk. Note the RWTS IOB r/w buffer points to $0200 by default, and that is temporarily changed during this read.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -2466,12 +2506,6 @@
 
 "2232":{
 "Text":"May handle periodic NPC behavior... walking?",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-256},
-
-"2751":{
-"Text":"Unidentified RWTS call",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -5044,6 +5078,48 @@
 "Value":33205,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7824":{
+"Label":"txtpos_to_addr",
+"Value":32400,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5921":{
+"Label":"GAME2_txtpos_to_addr",
+"Value":30497,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"5497":{
+"Label":"draw_npc",
+"Value":30073,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"},
+
+"741":{
+"Label":"item_state_pages",
+"Value":25317,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2751":{
+"Label":"init_item_state",
+"Value":27327,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"63":{
+"Label":"GAME2_init_item_state",
+"Value":24639,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -5252,6 +5328,30 @@
 "Format":"StringGeneric",
 "SubFormat":"HighAscii",
 "SymbolRef":null},
+
+"2771":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTSCMD_read",
+"Part":"Low"}},
+
+"2782":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTS_IOB_buf",
+"Part":"Low"}},
+
+"2806":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RWTS_IOB_buf",
+"Part":"Low"}},
 
 "2845":{
 "Length":1,

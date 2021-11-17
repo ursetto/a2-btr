@@ -152,6 +152,13 @@
 "Value":780,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"8":{
+"Label":"RWTS_IOB_buf",
+"Value":776,
+"Source":"User",
+"Type":"GlobalAddrExport",
 "LabelAnno":"None"}},
 
 "OperandFormats":{

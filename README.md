@@ -292,8 +292,8 @@ There are $1000 extraneous bytes at the end which are overwritten by, and identi
     $AF00 - $AFFF   Unused, copy of $B600
     $B000 - $B0FF   Unused, copy of $0900
     $B100 - $B1FF   Unused, copy of $5B00
-    $B200 - $B2FF   Game state
-    $B300 - $B5FF   Item state
+    $B200 - $B2FF   Game state, mainly NPC
+    $B300 - $B5FF   Item state (initially read from T22,S00..02 on side 2)
     $B600 - $B6FF   Sound routines and data; keypress checking
     $B700 - $BFFF   DOS (enough for RWTS)
 
@@ -345,6 +345,8 @@ Notable positions:
 T01..T20,S00..0F of side B contain playfield tile data. Each sector represents one screen. The 4-bit sector number comes from the low 4 bits of $1B. The 5-bit track number comes from the high 4 bits of $1B, plus the low bit in $1C as the top bit, plus 1 (since tracks start at 1). So the 32x16 map is logically laid out as 16x32 (sector * track).
 
 The initial tile data is run-length encoded. It starts at sector offset $01 and consists of either a tile byte 00..7F (high bit clear), or a tile byte (high bit set) + repeat byte. (Further info in the disassembly.)
+
+T22,S00..02 contains the initial item state data. It is read into $B300..$B5FF whenever the system is reinitialized.
 
 ## Amusements
 

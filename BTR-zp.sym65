@@ -6,7 +6,8 @@ TXTPTR @ $03 2 ;current tile position on text page 1
 temp08 @ $08
 temp09 @ $09
 temp0a @ $0a
-temp11 @ $11
+temp11_textlo @ $11 ; often used to hold text page address of tile (lo)
+temp12_texthi @ $12 ; often used to hold text page address of tile (lo)
 
 playerX @ $19 ; tile X of player
 playerY @ $1a ; tile Y of player
@@ -49,11 +50,16 @@ GAMEOVER @ $3d ;game over bool (0/1)
 VISIONNUM @ $3e ; vision number to have next, 0..5
 gainSpirit @ $3f ; spirit gained so far, modulo 5
 lampFuel @ $44 ; number of rooms left in lamp; 00..13
+temp49 @ $49 ; used only in $A7F3
 SOUNDFLG @ $4a ;0 = sound off, 1 = on
 NINEIDX @ $55 ;cur index into $900 block
 HTAB @ $64 ; horiz text pos (next line at +$28)
 INSIDE @ $67 ; Are we inside? Toggled when entering a door, or set manually on teleport.
-zp6b @ $6b ; updated at $6983
+zp6b_npcHere @ $6b ; NPC is on this screen? (0=no, 1=yes)
+npcX @ $6c ; NPC X location on this screen
+npcY @ $6d ; NPC Y location on this screen
+zp6e @ $6e ; set in NPC code; initial from RWTSBUF+227 & 0x0F
+npcFacing @ $6f ; NPC facing direction on this screen
 WEIGHT @ $70 ; current item weight carried (< limitWeight)
 MENUCOL @ $71 ;menu column (0..4)
 MENUROW @ $72 ;menu row (0..3)

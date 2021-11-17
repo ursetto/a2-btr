@@ -774,6 +774,40 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_examine":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_examine",
+"Value":30702,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"GAME2_init_item_state":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_init_item_state",
+"Value":24639,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_intro":{
 "DataDescriptor":{
 "Length":1,
@@ -1114,6 +1148,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GAME2_txtpos_to_addr":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GAME2_txtpos_to_addr",
+"Value":30497,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_win_game":{
 "DataDescriptor":{
 "Length":1,
@@ -1441,6 +1492,7 @@
 "315":"maybe begin string or formatting byte",
 "765":"jumps right over this next data area",
 "1474":"junk",
+"1563":"draw tile in A and store to text screen",
 "1569":"X is the horiz text pos",
 "1571":"$08 holds A on entry",
 "1589":"reached desired message; print",
@@ -1527,12 +1579,22 @@
 "2534":"key",
 "2535":"key",
 "2536":"elixer",
+"2585":"is NPC standing 1 tile away",
+"2592":"or 2 away",
+"2617":"facing same dir, reject",
+"2619":"we\u0027re good",
 "2823":"getting warmer",
 "2867":"that was easy",
 "3059":"nothing",
 "3110":"pseudo-random bytes",
 "3116":"10..13",
+"3798":"temp reused for a bit",
+"3819":"spirited away?",
 "3848":"jumps into illegal instruction",
+"4595":"temp save, used only here",
+"4597":"write tile in A to hires",
+"4600":"get text addr of tile in $11",
+"4607":"store tile to text page",
 "4678":"set hires and warm start",
 "4684":"may be unused",
 "4692":"Clear hires page 2 (was SCREEN)",
@@ -1837,7 +1899,7 @@
 "BackgroundColor":0},
 
 "2580":{
-"Text":"Check if NPC is in range for normal speech, as well as facing you, and set the carry flag if so.",
+"Text":"Check if NPC is in range for normal speech (1-2 tiles), as well as facing you, and set the carry flag if so.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -1868,6 +1930,12 @@
 
 "2859":{
 "Text":"Spoiler ahead: Offer Raamo a shuba or a rope to win.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4595":{
+"Text":"Draw tile in A to hires screen at (TXTCOL,TXTROW), and store it to the text screen at that same position.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -3480,6 +3548,41 @@
 "Value":41454,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4595":{
+"Label":"drawtile_and_store",
+"Value":42995,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1563":{
+"Label":"SCRN_drawtile_store",
+"Value":39963,
+"Source":"User",
+"Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"2579":{
+"Label":"rts",
+"Value":40979,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2621":{
+"Label":"clc",
+"Value":41021,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2596":{
+"Label":"x_ok",
+"Value":40996,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{

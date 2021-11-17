@@ -6,6 +6,8 @@ STACK_need_energy @ $0103 ; vector -- bytes corrupt
 
 RWTSBUF @ $0200 256 ; 256-byte sector r/w buffer
 RWTSBUF_npc @ $02e1 ; nonzero if NPC is present; may contain data in top 4 bits
+RWTSBUF_npcX @ $02e4 ; NPC initial X location
+RWTSBUF_npcY @ $02e5 ; NPC initial Y location
 RWTSBUF_npc_pense_emot1 @ $02ea ; NPC pense emotion number (variant 1), 1-based
 RWTSBUF_npc_pense_mesg1 @ $02eb ; NPC pense message number (variant 1), 1-based
 RWTSBUF_npc_pense_emot2 @ $02ee ; NPC pense emotion number (variant 2), 1-based
