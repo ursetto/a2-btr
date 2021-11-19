@@ -1660,12 +1660,28 @@
 "4805":"(1,1,0) -- $e0 (when $9a == 1)",
 "4813":"(0,0,0) -- $ba..$de,$e1..$ff",
 "4815":"(1,1,0) -- $df",
+"4834":"always",
 "4840":"if facing left",
 "5094":"\u003e= 30 days, gifted quester",
 "5121":"\u003e= 15 days, highly gifted quester",
 "5155":"\u003c 15 days, master quester",
 "5180":"again the weird loop that never loops",
 "5199":"Save old player X,Y for later erase",
+"5215":"Bit 7 is carry (bit 1 from $A3); Bit 6-0 is 0",
+"5217":"cannot understand this. clc+adc #$00 should be nop",
+"5221":"$a3/4",
+"5223":"carry should always be 0",
+"5233":"playerY * 8 hires lines",
+"5358":"OR with hires screen",
+"5360":"note x=0; ora/sta ($0f)",
+"5362":"next zp1d index",
+"5365":"16-bit inc $0f ptr",
+"5373":"loop 3 times total",
+"5378":"processed 64 yet?",
+"5385":"zp1f starts at #$FF",
+"5387":"so this loops twice",
+"5389":"16-bit add of 64 to $1d/$1e",
+"5402":"reset zp1d index",
 "5417":"probably related to the 6 tiles printed",
 "5429":"skip to next row if row \u003c 0",
 "5433":"or if row \u003e 19 (why not just exit)",
@@ -2463,6 +2479,24 @@
 
 "2751":{
 "Text":"Read T22,S00..02 into $B300..$B5FF. This sets the initial item state from the game disk. Note the RWTS IOB r/w buffer points to $0200 by default, and that is temporarily changed during this read.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4822":{
+"Text":"Sets $A3 to $00/$06 (crawling) or $22/$28 (standing), depending on facing direction. Often called in tandem with FACING being updated. Might be initial animation frame.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5207":{
+"Text":"Bit 0 (odd/even) in $A3 is discarded. Bit 1 becomes the high bit in A, and is stored in $1d. Bits 7..2 are shifted to 5..0, and 32 added and stored in $1e.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5385":{
+"Text":"Increase $1d by 64 and continue. Do this twice.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -5120,6 +5154,41 @@
 "Value":24639,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"4836":{
+"Label":"crawling",
+"Value":29412,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4844":{
+"Label":"cont",
+"Value":29420,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4822":{
+"Label":"init_anim_frame",
+"Value":29398,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"},
+
+"5371":{
+"Label":"no16",
+"Value":29947,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5340":{
+"Label":"line",
+"Value":29916,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
