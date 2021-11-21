@@ -1553,6 +1553,7 @@
 "2855":"external entry point",
 "2874":"May indicate player needs to be erased",
 "2890":"?",
+"2916":"must be yet another timer/counter",
 "2948":"not falling, branch",
 "2950":"did we fall less than 6 tiles?",
 "2954":"\u003e=6 tiles, jsr",
@@ -1587,6 +1588,8 @@
 "3138":"no horiz motion; check vertical",
 "3144":"moved opposite dir we are facing",
 "3146":"update facing direction, and cancel movement",
+"3156":"toggle $97 between 0 and 2 (step frame offset)",
+"3157":"2-2=0, 2-0=2",
 "3169":"no vertical motion",
 "3171":"moving down",
 "3173":"we are moving up",
@@ -1600,6 +1603,12 @@
 "3235":"already crawling, return",
 "3239":"now set crawl flag",
 "3244":"signal climb start?",
+"3476":"seems redundant -- we can only apparently reach here",
+"3479":"if is_climbing is true (carry set)?",
+"3481":"our understanding may be wrong",
+"3492":"The only place where $99 is set to 1",
+"3498":"left crouch frame",
+"3504":"right crouch frame",
 "3558":"may be 0 or 1 -- flip bit",
 "3565":"choose byte 0 or 1",
 "3627":"and return to caller",
@@ -1609,8 +1618,23 @@
 "3648":"check all shuba slots",
 "3661":"no shuba, return to normal processing",
 "3666":"whee!",
+"3686":"external entry, when already flying",
 "3774":"writes to $9b are contained here",
+"3798":"0 or 1, alternating frames; basically, taking a step",
+"3809":"crawling",
+"3823":"used only for Z side effect -- may imply crouching",
+"3840":"right facing frames are left facing + 6",
+"3847":"should add 2 only on right step",
+"3849":"or maybe no step",
 "3853":"maintain A4=A3+1",
+"3857":"note meaning may be reversed",
+"3860":"move the player",
+"3866":"and check left/right tile at feet, depending on facing",
+"3868":"note this is the tile we are now directly over",
+"3884":"tile was not solid, so fall through one tile",
+"3886":"footstep sound 1",
+"3892":"footstep sound 2",
+"3905":"not crawling nor walking, unsure",
 "4219":"check lower 3 bits",
 "4315":"move one tile in direction they are facing",
 "4503":"A is BA..BC on entry (the door tile)",
@@ -2058,7 +2082,7 @@
 "BackgroundColor":0},
 
 "3630":{
-"Text":"Returns bool in carry. Returns true (set) if game timer is running AND $a3 is between $10 and $15.",
+"Text":"Returns bool in carry. Returns true (set) if game timer is running AND $a3 is between $10 and $15, implying player is climbing.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2498,6 +2522,12 @@
 "5385":{
 "Text":"Increase $1d by 64 and continue. Do this twice.",
 "BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3798":{
+"Text":"This appears to handle walk/crawl cycles.\r\n\r\n$A3 animation frames:\r\nLeft walk animation: $00, $02, $00, $04\r\nRight walk animation: $06, $08, $06, $0A\r\nLeft glide: $0C\r\nRight glide: $0E\r\nClimb: $10, $12\r\nUnknown (unused?): $14\r\nLeft crouch: $16\r\nLeft jump: $18\r\nRight crouch: $1A (between standing and crawling/bonk, or start of jump)\r\nRight jump: $1C\r\nRight bonk: $1E, $20, $1E, $20, $1E, $20\r\nLeft crawl animation: $22, $24, $22, $26\r\nRight crawl animation: $28, $2A, $28, $2C\r\nResting: $2E",
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0}},
 
@@ -4989,7 +5019,7 @@
 "LabelAnno":"None"},
 
 "3047":{
-"Label":"cont",
+"Label":"climbing",
 "Value":27623,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
@@ -5189,6 +5219,132 @@
 "Value":29916,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3798":{
+"Label":"walk_crawl_cycle",
+"Value":28374,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3909":{
+"Label":"crawling_zp90",
+"Value":28485,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3907":{
+"Label":"walking_zp90",
+"Value":28483,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3903":{
+"Label":"next_step_value",
+"Value":28479,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3630":{
+"Label":"is_climbing",
+"Value":28206,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3875":{
+"Label":"right",
+"Value":28451,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3877":{
+"Label":"gettile",
+"Value":28453,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3886":{
+"Label":"solid",
+"Value":28462,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3894":{
+"Label":"sound",
+"Value":28470,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3897":{
+"Label":"nostep",
+"Value":28473,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3911":{
+"Label":"walk_frames",
+"Value":28487,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3913":{
+"Label":"crawl_frames",
+"Value":28489,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3905":{
+"Label":"zp99_zp90",
+"Value":28481,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3842":{
+"Label":"left",
+"Value":28418,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3849":{
+"Label":"step",
+"Value":28425,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4009":{
+"Label":"handle_npc",
+"Value":28585,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"},
+
+"2994":{
+"Label":"notflying_check_x",
+"Value":27570,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3686":{
+"Label":"flying",
+"Value":28262,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{

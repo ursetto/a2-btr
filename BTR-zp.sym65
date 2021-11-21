@@ -93,14 +93,16 @@ zp90 @ $90 ; set to $0a during climb start
 FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
 flyFlag @ $94 ; # 1 when flying (button pressed in air after > 2 tiles fell)
 FACING @ $95 ;FF=left, 01=right facing
+takingStep @ $96 ; 0 or 1 depending on taking step in cycle
+zp99 @ $99 ; 0/1, used during walk/crawl cycle
 crawlFlag @ $9a ; 1=crawling, 0=not
 zp9b @ $9b
 doorTransit @ $9e ; 1..3 (entering onscreen door #) or 0
 enterMenu @ $9f ; show menu on next frame
 zpA1 @ $a1 ; unknown, but may be 0 or 1
 MOVING @ $a2 ;1=moving,0=stationary
-zpA3 @ $A3 ; only used in game2. might be char animation frame
-zpA4_unused @ $A4 ; always $A3+1; never read, seems unused
+animFrame @ $A3 ; character anim frame (see $6ED6)
+animFrame_unused @ $A4 ; always $A3+1; never read, seems unused
 XMOVFLG @ $AF
 YMOVFLG @ $B0 ;FF=up,01=down (edge at end of action)
 JOYFLG @ $b1 ;01 = joystick, 00 = kbd
