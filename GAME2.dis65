@@ -1305,6 +1305,7 @@
 "210":"we\u0027re fine",
 "212":"starved of food or rest",
 "222":"unclear when this happens",
+"228":"this was already in A, in fact",
 "373":"phantom character 5 during demo",
 "375":"give the demo player a shuba",
 "383":"copy $0E bytes from player stats to cur stats",
@@ -1582,6 +1583,7 @@
 "3101":"have we fallen 2 tiles",
 "3105":"yes, play this sound, which appears to make no sound",
 "3107":"change to #$01 to beep after falling 2 tiles",
+"3110":"(skips resetting FALLCNT to 0)",
 "3115":"ladder middle tile",
 "3119":"vine middle tile",
 "3133":"on ladder; skip horiz motion check",
@@ -1603,6 +1605,22 @@
 "3235":"already crawling, return",
 "3239":"now set crawl flag",
 "3244":"signal climb start?",
+"3264":"stop falling, unless you enter this just below",
+"3271":"(implicitly populates tileFeet)",
+"3276":"? looks like a plant?",
+"3282":"?",
+"3284":"halt timer even if player onscreen",
+"3296":"player offscreen to left",
+"3302":"(always)",
+"3308":"player offscreen to right",
+"3318":"player offscreen to top",
+"3320":"(always)",
+"3326":"player offscreen to bottom",
+"3328":"(always)",
+"3330":"was the player offscreen?",
+"3332":"no, queue up player erase",
+"3334":"yes, record in which direction",
+"3336":"and halt timer",
 "3476":"seems redundant -- we can only apparently reach here",
 "3479":"if is_climbing is true (carry set)?",
 "3481":"our understanding may be wrong",
@@ -1637,6 +1655,13 @@
 "3905":"not crawling nor walking, unsure",
 "4219":"check lower 3 bits",
 "4315":"move one tile in direction they are facing",
+"4408":"ignore brambles if flying. only contact on ground",
+"4435":"if crawling, don\u0027t test collision at shoulder height",
+"4466":"full stop, max fall, get hurt",
+"4490":"unknown; probably a wall",
+"4494":"a locked gate (Temple Grund entrance)",
+"4496":"   or impassable wall (hostage house)",
+"4498":"a checkerboard pattern (internal house wall)",
 "4503":"A is BA..BC on entry (the door tile)",
 "4504":"subtract B9",
 "4506":"result is 1..3",
@@ -2529,6 +2554,36 @@
 "Text":"This appears to handle walk/crawl cycles.\r\n\r\n$A3 animation frames:\r\nLeft walk animation: $00, $02, $00, $04\r\nRight walk animation: $06, $08, $06, $0A\r\nLeft glide: $0C\r\nRight glide: $0E\r\nClimb: $10, $12\r\nUnknown (unused?): $14\r\nLeft crouch: $16\r\nLeft jump: $18\r\nRight crouch: $1A (between standing and crawling/bonk, or start of jump)\r\nRight jump: $1C\r\nRight bonk: $1E, $20, $1E, $20, $1E, $20\r\nLeft crawl animation: $22, $24, $22, $26\r\nRight crawl animation: $28, $2A, $28, $2C\r\nResting: $2E",
 "BoxMode":true,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"3334":{
+"Text":"X is guaranteed to be set to 01..04 when the offscreen flag is set.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3264":{
+"Text":"Finishes up player movement for this frame.\r\n\r\nStops any falling motion; assumes called when on solid ground. In one case this is bypassed, when it is known the player is in the air.\r\n\r\nChecks for collision with brambles or walls.\r\n\r\nChecks if the player is offscreen (presumably by one tile) in either or both of the X or Y axes. The player is moved 1 tile in the onscreen X direction if needed (Y position is not modified), and zp $8f is set to\r\n  01 -- was off top\r\n  02 -- was off right\r\n  03 -- was off bottom\r\n  04 -- was off left\r\nwith the Y axis taking precedence.\r\n\r\nThis is called via JMP, so we will continue in the caller\u0027s caller.",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4490":{
+"Text":"Sets Z flag if tile in A is $07,$08 or $52. These are tiles that cause you to get hurt when you contact them.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4426":{
+"Text":"Checks and handles collision with wall tiles (locked gate, house wall) at foot and shoulder level.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4392":{
+"Text":"Checks and handles collision with brambles at foot level. Ignored when flying.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -2580,8 +2635,20 @@
 "MaxWidth":80,
 "BackgroundColor":-256},
 
+"3274":{
+"Text":"Special check for tile $20 at our feet, purpose unknown\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
 "4168":{
 "Text":"Setting fallcnt to $0A is observed to happen when you bump your head.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
+"4341":{
+"Text":"Might control NPC behavior (stopping) near player.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -5345,6 +5412,153 @@
 "Value":28262,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3314":{
+"Label":"top",
+"Value":27890,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3322":{
+"Label":"bottom",
+"Value":27898,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3288":{
+"Label":"left",
+"Value":27864,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3304":{
+"Label":"right",
+"Value":27880,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3341":{
+"Label":"queue_erase",
+"Value":27917,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3334":{
+"Label":"offscreen",
+"Value":27910,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3330":{
+"Label":"is_onscreen",
+"Value":27906,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4466":{
+"Label":"ouch",
+"Value":29042,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4502":{
+"Label":"rts",
+"Value":29078,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4490":{
+"Label":"is_collision_tile",
+"Value":29066,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4437":{
+"Label":"rts",
+"Value":29013,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4445":{
+"Label":"collide",
+"Value":29021,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4426":{
+"Label":"check_walls",
+"Value":29002,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4438":{
+"Label":"chk_collide_shoulder",
+"Value":29014,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4401":{
+"Label":"rts",
+"Value":28977,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4477":{
+"Label":"reset_after_hurt",
+"Value":29053,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4402":{
+"Label":"check_brambles",
+"Value":28978,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"4392":{
+"Label":"check_brambles",
+"Value":28968,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3264":{
+"Label":"finish_move",
+"Value":27840,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3268":{
+"Label":"finish_move2",
+"Value":27844,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"228":{
+"Label":"move_next_room",
+"Value":24804,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -5607,6 +5821,14 @@
 "Format":"NumericLE",
 "SubFormat":"Hex",
 "SymbolRef":null},
+
+"4397":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"tile_brambles",
+"Part":"Low"}},
 
 "4538":{
 "Length":2,
@@ -6437,6 +6659,29 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"}],
 "ClearPrevious":false},
+
+"3264":{
+"Variables":[{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"whether the player was offscreen",
+"HasWidth":true,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"tmp_offScreenFlag",
+"Value":129,
+"Source":"Variable",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}],
+"ClearPrevious":false},
+
+"3346":{
+"Variables":[],
+"ClearPrevious":true},
 
 "5961":{
 "Variables":[{
