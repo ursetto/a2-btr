@@ -47,3 +47,4 @@ item_fallaKey = $0D
 item_elixer = $0E
 
 tile_brambles = $1C
+tile_water = $20

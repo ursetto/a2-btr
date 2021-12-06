@@ -1306,6 +1306,7 @@
 "212":"starved of food or rest",
 "222":"unclear when this happens",
 "228":"this was already in A, in fact",
+"348":"resume tick, stopped when we started room transition",
 "373":"phantom character 5 during demo",
 "375":"give the demo player a shuba",
 "383":"copy $0E bytes from player stats to cur stats",
@@ -1554,7 +1555,8 @@
 "2855":"external entry point",
 "2874":"May indicate player needs to be erased",
 "2890":"?",
-"2916":"must be yet another timer/counter",
+"2916":"? timer counting up until animDelay to update player frame",
+"2918":"why not just dec animDelay",
 "2948":"not falling, branch",
 "2950":"did we fall less than 6 tiles?",
 "2954":"\u003e=6 tiles, jsr",
@@ -1607,9 +1609,7 @@
 "3244":"signal climb start?",
 "3264":"stop falling, unless you enter this just below",
 "3271":"(implicitly populates tileFeet)",
-"3276":"? looks like a plant?",
-"3282":"?",
-"3284":"halt timer even if player onscreen",
+"3284":"halt timer in prep for teleport",
 "3296":"player offscreen to left",
 "3302":"(always)",
 "3308":"player offscreen to right",
@@ -1624,8 +1624,7 @@
 "3476":"seems redundant -- we can only apparently reach here",
 "3479":"if is_climbing is true (carry set)?",
 "3481":"our understanding may be wrong",
-"3492":"The only place where $99 is set to 1",
-"3498":"left crouch frame",
+"3498":"left crouch frame (to start the jump)",
 "3504":"right crouch frame",
 "3558":"may be 0 or 1 -- flip bit",
 "3565":"choose byte 0 or 1",
@@ -1640,7 +1639,6 @@
 "3774":"writes to $9b are contained here",
 "3798":"0 or 1, alternating frames; basically, taking a step",
 "3809":"crawling",
-"3823":"used only for Z side effect -- may imply crouching",
 "3840":"right facing frames are left facing + 6",
 "3847":"should add 2 only on right step",
 "3849":"or maybe no step",
@@ -1652,7 +1650,7 @@
 "3884":"tile was not solid, so fall through one tile",
 "3886":"footstep sound 1",
 "3892":"footstep sound 2",
-"3905":"not crawling nor walking, unsure",
+"3907":"not crawling nor walking, unsure",
 "4219":"check lower 3 bits",
 "4315":"move one tile in direction they are facing",
 "4408":"ignore brambles if flying. only contact on ground",
@@ -2551,7 +2549,7 @@
 "BackgroundColor":0},
 
 "3798":{
-"Text":"This appears to handle walk/crawl cycles.\r\n\r\n$A3 animation frames:\r\nLeft walk animation: $00, $02, $00, $04\r\nRight walk animation: $06, $08, $06, $0A\r\nLeft glide: $0C\r\nRight glide: $0E\r\nClimb: $10, $12\r\nUnknown (unused?): $14\r\nLeft crouch: $16\r\nLeft jump: $18\r\nRight crouch: $1A (between standing and crawling/bonk, or start of jump)\r\nRight jump: $1C\r\nRight bonk: $1E, $20, $1E, $20, $1E, $20\r\nLeft crawl animation: $22, $24, $22, $26\r\nRight crawl animation: $28, $2A, $28, $2C\r\nResting: $2E",
+"Text":"This appears to handle walk/run/crawl cycle. Sets the animation delay (hold time for current player animation frame) appropriately for the current action. Crawling is slow, walking is medium and running is fast. Each is 4 frames long, with frames 0 and 2 being identical (standing still) and frames 1 and 3 being left and right steps.\r\n\r\n$A3 animation frames:\r\nLeft walk animation: $00, $02, $00, $04\r\nRight walk animation: $06, $08, $06, $0A\r\nLeft glide: $0C\r\nRight glide: $0E\r\nClimb: $10, $12\r\nUnknown (unused?): $14\r\nLeft crouch: $16\r\nLeft jump: $18\r\nRight crouch: $1A (between standing and crawling/bonk, or start of jump)\r\nRight jump: $1C\r\nRight bonk: $1E, $20, $1E, $20, $1E, $20\r\nLeft crawl animation: $22, $24, $22, $26\r\nRight crawl animation: $28, $2A, $28, $2C\r\nResting: $2E",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2563,7 +2561,7 @@
 "BackgroundColor":0},
 
 "3264":{
-"Text":"Finishes up player movement for this frame.\r\n\r\nStops any falling motion; assumes called when on solid ground. In one case this is bypassed, when it is known the player is in the air.\r\n\r\nChecks for collision with brambles or walls.\r\n\r\nChecks if the player is offscreen (presumably by one tile) in either or both of the X or Y axes. The player is moved 1 tile in the onscreen X direction if needed (Y position is not modified), and zp $8f is set to\r\n  01 -- was off top\r\n  02 -- was off right\r\n  03 -- was off bottom\r\n  04 -- was off left\r\nwith the Y axis taking precedence.\r\n\r\nThis is called via JMP, so we will continue in the caller\u0027s caller.",
+"Text":"Finishes up player movement for this frame.\r\n\r\nStops any falling motion; assumes called when on solid ground. In one case this is bypassed, when it is known the player is in the air.\r\n\r\nChecks for collision with water and sets a flag handled next frame.\r\n\r\nChecks for collision with brambles or walls.\r\n\r\nChecks if the player is offscreen (presumably by one tile) in either or both of the X or Y axes. The player is moved 1 tile in the onscreen X direction if needed (Y position is not modified), and zp $8f is set to\r\n  01 -- was off top\r\n  02 -- was off right\r\n  03 -- was off bottom\r\n  04 -- was off left\r\nwith the Y axis taking precedence.\r\n\r\nThis is called via JMP, so we will continue in the caller\u0027s caller.",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2582,6 +2580,18 @@
 
 "4392":{
 "Text":"Checks and handles collision with brambles at foot level. Ignored when flying.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"228":{
+"Text":"Based on the value in nextRoomDir, update the user\u0027s map position by 1 offset to the top (01), right (02), bottom (03) or left (04). Then load the new room and continue.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3274":{
+"Text":"Check if we touched water. If so, stop time and set a flag which will teleport us home on the next frame. This subroutine continues but its offscreen computations are irrelevant; it could just return instead.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -2623,6 +2633,12 @@
 "MaxWidth":80,
 "BackgroundColor":-7278960},
 
+"2178":{
+"Text":"There\u0027s already a handle_npc? so this is another temp name.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
 "2232":{
 "Text":"May handle periodic NPC behavior... walking?",
 "BoxMode":false,
@@ -2631,12 +2647,6 @@
 
 "2816":{
 "Text":"Jump vectors at $6b00",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-256},
-
-"3274":{
-"Text":"Special check for tile $20 at our feet, purpose unknown\r\n",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -5296,14 +5306,14 @@
 "LabelAnno":"None"},
 
 "3909":{
-"Label":"crawling_zp90",
+"Label":"crawling_delay",
 "Value":28485,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "3907":{
-"Label":"walking_zp90",
+"Label":"running_delay",
 "Value":28483,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -5373,7 +5383,7 @@
 "LabelAnno":"None"},
 
 "3905":{
-"Label":"zp99_zp90",
+"Label":"walking_delay",
 "Value":28481,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -5559,6 +5569,69 @@
 "Value":24804,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"338":{
+"Label":"cont",
+"Value":24914,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2178":{
+"Label":"handle_npc2",
+"Value":26754,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"},
+
+"1644":{
+"Label":"found_near_water",
+"Value":26220,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2923":{
+"Label":"update",
+"Value":27499,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3830":{
+"Label":"walking",
+"Value":28406,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3820":{
+"Label":"not_crawling",
+"Value":28396,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3835":{
+"Label":"facing",
+"Value":28411,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3482":{
+"Label":"jump_to_run",
+"Value":28058,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3506":{
+"Label":"set_frame",
+"Value":28082,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -5815,6 +5888,14 @@
 "Format":"NumericLE",
 "SubFormat":"None",
 "SymbolRef":null},
+
+"3276":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"tile_water",
+"Part":"Low"}},
 
 "3648":{
 "Length":2,

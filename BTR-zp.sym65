@@ -78,28 +78,28 @@ MINUTES @ $7d ; number of minutes until next time period (0..$25)
 temp7e @ $7e ; only used in $84CC sub
 temp7f @ $7f ; only used in $84CC sub
 
-temp89 @ $89 2
-temp8b @ $8b
-playerXold @ $9c
-playerYold @ $9d
-
+touchedWater @ $80 ; we touched water and will pass out
 temp81 @ $81 ; flag used only in $6CC0
 temp82 @ $82
-
 waitMelody @ $83 ; always 0, but could be interrupt placeholder
 VIRTBTN @ $84 ; virtual button press, used only in kbd handler
 XDIR @ $85 ;last x dir pressed, -1 (left) or 1 (right)
 YDIR @ $86 ;last y dir pressed, -1 (up) or 1 (down)
 TICKING @ $87 ; 1 if timer is ticking, 0 if paused
+animTimer @ $88 ; counts up to animDelay
+temp89 @ $89 2
+temp8b @ $8b
 nextRoomDir @ $8f ; 00,01,02,03,04 -- next map room direction
-zp90 @ $90 ; set to $0a during climb start
+animDelay @ $90 ; ticks to hold current player animation frame
 FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
 flyFlag @ $94 ; # 1 when flying (button pressed in air after > 2 tiles fell)
 FACING @ $95 ;FF=left, 01=right facing
 takingStep @ $96 ; 0 or 1 depending on taking step in cycle
-zp99 @ $99 ; 0/1, used during walk/crawl cycle
+runFlag @ $99 ; 1=running, 0=not
 crawlFlag @ $9a ; 1=crawling, 0=not
 zp9b @ $9b
+playerXold @ $9c
+playerYold @ $9d
 doorTransit @ $9e ; 1..3 (entering onscreen door #) or 0
 enterMenu @ $9f ; show menu on next frame
 zpA1 @ $a1 ; unknown, but may be 0 or 1
