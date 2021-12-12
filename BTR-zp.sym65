@@ -89,9 +89,12 @@ TICKING @ $87 ; 1 if timer is ticking, 0 if paused
 animTimer @ $88 ; counts up to animDelay
 temp89 @ $89 2
 temp8b @ $8b
+jumpFlag @ $8c ; 1=jumping, 0=not
+jumpFrame @ $8d ; frame 1..4 (when jumpFlag=1)
 nextRoomDir @ $8f ; 00,01,02,03,04 -- next map room direction
 animDelay @ $90 ; ticks to hold current player animation frame
 FALLCNT @ $92 ;# of tiles we've fallen; $0A head bonked
+bonkFrame @ $93
 flyFlag @ $94 ; # 1 when flying (button pressed in air after > 2 tiles fell)
 FACING @ $95 ;FF=left, 01=right facing
 takingStep @ $96 ; 0 or 1 depending on taking step in cycle
@@ -102,14 +105,15 @@ playerXold @ $9c
 playerYold @ $9d
 doorTransit @ $9e ; 1..3 (entering onscreen door #) or 0
 enterMenu @ $9f ; show menu on next frame
-zpA1 @ $a1 ; unknown, but may be 0 or 1
+bonkAlt @ $a1 ; 0 or 1 to alternate bonk frames
 MOVING @ $a2 ;1=moving,0=stationary
 animFrame @ $A3 ; character anim frame (see $6ED6)
 animFrame_unused @ $A4 ; always $A3+1; never read, seems unused
 XMOVFLG @ $AF
 YMOVFLG @ $B0 ;FF=up,01=down (edge at end of action)
 JOYFLG @ $b1 ;01 = joystick, 00 = kbd
-zpB2_erasePlayer @ $B2 ; read only at $6b3a. Flag to erase player on next frame?
+erasePlayer @ $B2 ; flag to erase player on next frame
+longJump @ $b4 ; 2 (stamina >= 20) or 1 (stamina < 20); if 2, prolongs jump in frame 3
 tempB7 @ $b7 ; temp used only in handle_food_rest
 foodRestTimer @ $b8 ; remaining time until food/rest decreases
 zpBC_bellrings @ $bc ; if 1, spirit bell rings, if 0, get attacked

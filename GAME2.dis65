@@ -1560,6 +1560,7 @@
 "2948":"not falling, branch",
 "2950":"did we fall less than 6 tiles?",
 "2954":"\u003e=6 tiles, jsr",
+"2957":"landing noise",
 "2962":"reset fall count",
 "2996":"save old xdir ?",
 "3001":"no button pressed",
@@ -1571,6 +1572,7 @@
 "3024":"ignore x motion if we are standing on air",
 "3026":"this tile will be handled as air",
 "3034":"face the way we are moving",
+"3039":"when climbing, allow jump in opposite direction",
 "3052":"not moving, check door etc.",
 "3054":"moving up, check door etc.",
 "3056":"moving down, check tile below us",
@@ -1621,13 +1623,32 @@
 "3332":"no, queue up player erase",
 "3334":"yes, record in which direction",
 "3336":"and halt timer",
-"3476":"seems redundant -- we can only apparently reach here",
-"3479":"if is_climbing is true (carry set)?",
-"3481":"our understanding may be wrong",
+"3350":"left jump frame",
+"3356":"right jump frame",
+"3365":"start of jump, do not check x solidity",
+"3367":"check tile under our feet",
+"3376":"tile is solid, so land on it (?)",
+"3383":"footstep (landing sound)?",
+"3400":"third frame?",
+"3404":"1 (stamina \u003c20) or 2 (\u003e=20), set at start of jump",
+"3406":"if 2, keep player at same Y, repeat frame 3 (with longJump 1)",
+"3408":"up,up,down,down",
+"3419":"was this the 3rd or 4th frame?",
+"3429":"last jump frame, always finish jump now",
+"3462":"jump frame 1..4 y offset",
+"3463":"(move up 2, then down 2)",
+"3481":"maphalf=$1,mappos\u003e=$80,climbing",
 "3498":"left crouch frame (to start the jump)",
 "3504":"right crouch frame",
-"3558":"may be 0 or 1 -- flip bit",
-"3565":"choose byte 0 or 1",
+"3530":"1 if stamina level \u003c 20, 2 if \u003e= 20",
+"3541":"Play bonk sound during frame 2",
+"3550":"in frame 10, start getting up",
+"3558":"alternate frames (why not just AND $93 with #$01)",
+"3565":"frame 0 ($1e) or 1 ($20)",
+"3585":"set left or right crouch frame to arise",
+"3596":"alternate bonk frames",
+"3602":"bonk start frame",
+"3607":"not falling any more!",
 "3627":"and return to caller",
 "3632":"game paused; clear carry",
 "3638":"$a3 \u003c $10 or",
@@ -2549,7 +2570,7 @@
 "BackgroundColor":0},
 
 "3798":{
-"Text":"This appears to handle walk/run/crawl cycle. Sets the animation delay (hold time for current player animation frame) appropriately for the current action. Crawling is slow, walking is medium and running is fast. Each is 4 frames long, with frames 0 and 2 being identical (standing still) and frames 1 and 3 being left and right steps.\r\n\r\n$A3 animation frames:\r\nLeft walk animation: $00, $02, $00, $04\r\nRight walk animation: $06, $08, $06, $0A\r\nLeft glide: $0C\r\nRight glide: $0E\r\nClimb: $10, $12\r\nUnknown (unused?): $14\r\nLeft crouch: $16\r\nLeft jump: $18\r\nRight crouch: $1A (between standing and crawling/bonk, or start of jump)\r\nRight jump: $1C\r\nRight bonk: $1E, $20, $1E, $20, $1E, $20\r\nLeft crawl animation: $22, $24, $22, $26\r\nRight crawl animation: $28, $2A, $28, $2C\r\nResting: $2E",
+"Text":"This appears to handle walk/run/crawl cycle. Sets the animation delay (hold time for current player animation frame) appropriately for the current action. Crawling is slow, walking is medium and running is fast. Each is 4 frames long, with frames 0 and 2 being identical (standing still) and frames 1 and 3 being left and right steps.\r\n\r\n$A3 animation frames:\r\nLeft walk animation: $00, $02, $00, $04\r\nRight walk animation: $06, $08, $06, $0A\r\nLeft glide: $0C\r\nRight glide: $0E\r\nClimb: $10, $12\r\nUnknown (unused?): $14\r\nLeft crouch: $16\r\nLeft jump: $18\r\nRight crouch: $1A (between standing and crawling/bonk, or start of jump)\r\nRight jump: $1C\r\nBonk: $1E, $20, $1E, $20, $1E, $20\r\nLeft crawl animation: $22, $24, $22, $26\r\nRight crawl animation: $28, $2A, $28, $2C\r\nResting: $2E",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2592,6 +2613,24 @@
 
 "3274":{
 "Text":"Check if we touched water. If so, stop time and set a flag which will teleport us home on the next frame. This subroutine continues but its offscreen computations are irrelevant; it could just return instead.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3391":{
+"Text":"Update player position during jump. Player moves 1 tile horizontally during each of 4 jump frames. During each of frames 1 \u0026 2, player moves up 1 tile; and down 1 tile during frames 3 \u0026 4. If the player\u0027s stamina is 20 or more, they jump farther by adding an extra frame (frame 3 is repeated, but the player only moves horizontally).",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3535":{
+"Text":"Handle frame of bonking head. Bonk frames 1..8 alternate frames $1E and $20 (rubbing head). Frame 9 is a crouch (getting up). Frame 10 stands up and finishes.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3466":{
+"Text":"Underground, in the the bottom 4 map rows (positions $0180-$01FF), you cannot jump while climbing. This is probably an easy way to handle most ladders being surrounded by solid rock; the few that are not, you don\u0027t notice this.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -5096,7 +5135,7 @@
 "LabelAnno":"None"},
 
 "3047":{
-"Label":"climbing",
+"Label":"jump",
 "Value":27623,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
@@ -5621,7 +5660,7 @@
 "LabelAnno":"None"},
 
 "3482":{
-"Label":"jump_to_run",
+"Label":"jump",
 "Value":28058,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -5632,6 +5671,174 @@
 "Value":28082,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3462":{
+"Label":"jump_frame_yoffset",
+"Value":28038,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3439":{
+"Label":"land_player",
+"Value":28015,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3448":{
+"Label":"right",
+"Value":28024,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3450":{
+"Label":"check_ground",
+"Value":28026,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3436":{
+"Label":"finish",
+"Value":28012,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3391":{
+"Label":"update_jump_pos",
+"Value":27967,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3408":{
+"Label":"yupdate",
+"Value":27984,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3423":{
+"Label":"chk_last_frame",
+"Value":27999,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3346":{
+"Label":"jumping",
+"Value":27922,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3358":{
+"Label":"left",
+"Value":27934,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"2980":{
+"Label":"check_jumping",
+"Value":27556,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2987":{
+"Label":"check_flying",
+"Value":27563,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2957":{
+"Label":"footfall",
+"Value":27533,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3598":{
+"Label":"fell_6_or_more",
+"Value":28174,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3762":{
+"Label":"set_anim_frame",
+"Value":28338,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2973":{
+"Label":"check_bonk",
+"Value":27549,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3535":{
+"Label":"bonking",
+"Value":28111,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3596":{
+"Label":"bonk_frame",
+"Value":28172,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3546":{
+"Label":"nosound",
+"Value":28122,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3585":{
+"Label":"get_up",
+"Value":28161,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3571":{
+"Label":"end_bonk",
+"Value":28147,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3593":{
+"Label":"ret",
+"Value":28169,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3530":{
+"Label":"long",
+"Value":28106,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3466":{
+"Label":"try_jump",
+"Value":28042,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{

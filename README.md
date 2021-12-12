@@ -329,8 +329,8 @@ Storage disk layout:
 
 The map position is a 9-bit value: 32 screens wide, and 16 screens high. The current position is stored as a 16-bit value at $1B:
 
-          1B       1C
-    YYYXXXXX 0000000Y
+           1C          1B
+     0000000Y    YYYXXXXX
 
 where (0,0) is at the upper left. Thus, moving down a screen advances the position by $20. There's no distinction between inside and outside on the map — doors simply teleport you to a predefined X, Y.
 The game does keep track of inside and outside for lighting and stealing purposes, but door destinations don't include an inside or outside value; it's relative, toggled on door entry.
