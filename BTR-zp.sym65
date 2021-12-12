@@ -71,6 +71,7 @@ temp75 @ $75
 temp76 @ $76
 selItemSlot @ $77 ; last selected item slot (00..FE or FF)
 selItemNum @ $78 ; last selected item number (01..0E)
+temp79 @ $79
 temp7a @ $7a
 temp7b @ $7b
 TICKS @ $7c ; number of ticks until next minute (0..$FF)
@@ -100,7 +101,7 @@ FACING @ $95 ;FF=left, 01=right facing
 takingStep @ $96 ; 0 or 1 depending on taking step in cycle
 runFlag @ $99 ; 1=running, 0=not
 crawlFlag @ $9a ; 1=crawling, 0=not
-zp9b @ $9b
+crouchFlag @ $9b ; 1=crouching; reset on next frame
 playerXold @ $9c
 playerYold @ $9d
 doorTransit @ $9e ; 1..3 (entering onscreen door #) or 0

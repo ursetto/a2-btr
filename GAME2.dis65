@@ -1557,6 +1557,7 @@
 "2890":"?",
 "2916":"? timer counting up until animDelay to update player frame",
 "2918":"why not just dec animDelay",
+"2939":"resets $9b and returns -- noop frame?",
 "2948":"not falling, branch",
 "2950":"did we fall less than 6 tiles?",
 "2954":"\u003e=6 tiles, jsr",
@@ -1658,6 +1659,8 @@
 "3666":"whee!",
 "3686":"external entry, when already flying",
 "3774":"writes to $9b are contained here",
+"3780":"crouch left",
+"3786":"crouch right",
 "3798":"0 or 1, alternating frames; basically, taking a step",
 "3809":"crawling",
 "3840":"right facing frames are left facing + 6",
@@ -1934,6 +1937,7 @@
 "8508":"lose 2 time periods",
 "8551":"lose 10 spirit",
 "8555":"floor",
+"8667":"never used!",
 "8827":"suppress beep for first item display",
 "8903":"await button or direction",
 "8945":"print name right-to-left",
@@ -2552,7 +2556,7 @@
 "BackgroundColor":0},
 
 "4822":{
-"Text":"Sets $A3 to $00/$06 (crawling) or $22/$28 (standing), depending on facing direction. Often called in tandem with FACING being updated. Might be initial animation frame.",
+"Text":"Sets animation frame to $00/$06 (crawling) or $22/$28 (standing), depending on facing direction. Often called in tandem with FACING being updated. Essentially, the initial animation frame when you are stopped on the ground.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2631,6 +2635,18 @@
 
 "3466":{
 "Text":"Underground, in the the bottom 4 map rows (positions $0180-$01FF), you cannot jump while climbing. This is probably an easy way to handle most ladders being surrounded by solid rock; the few that are not, you don\u0027t notice this.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3791":{
+"Text":"Called from main tick loop when crouching. Resets crouchFlag and sets the player animation frame to stand or crawl. crawlFlag will be set along with crouchFlag when crawling, effectively queueing a stand or crawl.\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3772":{
+"Text":"Crouch. Whether we are about to stand or about to crawl in the next frame is encoded in crawlFlag.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -5317,11 +5333,11 @@
 "LabelAnno":"None"},
 
 "4822":{
-"Label":"init_anim_frame",
+"Label":"stop_frame_ground",
 "Value":29398,
 "Source":"User",
 "Type":"GlobalAddr",
-"LabelAnno":"Uncertain"},
+"LabelAnno":"None"},
 
 "5371":{
 "Label":"no16",
@@ -5837,6 +5853,27 @@
 "3466":{
 "Label":"try_jump",
 "Value":28042,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3788":{
+"Label":"left",
+"Value":28364,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"3772":{
+"Label":"crouch",
+"Value":28348,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3791":{
+"Label":"uncrouch",
+"Value":28367,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
