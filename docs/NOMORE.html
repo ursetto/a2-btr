@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>NOMORE Disassembly</title>
+
+    <meta content="en-us" http-equiv="Content-Language" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="description" content="SourceGen-generated disassembly of NOMORE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="SGStyle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <p style="font-size:smaller;"><a href="./">(back to project page)</a></p>
+    <h1>NOMORE Disassembly</h1>
+
+    <div id="code-lines">
+        <!-- The CodeLines marker is not optional, and may only appear once -->
+<pre>                   ; 6502bench SourceGen v1.7.3
+                   <a name="SymTXTPTR">TXTPTR</a>                .eq     $03    {addr/2}         ;current tile position on text page 1
+                   <a name="SymMAPPOS">MAPPOS</a>                .eq     $1b                     ; playfield position
+                   <a name="SymMAPHALF">MAPHALF</a>               .eq     $1c                     ; playfield half (top/bottom); like top bit of MAPPOS
+                   <a name="SymdoorNeshom">doorNeshom</a>            .eq     $35                     ; FF = door goes to Neshom house, 01 = Neshom realm
+                   <a name="SymMON_CSWL">MON_CSWL</a>              .eq     $36                     ;character output hook (lo)
+                   <a name="SymspokeTo">spokeTo</a>               .eq     $37                     ; spoke to or bought from NPC while on this screen
+                   <a name="SymGAME1_BITTAB5">GAME1_BITTAB5</a>         .eq     $1dbd
+                   <a name="SymGAME1_BITTAB6">GAME1_BITTAB6</a>         .eq     $1dbe
+                   <a name="SymGAME2_PRNTSTR">GAME2_PRNTSTR</a>         .eq     $600c
+                   <a name="SymGAME2_message_wait">GAME2_message_wait</a>    .eq     $7706
+                   <a name="SymitemStatePos">itemStatePos</a>          .eq     $b300  {addr/256}       ; 256 map positions, one per item
+                   <a name="SymitemState">itemState</a>             .eq     $b500  {addr/256}       ; 7=mappos high bit, 6=in world, 5=in inv, 4..0=map row
+
+                                         .org    $0100
+                   <span style="background-color: #cb9099">NOTE: Looks like some bytes are corrupt. Using any spirit action other than</span>
+                   <span style="background-color: #cb9099">PENSE when you have insufficient spirit energy results in "I HAVE NOTHING MORE</span>
+                   <span style="background-color: #cb9099">TO GIVE" instead of "YOU NEED MORE SPIRIT ENERGY", and then locks up. That code</span>
+                   <span style="background-color: #cb9099">jumps to $0103, an illegal opcode. PENSE works because it does not use $0103,</span>
+                   <span style="background-color: #cb9099">but its own copy of that code. Jump to $0100 should work, because it will</span>
+                   <span style="background-color: #cb9099">execute harmless instructions on its way to $010E.</span>
+                   <span style="background-color: #cb9099"></span>
+                   <span style="background-color: #cb9099">Either the source disk was corrupt, there was some unhandled copy protection, or</span>
+                   <span style="background-color: #cb9099">this version actually has a bug.</span>
+                   <span style="background-color: #cb9099"></span>
+                   <span style="background-color: #cb9099">$0100: JMP $010E ??  ; STACK_npc_offer</span>
+                   <span style="background-color: #cb9099">$0103: JMP $0160 ??  ; STACK_need_energy</span>
+0100: 31 36                              and     (<a href="#SymMON_CSWL">MON_CSWL</a>),y
+0102: 34 03                              bit     <a href="#SymTXTPTR">TXTPTR</a>,x
+0104: 34 35                              bit     <a href="#SymdoorNeshom">doorNeshom</a>,x
+0106: 36 37                              rol     <a href="#SymspokeTo">spokeTo</a>,x
+0108: 38                                 sec
+0109: 39 10 d0                           and     $d010,y
+010c: 01 60                              ora     ($60,x)
+010e: a2 ff        <a name="Symnpc_offer">npc_offer</a>             ldx     #$ff
+0110: ca           @next_item            dex
+0111: e0 ff                              cpx     #$ff                    ;check item = 00..FE
+0113: d0 25                              bne     @valid_item_num
+0115: 68                                 pla                             ;cycled thru all item numbers
+0116: 68                                 pla                             ;discard caller return address (speak module)
+0117: 20 0c 60                           jsr     <a href="#SymGAME2_PRNTSTR">GAME2_PRNTSTR</a>
+011a: 01                                 .dd1    $01
+011b: c9 a0 c8 c1+                       .str    ↑“I HAVE NOTHING MORE TO GIVE”
+0136: ff                                 .dd1    $ff
+0137: 4c 06 77                           jmp     <a href="#SymGAME2_message_wait">GAME2_message_wait</a>      ;return to game
+
+013a: bd 00 b3     @valid_item_num       lda     <a href="#SymitemStatePos">itemStatePos</a>,x
+013d: c5 1b                              cmp     <a href="#SymMAPPOS">MAPPOS</a>
+013f: d0 cf                              bne     @next_item
+0141: bd 00 b5                           lda     <a href="#SymitemState">itemState</a>,x
+0144: 29 80                              and     #$80                    ;check if mapside is same as item's (bit 7)
+0146: d0 06                              bne     @side0
+0148: a5 1c                              lda     <a href="#SymMAPHALF">MAPHALF</a>
+014a: d0 c4                              bne     @next_item
+014c: f0 04                              beq     @check_state
+
+014e: a5 1c        @side0                lda     <a href="#SymMAPHALF">MAPHALF</a>
+0150: f0 be                              beq     @next_item
+0152: bd 00 b5     @check_state          lda     <a href="#SymitemState">itemState</a>,x
+0155: 2c be 1d                           bit     <a href="#SymGAME1_BITTAB6">GAME1_BITTAB6</a>           ;bit 6 must be set
+0158: f0 b6                              beq     @next_item
+015a: 2c bd 1d                           bit     <a href="#SymGAME1_BITTAB5">GAME1_BITTAB5</a>           ;bit 5 must be clear
+015d: d0 b1                              bne     @next_item
+015f: 60                                 rts
+
+0160: 20 0c 60     <a name="Symneed_more_energy">need_more_energy</a>      jsr     <a href="#SymGAME2_PRNTSTR">GAME2_PRNTSTR</a>
+0163: 01                                 .dd1    $01
+0164: d9 cf d5 a0+                       .str    ↑“YOU NEED MORE SPIRIT ENERGY”
+017f: ff                                 .dd1    $ff
+0180: 4c 06 77                           jmp     <a href="#SymGAME2_message_wait">GAME2_message_wait</a>
+
+0183: e3 20 60 a0+                       .junk   45
+</pre>
+
+
+    </div>
+
+    <!-- SymbolTable is optional; remove this entire section from the template if you don't want it -->
+    <div id="symbol-table">
+        <h2>Symbol Table</h2>
+<p>No exported symbols found.</p>
+
+    </div>
+
+    <div id="footer">
+        <hr/>
+        <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.7.3
+        on 2021/12/18 <!--00:31:47 -06:00--></p>
+        <p>Expression style: Common</p>
+        <!-- parameters: cols=22,8,24,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=False;nonuPfx='@';varPfx='';labelBrk=True;notes=True;gfx=True;opWrap=64 -->
+    </div>
+</body>
+</html>
