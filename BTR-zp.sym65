@@ -49,7 +49,7 @@ STARVED_food = $01
 STARVED_rest = $02
 
 GAMEOVER @ $3d ;game over bool (0/1)
-VISIONNUM @ $3e ; vision number to have next, 0..5
+visionNum @ $3e ; vision number to have next, 0..5
 gainSpirit @ $3f ; spirit gained so far, modulo 5
 lampFuel @ $44 ; number of rooms left in lamp; 00..13
 temp49 @ $49 ; used only in $A7F3

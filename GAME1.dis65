@@ -27,6 +27,40 @@
 "RT:Apple/VisHiRes.cs",
 "PROJ:InlineBTRString.cs"],
 "ProjectSyms":{
+"BIGMESS_end_vision":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"BIGMESS_end_vision",
+"Value":819,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"BIGMESS_visions":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"BIGMESS_visions",
+"Value":816,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "GAME2_action_menu":{
 "DataDescriptor":{
 "Length":1,
@@ -911,8 +945,7 @@
 "4611":"bigmess",
 "4614":"1 = vision of mourning",
 "4688":"bigmess",
-"4691":"3 or 4 = ??????",
-"4695":"bigmess",
+"4695":"jump to bigmess for visions 3 and 4",
 "4698":"2 = vision of reuniting",
 "4763":"bigmess",
 "4928":"the 24 hires text lines (low)",
@@ -1407,6 +1440,13 @@
 "Value":6864,
 "Source":"User",
 "Type":"GlobalAddrExport",
+"LabelAnno":"None"},
+
+"4691":{
+"Label":"other_visions",
+"Value":7251,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
