@@ -8,7 +8,7 @@ This repository contains:
 
 ## Disassembly details
 
-Disassembly is not yet complete, but large portions are done. I did the disassembly using [6502bench SourceGen](https://6502bench.com) with each source file (module) as a separate project. The files are exported to HTML in [docs/](https://github.com/ursetto/a2-btr/docs/), in common assembler syntax with widths of 22/8/24/100 (label/opcode/operand/comment), plus long labels on separate lines. At the moment, it is not exported to actual source files. The docs are made available as [GitHub Pages](https://ursetto.github.io/a2-btr).
+Disassembly is not yet complete, but large portions are done. I did the disassembly using [6502bench SourceGen](https://6502bench.com) with each source file (module) as a separate project. The files are exported to HTML in [docs/](./docs/), in common assembler syntax with widths of 22/8/24/100 (label/opcode/operand/comment), plus long labels on separate lines. At the moment, it is not exported to actual source files. The docs are made available as [GitHub Pages](https://ursetto.github.io/a2-btr).
 
 The style is a little inconsistent, but generally zero-page variables look `likeThis` or occasionally `LIKETHIS`, and code labels look `like_this`. Structure members or constants are usually named like `STRUCT_member`.
 
