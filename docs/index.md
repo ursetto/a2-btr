@@ -1,6 +1,6 @@
 # Below the Root analysis
 
-(Go to the [disassembly](#Disassembly) or [main project page](https://github.com/ursetto/a2-btr).)
+(Go to the [disassembly](#disassembly) or [main project page](https://github.com/ursetto/a2-btr).)
 
 We'll start our analysis from "Below the Root (4am crack)", 4am's deprotected copy of Below the Root for the Apple \]\[, available on Asimov. There is a [san inc ProDOS](https://mirrors.apple2.org.za/ftp.apple.asimov.net/images/games/collections/san_inc_prodos/) port on Asimov, but it hangs if you play as any character other than Neric.
 
