@@ -8,6 +8,7 @@ GAME1
 GAME2
 NOMORE
 SCREEN
+WIND
 WIND.BAS
 WINDHAM
 
@@ -19,3 +20,4 @@ Below the Root (4am crack).txt
 *.vii
 *.viisnapshot
 
+!res/dos33.dsk

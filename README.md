@@ -24,3 +24,25 @@ Zero-page values are in [BTR-zp.sym65](./BTR-zp.sym65) and imported just once in
 Non-zero-page data references that are not in a module are in [BTR.sym65](./BTR.sym65). For example, game state in $B200-$B5FF, and the RWTS buffer values at $0200. In retrospect, there is not a particularly good reason to have 2 separate symbol files.
 
 I wrote a custom SourceGen module, [InlineBTRString.cs](./InlineBTRString.cs), to parse the unique inline string format used in BTR. Basically, it looks for JSRs to the string printing function and transforms the code and data around that. Without this, the analyzer had a very hard time differentiating code from data.
+
+## Makefile
+
+Obtain `Below the Root (4am crack) side A.dsk` and `Below the Root (4am crack) side B.dsk` and copy them into this directory.
+
+After typing `make`, you will have:
+
+- cleartext (unswizzled) copies of the files on side A
+- a bootable side A disk `workA.dsk` with minor enhancements 
+
+Enhancements:
+
+- Enables 2 drives. Place `workA.dsk` in drive 1 and side B in drive 2. Useful for accelerated boot and test.
+- Selects keyboard mode automatically, implicitly skipping the prompt to insert side 2.
+
+Issues:
+
+- Must choose Neric to avoid disk swapping. Otherwise, you must swap side A into drive 2 (!) for a moment when starting a new game.
+- Must insert storage disk into drive 2, if saving/loading.
+
+The new game swap issue can be fixed with a small change to `read_char_data` ($AE1D) to temporarily set the default drive to 1 and skip the disk prompts.
+
