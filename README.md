@@ -40,18 +40,15 @@ Enhancements:
 
 - Enables 2 drives. Place `workA.dsk` in drive 1 and side B in drive 2. Useful for accelerated boot and test (try `make boot`).
 - Selects keyboard mode automatically, implicitly skipping the prompt to insert side 2.
-- Storage disk also read from drive 1. You never need to swap the data disk out.
+- You never need to swap the data disk out.
+- Side 1 and storage disk are both read from drive 1; you will be prompted to swap these when needed. Side 1 is only needed when
+  changing characters.
 
-Issues:
+DIRECT.SECTOR is rewritten for dual-drive support, adding an RWTS entry point just for the side1/storage disk, and WINDD2K.BAS pokes in a few code changes.
+Note we need to strip out REM statements from WINDD2K before writing to disk, or it will pass $A00 and be clobbered by GAME1.
 
-- If loading a quest for a different character than the one currently in memory, character sprites are corrupted as they are
-  read from disk 1 (storage) without prompting to replace the disk with side A. Need to check if this is my fault or a bug
-  in the original code.
-
-DIRECT.SECTOR is rewritten for dual-drive support, and WINDD2K.BAS is used to update code. Note we need to strip out REM statements
-from WINDD2K before writing to disk, or it will pass $A00 and be clobbered by GAME1.
-
-The new game swap issue is fixed with a small change to `read_char_data` (at $AE71 or +$1871 in SCREEN) to repoint the JSR to DIRECT_RWTS1.
-We skip the side 2 disk prompt at +$188f with BIT ($2C), and the side 1 disk prompt at +$181D with JMP $AE58. We repoint the save game RWTS
-at +$1725 and the load game at +$1765. Above I use relative offsets into SCREEN as the actual modified locations are $4000 + offset, which is
-relocated to $9600.
+In `read_char_data` (at $AE71 or +$1871 in SCREEN), we repoint the JSR to DIRECT_RWTS1 to read character sprites from drive 1.
+We skip the side 2 disk prompt at +$188f with BIT ($2C) as it is always inserted in drive 2. We repoint the save game RWTS at +$1725
+and the load game at +$1765 to the storage disk in drive 1.
+(We cannot skip the side 1 disk prompt at +$181D with JMP $AE58, because side 1 and the storage disk coexist in drive 1.)
+Above I use relative offsets into SCREEN, as the actual modified locations are A$4000 + offset, which is then relocated to $9600.
