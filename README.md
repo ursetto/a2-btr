@@ -38,7 +38,7 @@ After typing `make`, you will have:
 
 Enhancements:
 
-- Enables 2 drives. Place `workA.dsk` in drive 1 and side B in drive 2. Useful for accelerated boot and test.
+- Enables 2 drives. Place `workA.dsk` in drive 1 and side B in drive 2. Useful for accelerated boot and test (try `make boot`).
 - Selects keyboard mode automatically, implicitly skipping the prompt to insert side 2.
 
 Issues:
