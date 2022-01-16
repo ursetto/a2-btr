@@ -12,6 +12,8 @@ WIND
 WIND.BAS
 WINDHAM
 
+direct_sector_2
+
 # for the moment
 *.dsk
 *.po
@@ -19,5 +21,6 @@ WINDHAM
 Below the Root (4am crack).txt
 *.vii
 *.viisnapshot
+*.report
 
 !res/dos33.dsk
