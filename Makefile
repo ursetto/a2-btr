@@ -33,7 +33,8 @@ $(work): $(files) $(dos33) WINDD2K.BAS direct_sector_2
 	@# Reserve T03,S00..T09,SFF (for raw sector copy)
 	dd if=/dev/zero count=110 bs=256 | applecommander -p $(work) TEMP B 0x0
 	applecommander -p $(work) WIND A 0x801 < WIND
-	applecommander -bas $(work) HELLO < WINDD2K.BAS
+	@# Upload enhanced HELLO program and strip out REMs to save space
+	cat WINDD2K.BAS | sed 's/: REM.*//' | applecommander -bas $(work) HELLO
 	applecommander -p $(work) NOMORE B 0x100  < NOMORE
 	applecommander -p $(work) DIRECT.SECTOR B 0x300 < direct_sector_2
 	applecommander -p $(work) BIGMESS B 0x330  < BIGMESS

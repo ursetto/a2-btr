@@ -40,11 +40,18 @@ Enhancements:
 
 - Enables 2 drives. Place `workA.dsk` in drive 1 and side B in drive 2. Useful for accelerated boot and test (try `make boot`).
 - Selects keyboard mode automatically, implicitly skipping the prompt to insert side 2.
+- Storage disk also read from drive 1. You never need to swap the data disk out.
 
 Issues:
 
-- Must choose Neric to avoid disk swapping. Otherwise, you must swap side A into drive 2 (!) for a moment when starting a new game.
-- Must insert storage disk into drive 2, if saving/loading.
+- If loading a quest for a different character than the one currently in memory, character sprites are corrupted as they are
+  read from disk 1 (storage) without prompting to replace the disk with side A. Need to check if this is my fault or a bug
+  in the original code.
 
-The new game swap issue can be fixed with a small change to `read_char_data` ($AE1D) to temporarily set the default drive to 1 and skip the disk prompts.
+DIRECT.SECTOR is rewritten for dual-drive support, and WINDD2K.BAS is used to update code. Note we need to strip out REM statements
+from WINDD2K before writing to disk, or it will pass $A00 and be clobbered by GAME1.
 
+The new game swap issue is fixed with a small change to `read_char_data` (at $AE71 or +$1871 in SCREEN) to repoint the JSR to DIRECT_RWTS1.
+We skip the side 2 disk prompt at +$188f with BIT ($2C), and the side 1 disk prompt at +$181D with JMP $AE58. We repoint the save game RWTS
+at +$1725 and the load game at +$1765. Above I use relative offsets into SCREEN as the actual modified locations are $4000 + offset, which is
+relocated to $9600.
