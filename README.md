@@ -27,12 +27,14 @@ I wrote a custom SourceGen module, [InlineBTRString.cs](./InlineBTRString.cs), t
 
 ## Makefile
 
-Obtain `Below the Root (4am crack) side A.dsk` and `Below the Root (4am crack) side B.dsk` and copy them into this directory.
+Obtain `Below the Root (4am crack) side A.dsk` and `Below the Root (4am crack) side B.dsk` and copy them into this directory. [applecommander](https://github.com/AppleCommander/AppleCommander) is required.
 
 After typing `make`, you will have:
 
 - cleartext (unswizzled) copies of the files on side A
-- a bootable side A disk `workA.dsk` with minor enhancements 
+- a bootable, unscrambled side A disk `pristineA.dsk`
+- a bootable side A disk `workA.dsk` with minor enhancements
+- `sideB.dsk`, a symlink to the BTR Side B disk for convenience.
 
 Enhancements:
 
