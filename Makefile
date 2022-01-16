@@ -1,5 +1,5 @@
 sideA="Below the Root (4am crack) side A.dsk"
-sideB="Below the Root (4am crack) side A.dsk"
+sideB="Below the Root (4am crack) side B.dsk"
 files=BIGMESS DIRECT.SECTOR GAME1 GAME2 NOMORE SCREEN WINDHAM WIND
 # Note: Can't decode WIND.BAS without writing unscrambled version back to floppy.
 
@@ -26,16 +26,17 @@ work:
 	make $(work)
 
 # Create a side A work disk with some QoL enhancements.
-$(work): $(files) $(dos33) WINDD2K.BAS
+$(work): $(files) $(dos33) WINDD2K.BAS direct_sector_2
 	ln -nsf $(sideB) sideB.dsk
 	cp $(dos33) $(work)
 	applecommander -d $(work) HELLO
 	@# Reserve T03,S00..T09,SFF (for raw sector copy)
 	dd if=/dev/zero count=110 bs=256 | applecommander -p $(work) TEMP B 0x0
 	applecommander -p $(work) WIND A 0x801 < WIND
-	applecommander -bas $(work) HELLO < WINDD2K.BAS
+	@# Upload enhanced HELLO program and strip out REMs to save space
+	cat WINDD2K.BAS | sed 's/: REM.*//' | applecommander -bas $(work) HELLO
 	applecommander -p $(work) NOMORE B 0x100  < NOMORE
-	applecommander -p $(work) DIRECT.SECTOR B 0x300  < DIRECT.SECTOR
+	applecommander -p $(work) DIRECT.SECTOR B 0x300 < direct_sector_2
 	applecommander -p $(work) BIGMESS B 0x330  < BIGMESS
 	applecommander -p $(work) WINDHAM B 0x400  < WINDHAM
 	applecommander -p $(work) GAME1 B 0xA00  < GAME1
@@ -74,5 +75,8 @@ clean:
 # Open work side A and original side B with Virtual ][ on macOS
 boot: $(work)
 	open workA.dsk sideB.dsk
+
+direct_sector_2: src/direct_sector.s
+	acme -o $@ -r $<.report $<
 
 .PHONY: check init-check work-rwts work pristine boot

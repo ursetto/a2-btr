@@ -38,13 +38,17 @@ After typing `make`, you will have:
 
 Enhancements:
 
-- Enables 2 drives. Place `workA.dsk` in drive 1 and side B in drive 2. Useful for accelerated boot and test.
+- Enables 2 drives. Place `workA.dsk` in drive 1 and side B in drive 2. Useful for accelerated boot and test (try `make boot`).
 - Selects keyboard mode automatically, implicitly skipping the prompt to insert side 2.
+- You never need to swap the data disk out.
+- Side 1 and storage disk are both read from drive 1; you will be prompted to swap these when needed. Side 1 is only needed when
+  changing characters.
 
-Issues:
+DIRECT.SECTOR is rewritten for dual-drive support, adding an RWTS entry point just for the side1/storage disk, and WINDD2K.BAS pokes in a few code changes.
+Note we need to strip out REM statements from WINDD2K before writing to disk, or it will pass $A00 and be clobbered by GAME1.
 
-- Must choose Neric to avoid disk swapping. Otherwise, you must swap side A into drive 2 (!) for a moment when starting a new game.
-- Must insert storage disk into drive 2, if saving/loading.
-
-The new game swap issue can be fixed with a small change to `read_char_data` ($AE1D) to temporarily set the default drive to 1 and skip the disk prompts.
-
+In `read_char_data` (at $AE71 or +$1871 in SCREEN), we repoint the JSR to DIRECT_RWTS1 to read character sprites from drive 1.
+We skip the side 2 disk prompt at +$188f with BIT ($2C) as it is always inserted in drive 2. We repoint the save game RWTS at +$1725
+and the load game at +$1765 to the storage disk in drive 1.
+(We cannot skip the side 1 disk prompt at +$181D with JMP $AE58, because side 1 and the storage disk coexist in drive 1.)
+Above I use relative offsets into SCREEN, as the actual modified locations are A$4000 + offset, which is then relocated to $9600.

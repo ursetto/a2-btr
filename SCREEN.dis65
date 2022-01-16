@@ -1971,12 +1971,6 @@
 "MaxWidth":80,
 "BackgroundColor":-18751},
 
-"5352":{
-"Text":"\r\n",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-23296},
-
 "6656":{
 "Text":"This page gets copied to $0900 during setup, but is not code.",
 "BoxMode":false,
@@ -3581,6 +3575,13 @@
 "2596":{
 "Label":"x_ok",
 "Value":40996,
+"Source":"User",
+"Type":"NonUniqueLocalAddr",
+"LabelAnno":"None"},
+
+"5782":{
+"Label":"loop",
+"Value":44182,
 "Source":"User",
 "Type":"NonUniqueLocalAddr",
 "LabelAnno":"None"}},
