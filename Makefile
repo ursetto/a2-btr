@@ -42,6 +42,7 @@ $(work): $(files) $(dos33) WINDD2K.BAS direct_sector_2
 	applecommander -p $(work) GAME1 B 0xA00  < GAME1
 	applecommander -p $(work) SCREEN B 0x4000 < SCREEN
 	applecommander -p $(work) GAME2 B 0x6000 < GAME2
+	applecommander -p $(work) DEBUG B 0x8500 < DEBUG
 	applecommander -d $(work) TEMP
 
 	@# Copy raw sectors T05..09,S00..0F (player char data) from original to work disk
@@ -77,6 +78,9 @@ boot: $(work)
 	open workA.dsk sideB.dsk
 
 direct_sector_2: src/direct_sector.s
+	acme -o $@ -r $<.report $<
+
+DEBUG: src/debug.s
 	acme -o $@ -r $<.report $<
 
 .PHONY: check init-check work-rwts work pristine boot
