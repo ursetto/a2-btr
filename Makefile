@@ -26,7 +26,7 @@ work:
 	make $(work)
 
 # Create a side A work disk with some QoL enhancements.
-$(work): $(files) $(dos33) WINDD2K.BAS direct_sector_2
+$(work): $(files) $(dos33) WINDD2K.BAS direct_sector_2 DEBUG
 	ln -nsf $(sideB) sideB.dsk
 	cp $(dos33) $(work)
 	applecommander -d $(work) HELLO
