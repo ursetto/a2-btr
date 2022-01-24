@@ -13,6 +13,17 @@ handle_ijkm_space = $7621
 jmp_pause   =     $779a                 ; jmp to GAME2_cleartext when menu item is PAUSE (pos 0,0)
 action_text =     $7844
 
+!macro pokew .addr, .val {
+            lda   #(.val & 255)
+            sta   .addr
+            lda   #(.val >> 8) & 255
+            sta   .addr+1
+}
+
+!macro poke .addr, .val {
+            lda   #.val
+            sta   .addr
+}
 
 ; In handle_ijkm_keyboard (or patch to it), we can test for Ctrl-D and toggle a debugflag. This flag would
 ; indicate debug mode is enabled (not that we should enter the debug menu). We should probably then
@@ -50,16 +61,9 @@ entry
             sta   debugMenu
 
             ; Patch in call to handling PAUSE/DEBUG menu item.
-            lda   #<handle_pause_debug
-            sta   jmp_pause+1
-            lda   #>handle_pause_debug
-            sta   jmp_pause+2
-
+            +pokew jmp_pause+1, handle_pause_debug
             ;; Patch debug kbd handler into keyboard handler
-            lda   #<handle_debug_kbd
-            sta   handle_ijkm_space+1
-            lda   #>handle_debug_kbd
-            sta   handle_ijkm_space+2
+            +pokew handle_ijkm_space+1, handle_debug_kbd
 
             jmp   start_vec
 
@@ -81,11 +85,17 @@ handle_debug_kbd
             eor   #$FF
             sta   debugFlag
             beq   @pause
-            lda   #'D'
-            sta   action_text+1
+            +poke action_text+1, 'D'
+            +poke action_text+2, 'E'
+            +poke action_text+3, 'B'
+            +poke action_text+4, 'U'
+            +poke action_text+5, 'G'
             bne   @ret
-@pause      lda   #'P'
-            sta   action_text+1
+@pause      +poke action_text+1, 'P'
+            +poke action_text+2, 'A'
+            +poke action_text+3, 'U'
+            +poke action_text+4, 'S'
+            +poke action_text+5, 'E'
 @ret        pla
 @rts        rts
 
