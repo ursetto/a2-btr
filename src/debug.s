@@ -88,3 +88,9 @@ handle_debug_kbd
             sta   action_text+1
 @ret        pla
 @rts        rts
+
+!if * > $9600 {
+            !error "Encroached into SCREEN at $9600 by ", * - $9600, " bytes"
+} else {
+            !warn       $9600 - *, " bytes available"
+}
