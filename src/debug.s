@@ -1,3 +1,6 @@
+            !cpu  6502
+*           =     $8500
+
 debugFlag   =     $EE
 debugMenu   =     $EF
 
@@ -8,9 +11,8 @@ SCRN_chkkey =     $b609
 handle_kbd_or_joy = $761a
 handle_ijkm_space = $7621
 jmp_pause   =     $779a                 ; jmp to GAME2_cleartext when menu item is PAUSE (pos 0,0)
+action_text =     $7844
 
-
-*           =     $8500
 
 ; In handle_ijkm_keyboard (or patch to it), we can test for Ctrl-D and toggle a debugflag. This flag would
 ; indicate debug mode is enabled (not that we should enter the debug menu). We should probably then
@@ -37,6 +39,11 @@ jmp_pause   =     $779a                 ; jmp to GAME2_cleartext when menu item 
 ;; 761e: 4c ac 76                           jmp     handle_joystick
 ;;  or here (for KBD only, slightly cleaner)
 ;; 7621: 20 09 b6     handle_ijkm_space     jsr     SCRN_chkkey
+
+
+;;; Action text for menu; we can modify PAUSE to DEBUG when debug flag is set.
+;;; 7844: a0 d0 c1 d5+ action_text .str " PAUSE ...."
+
 entry
             lda   #0
             sta   debugFlag
@@ -65,12 +72,19 @@ handle_pause_debug
             jmp   GAME2_cleartext
 
 handle_debug_kbd
+            ;; Must preserve SCRN_chkkey value in A on return.
             jsr   SCRN_chkkey
-            cmp   #$84                  ; Ctrl-D (or the number 4)
+            cmp   #$84                  ; Ctrl-D (or shift-4 '$')
             bne   @rts
             pha
             lda   debugFlag
             eor   #$FF
             sta   debugFlag
-            pla
+            beq   @pause
+            lda   #'D'
+            sta   action_text+1
+            bne   @ret
+@pause      lda   #'P'
+            sta   action_text+1
+@ret        pla
 @rts        rts
