@@ -30,6 +30,11 @@ action_text =     $7844
 ; immediately update the main menu text to change "PAUSE" to "DEBUG" (or vice versa, based on the flag value).
 
 ; We should be able to reuse the menu choice code, but we need another flag to say we are in the debug menu.
+;
+; The menu display code hardcodes the address of the action strings (action_text) used during menu display and
+; highlight, as well as the exact text columns (which is ok), so we must either duplicate all this code or
+; swap in/out the text as needed. Swapping is simplest, but is complicated by needing to write "DEBUG/PAUSE"
+; to the main menu.
 
 ; In main game loop, check if entering menu
 ; 60a3: a5 9f        @check_menu_entry     lda     enterMenu               ;enter menu on this frame?
@@ -39,6 +44,9 @@ action_text =     $7844
 ; In action menu, this handles item selection, and could be patched
 ; to handle a debug menu, using the normal action code to move.
 ; 7746: 4c 92 77                           jmp     select_menu_item
+
+; 
+; 7727: 20 2f 78     action_menu           jsr     display_actions
 
 ; This subroutine jumps to GAME2_cleartext if col,row is 0,0. This jump could be patched
 ; to test the debugflag and enter the debug menu.
@@ -85,13 +93,16 @@ handle_debug_kbd
             eor   #$FF
             sta   debugFlag
             beq   @pause
+            jsr   select_menu0          ; TEST
             +poke action_text+1, 'D'
             +poke action_text+2, 'E'
             +poke action_text+3, 'B'
             +poke action_text+4, 'U'
             +poke action_text+5, 'G'
             bne   @ret
-@pause      +poke action_text+1, 'P'
+@pause
+            jsr   select_menu1          ; TEST
+            +poke action_text+1, 'P'
             +poke action_text+2, 'A'
             +poke action_text+3, 'U'
             +poke action_text+4, 'S'
@@ -99,8 +110,48 @@ handle_debug_kbd
 @ret        pla
 @rts        rts
 
+; saw corruption once, which could indicate these are unsafe
+.src        =     $09
+.dst        =     $11
+
+select_menu0
+            lda #<action_menu_text
+            ldy #>action_menu_text
+            bne +
+select_menu1
+            lda #<debug_menu_text
+            ldy #>debug_menu_text
++
+            sta .src
+            sty .src+1
+            lda #<action_text
+            ldy #>action_text
+            sta .dst
+            sty .dst+1
+            ldy #debug_menu_text-action_menu_text-1 ; length of menu text - 1
+-           lda (.src),y
+            sta (.dst),y
+            dey
+            bne -
+            rts
+
+; todo: conversion table
+; $A0 (4 * $28) bytes long == 160 chars (4 rows * 40 cols)
+; Actual and max string length is $9F; last char is not printed
+action_menu_text
+            !text " PAUSE ", " TAKE ", " DROP ", " EXAMINE    ", " STATUS  "
+            !text " SPEAK ", " BUY  ", " SELL ", " INVENTORY  ", " RENEW   "
+            !text " PENSE ", " USE  ", " HEAL ", " GRUNSPREKE ", " MENU    "
+            !text " OFFER ", " EAT  ", " REST ", " KINIPORT   ", " SOUND  " ; last must be short 1 char
+
+debug_menu_text
+            !text " PAUSE ", " MOVE ", "  -   ", "            ", "         "
+            !text " REGEN ", " TICK ", "  -   ", "            ", "         "
+            !text "   -   ", "  -   ", "      ", "            ", "         "
+            !text "   -   ", "      ", "      ", "            ", "        "
+
 !if * > $9600 {
             !error "Encroached into SCREEN at $9600 by ", * - $9600, " bytes"
 } else {
-            !warn       $9600 - *, " bytes available"
+            ; !warn       $9600 - *, " bytes available"
 }
