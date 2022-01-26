@@ -1,17 +1,28 @@
             !cpu  6502
 *           =     $8500
 
+levelSpirit =     $23
+limitSpirit =     $27
+
+MENUCOL     =     $71
+MENUROW     =     $72
 debugFlag   =     $EE
 debugMenu   =     $EF
 
 GAME2_cleartext = $6006
+GAME2_action_menu = $7700
+GAME2_action_menu_noop = $7739
+;;; enter_menu = $604e
 start_vec   =     $a846
 SCRN_chkkey =     $b609
 
 handle_kbd_or_joy = $761a
 handle_ijkm_space = $7621
+jmp_select_menu_item = $7746
+select_menu_item = $7792
 jmp_pause   =     $779a                 ; jmp to GAME2_cleartext when menu item is PAUSE (pos 0,0)
 action_text =     $7844
+do_menu_status =  $82c1
 
 !macro pokew .addr, .val {
             lda   #(.val & 255)
@@ -68,10 +79,12 @@ entry
             sta   debugFlag
             sta   debugMenu
 
-            ; Patch in call to handling PAUSE/DEBUG menu item.
+            ;; Patch in call to handling PAUSE/DEBUG menu item.
             +pokew jmp_pause+1, handle_pause_debug
             ;; Patch debug kbd handler into keyboard handler
             +pokew handle_ijkm_space+1, handle_debug_kbd
+            ;; Patch our menu item selector in place of the normal one
+            +pokew jmp_select_menu_item+1, select_menu_item_2
 
             jmp   start_vec
 
@@ -93,20 +106,20 @@ handle_debug_kbd
             eor   #$FF
             sta   debugFlag
             beq   @pause
-            jsr   select_menu0          ; TEST
-            +poke action_text+1, 'D'
-            +poke action_text+2, 'E'
-            +poke action_text+3, 'B'
-            +poke action_text+4, 'U'
-            +poke action_text+5, 'G'
-            bne   @ret
+            +poke action_menu_text+1, 'D'
+            +poke action_menu_text+2, 'E'
+            +poke action_menu_text+3, 'B'
+            +poke action_menu_text+4, 'U'
+            +poke action_menu_text+5, 'G'
+            jsr   select_menu0          ;ensure menu text is copied
+            beq   @ret                  ;always (Z=0 after select_menu0)
 @pause
-            jsr   select_menu1          ; TEST
-            +poke action_text+1, 'P'
-            +poke action_text+2, 'A'
-            +poke action_text+3, 'U'
-            +poke action_text+4, 'S'
-            +poke action_text+5, 'E'
+            +poke action_menu_text+1, 'P'
+            +poke action_menu_text+2, 'A'
+            +poke action_menu_text+3, 'U'
+            +poke action_menu_text+4, 'S'
+            +poke action_menu_text+5, 'E'
+            jsr   select_menu0          ;ensure menu text is copied
 @ret        pla
 @rts        rts
 
@@ -115,14 +128,18 @@ handle_debug_kbd
 .dst        =     $11
 
 select_menu0
+            lda #$00
+            sta debugMenu
             lda #<action_menu_text
             ldy #>action_menu_text
             bne +
 select_menu1
+            lda #$FF
+            sta debugMenu
             lda #<debug_menu_text
             ldy #>debug_menu_text
-+
-            sta .src
+            ;; Copy menu text from (Y,A) into primary menu text
++           sta .src
             sty .src+1
             lda #<action_text
             ldy #>action_text
@@ -149,6 +166,40 @@ debug_menu_text
             !text " REGEN ", " TICK ", "  -   ", "            ", "         "
             !text "   -   ", "  -   ", "      ", "            ", "         "
             !text "   -   ", "      ", "      ", "            ", "        "
+
+;;; Menu item selector. Called when the user clicks on an item.
+select_menu_item_2
+            lda debugMenu
+            bne @debug
+            lda debugFlag
+            beq @ret
+            lda MENUCOL
+            bne @ret
+            lda MENUROW
+            bne @ret
+            jsr select_menu1
+            jsr GAME2_action_menu
+            jmp select_menu0            ; and rts
+@debug
+            ;; debug menu item handlers go here
+            lda MENUCOL
+            bne @c1
+            lda MENUROW
+            bne @rc10
+            jmp GAME2_cleartext         ;(0,0)
+@c1         cmp #$01
+            bne @rc02
+            jmp GAME2_cleartext
+@rc02       jmp GAME2_cleartext
+@rc10       cmp #$01
+            bne @rc20
+            lda #33                     ;REGEN
+            sta levelSpirit
+            sta limitSpirit             ;test
+            jmp do_menu_status
+@rc20       jmp GAME2_cleartext
+
+@ret        jmp select_menu_item        ; normal menu selector
 
 !if * > $9600 {
             !error "Encroached into SCREEN at $9600 by ", * - $9600, " bytes"
