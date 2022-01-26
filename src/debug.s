@@ -167,39 +167,54 @@ debug_menu_text
             !text "   -   ", "  -   ", "      ", "            ", "         "
             !text "   -   ", "      ", "      ", "            ", "        "
 
+debug_menu_routines                     ; all offsets must be -1
+            !word m_pause-1, m_move-1, m_noop-1, m_noop-1,       m_noop-1
+            !word m_regen-1, m_tick-1, m_noop-1, m_noop-1,       m_noop-1
+            !word m_noop-1,  m_noop-1, m_noop-1, m_noop-1,       m_noop-1
+            !word m_noop-1,  m_noop-1, m_noop-1, m_noop-1,       m_noop-1
+
 ;;; Menu item selector. Called when the user clicks on an item.
 select_menu_item_2
             lda debugMenu
-            bne @debug
+            bne @debug                  ; handle debug items if in debug menu
             lda debugFlag
-            beq @ret
+            beq @ret                    ; normal menu if debug flag is disabled
             lda MENUCOL
             bne @ret
             lda MENUROW
-            bne @ret
-            jsr select_menu1
-            jsr GAME2_action_menu
-            jmp select_menu0            ; and rts
+            bne @ret                    ; normal menu if position != (0,0)
+            jsr select_menu1            ; swap in debug menu text
+            jsr GAME2_action_menu       ; display and handle debug menu
+            jmp select_menu0            ; restore action menu text and rts
+
+@ret        jmp select_menu_item        ; continue with normal action menu
+;; Jump to debug menu routine handler at table + (MENUROW*5+MENUCOL)*2.
+;; A jump table is easier to maintain than the chained conditionals of
+;; the original, in my opinion.
 @debug
-            ;; debug menu item handlers go here
-            lda MENUCOL
-            bne @c1
-            lda MENUROW
-            bne @rc10
-            jmp GAME2_cleartext         ;(0,0)
-@c1         cmp #$01
-            bne @rc02
-            jmp GAME2_cleartext
-@rc02       jmp GAME2_cleartext
-@rc10       cmp #$01
-            bne @rc20
-            lda #33                     ;REGEN
+            lda   MENUROW
+            asl
+            asl                         ;row*4
+            clc
+            adc   MENUROW               ;row*5
+            adc   MENUCOL               ;row*5+col
+            asl
+            tax
+            lda   debug_menu_routines+1,x
+            pha
+            lda   debug_menu_routines,x
+            pha
+            rts                         ; jmp (debug_menu_routines,x) but for 6502
+
+;;; Menu item handling code
+m_pause     jmp GAME2_cleartext
+m_regen     lda #33                     ;REGEN
             sta levelSpirit
             sta limitSpirit             ;test
             jmp do_menu_status
-@rc20       jmp GAME2_cleartext
-
-@ret        jmp select_menu_item        ; normal menu selector
+m_move      jmp GAME2_cleartext
+m_tick      jmp GAME2_cleartext
+m_noop      jmp GAME2_action_menu_noop
 
 !if * > $9600 {
             !error "Encroached into SCREEN at $9600 by ", * - $9600, " bytes"
