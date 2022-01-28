@@ -1,8 +1,15 @@
             !cpu  6502
 *           =     $8500
 
+
 levelSpirit =     $23
+levelFood   =     $24                     ; level of food, max limit-1
+levelRest   =     $25                     ; level of rest, max limit-1
+levelStamina=     $26                     ; level of stamina
 limitSpirit =     $27
+limitFood   =     $2a                     ; not shown, levelStamina/2 + 1
+limitRest   =     $2b                     ; not shown, levelStamina/2 + 1
+maxWeight   =     $2c
 
 MENUCOL     =     $71
 MENUROW     =     $72
@@ -10,7 +17,9 @@ debugFlag   =     $EE
 debugMenu   =     $EF
 
 GAME2_cleartext = $6006
+GAME2_PRNTSTR =   $600c
 GAME2_action_menu = $7700
+GAME2_message_wait = $7706
 GAME2_action_menu_noop = $7739
 ;;; enter_menu = $604e
 start_vec   =     $a846
@@ -35,6 +44,22 @@ do_menu_status =  $82c1
             lda   #.val
             sta   .addr
 }
+
+!macro fstr .str {
+            !text .str
+            !byte $ff
+}
+
+!macro hvstr .h, .v, .str {
+            !byte .v * 40 + .h
+            +fstr .str
+}
+
+!macro print_hvstr .h, .v, .str {
+            jsr GAME2_PRNTSTR
+            +hvstr .h, .v, .str
+}
+
 
 ; In handle_ijkm_keyboard (or patch to it), we can test for Ctrl-D and toggle a debugflag. This flag would
 ; indicate debug mode is enabled (not that we should enter the debug menu). We should probably then
@@ -162,15 +187,15 @@ action_menu_text
             !text " OFFER ", " EAT  ", " REST ", " KINIPORT   ", " SOUND  " ; last must be short 1 char
 
 debug_menu_text
-            !text " PAUSE ", " MOVE ", "  -   ", "            ", "         "
-            !text " REGEN ", " TICK ", "  -   ", "            ", "         "
-            !text "   -   ", "  -   ", "      ", "            ", "         "
+            !text " PAUSE ", " MOVE ", "  -   ", " LEVEL UP   ", "         "
+            !text " REGEN ", " TICK ", "  -   ", " MAX OUT    ", "         "
+            !text "   -   ", " GET  ", "      ", "            ", "         "
             !text "   -   ", "      ", "      ", "            ", "        "
 
 debug_menu_routines                     ; all offsets must be -1
-            !word m_pause-1, m_move-1, m_noop-1, m_noop-1,       m_noop-1
-            !word m_regen-1, m_tick-1, m_noop-1, m_noop-1,       m_noop-1
-            !word m_noop-1,  m_noop-1, m_noop-1, m_noop-1,       m_noop-1
+            !word m_pause-1, m_move-1, m_noop-1, m_noimpl-1,     m_noop-1
+            !word m_regen-1, m_tick-1, m_noop-1, m_maxout-1,     m_noop-1
+            !word m_noop-1,  m_get-1,  m_noop-1, m_noop-1,       m_noop-1
             !word m_noop-1,  m_noop-1, m_noop-1, m_noop-1,       m_noop-1
 
 ;;; Menu item selector. Called when the user clicks on an item.
@@ -200,20 +225,43 @@ select_menu_item_2
             adc   MENUCOL               ;row*5+col
             asl
             tax
+            ;; jmp (debug_menu_routines,x) for 6502
             lda   debug_menu_routines+1,x
             pha
             lda   debug_menu_routines,x
             pha
-            rts                         ; jmp (debug_menu_routines,x) but for 6502
+            rts
 
 ;;; Menu item handling code
 m_pause     jmp GAME2_cleartext
-m_regen     lda #33                     ;REGEN
+m_regen     lda limitSpirit                     ;REGEN
             sta levelSpirit
-            sta limitSpirit             ;test
+            ldy limitFood
+            dey
+            sty levelFood
+            ldy limitRest
+            dey
+            sty levelRest
             jmp do_menu_status
+m_maxout    lda #99
+            sta limitSpirit
+            sta maxWeight               ; note: this might allow you to carry too many items
+            sta levelStamina
+            ;; note: recalced as levelStamina/2 + 1 if you gain stamina via elixir
+            lda #100
+            sta limitFood
+            sta limitRest
+            jmp m_regen
+
 m_move      jmp GAME2_cleartext
-m_tick      jmp GAME2_cleartext
+;;; Disabling TICKING also stops NPCs and other processing. Setting
+;;; the doorNeshom flag will prevent starvation and time passing, but entering a door
+;;; will teleport you to D'Ol Neshom.
+m_tick      jmp m_noimpl
+m_get       jmp m_noimpl
+m_noimpl    jsr GAME2_cleartext
+            +print_hvstr 1, 0, "NOT IMPLEMENTED"
+            jmp GAME2_message_wait
 m_noop      jmp GAME2_action_menu_noop
 
 !if * > $9600 {

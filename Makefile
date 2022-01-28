@@ -75,7 +75,8 @@ clean:
 
 # Open work side A and original side B with Virtual ][ on macOS
 boot: $(work)
-	open workA.dsk sideB.dsk
+	@#open workA.dsk sideB.dsk
+	open btrwork.vii
 
 direct_sector_2: src/direct_sector.s
 	acme -o $@ -r $<.report $<
