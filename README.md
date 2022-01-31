@@ -33,7 +33,7 @@ After typing `make`, you will have:
 
 - cleartext (unswizzled) copies of the files on side A
 - a bootable, unscrambled side A disk `pristineA.dsk`
-- a bootable side A disk `workA.dsk` with minor enhancements
+- a bootable side A disk `workA.dsk` with some enhancements
 - `sideB.dsk`, a symlink to the BTR Side B disk for convenience.
 
 Enhancements:
@@ -41,14 +41,33 @@ Enhancements:
 - Enables 2 drives. Place `workA.dsk` in drive 1 and side B in drive 2. Useful for accelerated boot and test (try `make boot`).
 - Selects keyboard mode automatically, implicitly skipping the prompt to insert side 2.
 - You never need to swap the data disk out.
-- Side 1 and storage disk are both read from drive 1; you will be prompted to swap these when needed. Side 1 is only needed when
-  changing characters.
+- Side 1 and storage disk are both read from drive 1; you will be prompted to swap these when needed. Side 1 is only needed when changing characters.
+- Adds a [debug menu](./src/debug.s), loaded into the language card. 64K required.
 
-DIRECT.SECTOR is rewritten for dual-drive support, adding an RWTS entry point just for the side1/storage disk, and WINDD2K.BAS pokes in a few code changes.
-Note we need to strip out REM statements from WINDD2K before writing to disk, or it will pass $A00 and be clobbered by GAME1.
+## Debug menu
+
+Press Control-D during gameplay to enable/disable debug mode; when enabled, the "PAUSE" item turns into "DEBUG" which will launch another menu.
+
+<img src="docs/images/debug-item.png" width=80%>
+
+This menu is limited right now, currently allowing you to REGEN (like RENEW but without returning home) and MAX OUT (set all stats to 99). Other functions are unimplemented.
+
+<img src="docs/images/debug-menu.png" width=80%>
+
+<img src="docs/images/debug-regen.png" width=80%>
+
+## Enhancement code
+
+DIRECT.SECTOR [is rewritten](./src/direct_sector.s) for dual-drive support, adding an RWTS entry point just for the side1/storage disk, and WINDD2K.BAS pokes in a few code changes. It also contains an alternate startup entry point to swap in LC bank 2, in order to activate the debug code at startup.
 
 In `read_char_data` (at $AE71 or +$1871 in SCREEN), we repoint the JSR to DIRECT_RWTS1 to read character sprites from drive 1.
 We skip the side 2 disk prompt at +$188f with BIT ($2C) as it is always inserted in drive 2. We repoint the save game RWTS at +$1725
 and the load game at +$1765 to the storage disk in drive 1.
 (We cannot skip the side 1 disk prompt at +$181D with JMP $AE58, because side 1 and the storage disk coexist in drive 1.)
 Above I use relative offsets into SCREEN, as the actual modified locations are A$4000 + offset, which is then relocated to $9600.
+
+Note we need to strip out REM statements from WINDD2K before writing to disk, or it will pass $A00 and be clobbered by GAME1.
+
+The debug code is loaded into the language card, since low RAM is essentially full. After a reset, the bank select switches are always Read ROM / Write RAM bank 2, so we can BLOAD our code to $D000 (bank 2) from BASIC (in ROM). To start we call into an ML subroutine (squeezed into our DIRECT.SECTOR) that switches bank 2 to read, and starts the game.
+
+LC bank 2 is left readable for the duration of the game. We don't copy the monitor into RAM, because the only ROM routine used is PREAD (paddle read) and we force keyboard mode. There's no room for more code in page $03 so implementing monitor copy, which must be done from the lower 48K, would take a little work. Pages $5D-$5F should be free for this and other (pre-LC) startup code.

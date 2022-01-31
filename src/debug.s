@@ -1,5 +1,5 @@
             !cpu  6502
-*           =     $8500
+*           =     $d000
 
 
 levelSpirit =     $23
@@ -263,9 +263,3 @@ m_noimpl    jsr GAME2_cleartext
             +print_hvstr 1, 0, "NOT IMPLEMENTED"
             jmp GAME2_message_wait
 m_noop      jmp GAME2_action_menu_noop
-
-!if * > $9600 {
-            !error "Encroached into SCREEN at $9600 by ", * - $9600, " bytes"
-} else {
-            ; !warn       $9600 - *, " bytes available"
-}

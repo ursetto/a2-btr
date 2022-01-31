@@ -40,19 +40,28 @@ RWTS_DCT    !byte $00                   ;device type (0=DISK ][)
 ; and data disk (drive 2) when using 2 drives. The RWTS entry point in the original code.
 DIRECT_RWTS ldy   #<RWTS_IOB
             lda   #>RWTS_IOB
-            jsr   RWTS
-            rts
+            jmp   RWTS
 
 ; Call RWTS, temporarily overriding drive to 1. Used to access data disk
 ; or storage disk when using 2 drives. Note: Assumes you have set drive
 ; to 2 at startup time.
 DIRECT_RWTS1
-            lda   #1
-            sta   RWTS_IOB_drive
+            dec   RWTS_IOB_drive        ;drive 1
             jsr   DIRECT_RWTS
-            lda   #2
-            sta   RWTS_IOB_drive
+            inc   RWTS_IOB_drive        ;drive 2
             rts
+
+;;; Alternate entry point for HELLO. Swap in our debug code (bloaded at $D000
+;;; in LC RAM bank 2) and jump to normal setup, which calls back to $D000 after
+;;; relocating SCREEN. The game does not use any ROM calls except for PREAD (joystick),
+;;; so we do not need to copy ROM to RAM for keyboard mode.
+;;; Note: BIT $C080 (read-only RAM bank 2) saves 3 bytes but disallows self-modifying
+;;; code (should we need it).
+setup_entry bit   $c083                 ; read/write LC RAM bank 2
+            bit   $c083                 ; twice
+            jmp   $5b00                 ; SCREEN setup entry point
+
+; 1 byte free
 
 !if * > $330 {
             ;; !warn to generate report, !error to fail
