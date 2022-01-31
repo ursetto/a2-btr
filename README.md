@@ -5,6 +5,7 @@ This repository contains:
 - SourceGen disassembly of Below the Root for the Apple II
 - [Documentation](https://ursetto.github.io/a2-btr) with a discussion of the program and its analysis
 - [Disassembly](https://ursetto.github.io/a2-btr/#disassembly) output 
+- A few [enhancements](#Makefile) for the base game
 
 ## Disassembly details
 
