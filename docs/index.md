@@ -296,13 +296,13 @@ Tileset 1 at $2f00:
     $0400 - $07FF   Playfield tile numbers (text page 1)
     $0800 - $08FF   Zero page save area
     $0900 - $09FF   Demo action data and source of psuedorandomness
-    $0A00 - $3FFF
+    $0A00 - $1FFF   GAME1 data (NPC conversations, tile data)
     $2000 - $2BFF   Active player sprites (read from T05..09,S00..0B on side 1)
     $4000 - $5FFF   Hires page 2 (display)
-    $6000 - $76FF
+    $6000 - $76FF   GAME2 game logic
     $7700 - $84FF   Menu and submenu and action handers
-    $8500 - $95FF   Unused
-    $9600 - $AEFF
+    $8500 - $95FF   NPC sprites
+    $9600 - $AEFF   SCREEN logic
     $AF00 - $AFFF   Unused, copy of $B600
     $B000 - $B0FF   Unused, copy of $0900
     $B100 - $B1FF   Unused, copy of $5B00
